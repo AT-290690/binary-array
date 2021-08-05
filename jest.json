@@ -1,0 +1,7 @@
+{
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+  "moduleFileExtensions": ["js", "node"],
+  "testURL": "http://localhost/",
+  "testEnvironment": "node",
+  "type": "module"
+}
