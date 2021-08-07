@@ -31,7 +31,7 @@ export class BinaryList {
       this.vector = [[null, null]];
       this.size = 0;
     }
-
+	
     if (key >= 0) {
       current[1] = null;
       const prev = this.vector[index - 1] || [null, null];
@@ -105,19 +105,15 @@ export class BinaryList {
   }
 
   addToRight(item) {
-    this._add(this._offsetRight++, item);
+    this.size && this._add(this._offsetRight++, item);
   }
 
   removeFromLeft() {
-    if (this.size === 0) return;
-    if (this._offsetLeft === 0) return this.removeFromRight();
-    this._delete(this._offsetLeft++);
+    this.size && this._delete(this._offsetLeft++);
   }
 
   removeFromRight() {
-    if (this.size === 0) return;
-    if (this._offsetRight === 0) return this.removeFromLeft();
-    this._delete(--this._offsetRight);
+    this.size && this._delete(--this._offsetRight);
   }
 
   set(key, value) {
