@@ -1,4 +1,4 @@
-import { BinaryArray } from './src/BinaryArray.js';
+import { BinaryArray } from '../src/BinaryArray.js';
 import Benchmark from 'benchmark';
 const suite = new Benchmark.Suite();
 const binaryArray = new BinaryArray();
