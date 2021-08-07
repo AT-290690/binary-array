@@ -56,7 +56,6 @@ export class BinaryList {
         this.vector.length--;
       }
     }
-
     this.size--;
   }
 
@@ -111,11 +110,13 @@ export class BinaryList {
 
   removeFromLeft() {
     if (this.size === 0) return;
+    if (this._offsetLeft === 0) return this.removeFromRight();
     this._delete(this._offsetLeft++);
   }
 
   removeFromRight() {
     if (this.size === 0) return;
+    if (this._offsetRight === 0) return this.removeFromLeft();
     this._delete(--this._offsetRight);
   }
 
