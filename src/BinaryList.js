@@ -27,34 +27,25 @@ export class BinaryList {
     const index = this.abs(key);
     const current = this.vector[index];
     if (!current) return null;
+
     if (this.size === 1) {
       this.vector = [[null, null]];
       this.size = 0;
     }
-	
-    if (key >= 0) {
-      current[1] = null;
-      const prev = this.vector[index - 1] || [null, null];
-      if (
-        current[0] === null &&
-        current[1] === null &&
-        prev[0] === null &&
-        prev[1] === null
-      ) {
-        this.vector.length--;
-      }
-    }
-    if (key < 0) {
-      current[0] = null;
-      const next = this.vector[index + 1] || [null, null];
-      if (
-        current[0] === null &&
-        current[1] === null &&
-        next[0] === null &&
-        next[1] === null
-      ) {
-        this.vector.length--;
-      }
+
+    if (key < 0) current[0] = null;
+    if (key >= 0) current[1] = null;
+    const next = this.vector[index + 1] || [null, null];
+    const prev = this.vector[index - 1] || [null, null];
+    if (
+      current[0] === null &&
+      current[1] === null &&
+      next[0] === null &&
+      next[1] === null &&
+      prev[0] === null &&
+      prev[1] === null
+    ) {
+      this.vector.length--;
     }
     this.size--;
   }
