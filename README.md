@@ -8,6 +8,7 @@ access O(1)
 memory O(N) ~ O(N*2)
 
 npm i --save-dev
+npm i npm-run-all 
 
 run tests:
 npm run test
