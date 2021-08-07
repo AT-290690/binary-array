@@ -9,7 +9,7 @@
     "test": "jest test test",
     "bench": "run-s shift-bench unshift-bench time-per-operation-bench",
     "shift-bench": "node benchmark/shift.perf.js",
-    "unshift-bench": "node benchmark/shift.perf.js",
+    "unshift-bench": "node benchmark/unshift.perf.js",
     "time-per-operation-bench": "node benchmark/time-per-operation.perf.js"
   },
   "jest": {
