@@ -54,10 +54,6 @@ export class BinaryList {
     return key < 0 ? key * -1 : key;
   }
 
-  get size() {
-    return this.size;
-  }
-
   init(initial) {
     if (
       initial &&
@@ -72,16 +68,8 @@ export class BinaryList {
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
   }
 
-  get vector() {
-    return this.vector;
-  }
-
   get(index) {
     return this._access(index + this._offsetLeft);
-  }
-
-  get size() {
-    return this.size;
   }
 
   clear() {
