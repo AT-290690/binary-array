@@ -196,10 +196,10 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       return levels === -1
         ? collection
         : collection.reduce((acc, current) => {
-            if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              flat(current.toArray(), levels).forEach((flatted) => acc.addToRight(flatted));
+        if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
+              acc.push(...flat(current.toArray(), levels));
             } else {
-              acc.addToRight(current);
+              acc.push(current);
             }
             return acc;
           }, []);
@@ -216,9 +216,9 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
         ? collection
         : collection.reduce((acc, current, index, self) => {
             if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              flat(current.map(callback).toArray(), levels).forEach((flatted) => acc.addToRight(flatted));
+              acc.push(...flat(current.map(callback).toArray(), levels));
             } else {
-              acc.addToRight(callback(current, index, self));
+              acc.push(callback(current, index, self));
             }
             return acc;
           }, []);
