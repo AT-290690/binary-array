@@ -88,6 +88,7 @@ export class BinaryArray extends BinaryList {
     }
     return false;
   }
+  
   find(callback) {
     for (let i = 0; i < this.size; i++) {
       const current = this.get(i);
