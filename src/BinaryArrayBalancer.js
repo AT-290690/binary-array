@@ -226,11 +226,5 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
     const result = flat(this, levels);
     return new BinaryArrayBalancer(result);
   }
-
-  balance() {
-    if (this._offsetRight + this._offsetLeft === 0) return;
-    const array = this.toArray();
-    this.clear();
-    return this.init(array);
-  }
+  
 }
