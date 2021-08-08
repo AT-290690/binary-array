@@ -63,11 +63,6 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
     return result;
   }
 
-  vectorIndexOf(index) {
-    const key = index + this._offsetLeft;
-    return key < 0 ? [key * -1, -1] : [key, 1];
-  }
-
   indexOf(item) {
     for (let i = 0; i < this.size; i++) {
       if (this.get(i) === item) return i;
