@@ -45,21 +45,21 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
 
   pop() {
     const last = this.last;
-    this.removeFromRight();
+    this.removeFromRightBalance();
     return last;
   }
 
   shift() {
     const first = this.first;
-    this.removeFromLeft();
+    this.removeFromLeftBalance();
     return first;
   }
 
   slice(start, end = this.size) {
     const result = new BinaryArrayBalancer();
     const half = Math.floor(end / 2);
-    for (let i = half - 1; i >= start; i--) result.addToLeftBalance(this.get(i));
-    for (let i = half; i < end; i++) result.addToRightBalance(this.get(i));
+    for (let i = half - 1; i >= start; i--) result.addToLeft(this.get(i));
+    for (let i = half; i < end; i++) result.addToRight(this.get(i));
     return result;
   }
 
@@ -121,9 +121,9 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
     const result = new BinaryArrayBalancer();
     const half = Math.floor(this.size / 2);
     for (let i = half - 1; i >= 0; i--)
-      result.addToLeftBalance(callback(this.get(i), i, this));
+      result.addToLeft(callback(this.get(i), i, this));
     for (let i = half; i < this.size; i++)
-      result.addToRightBalance(callback(this.get(i), i, this));
+      result.addToRight(callback(this.get(i), i, this));
     return result;
   }
 
@@ -197,9 +197,9 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
         ? collection
         : collection.reduce((acc, current) => {
             if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              acc.push(...flat(current.toArray(), levels));
+              flat(current.toArray(), levels).forEach((flatted) => acc.addToRight(flatted));
             } else {
-              acc.push(current);
+              acc.addToRight(current);
             }
             return acc;
           }, []);
@@ -216,9 +216,9 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
         ? collection
         : collection.reduce((acc, current, index, self) => {
             if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              acc.push(...flat(current.map(callback).toArray(), levels));
+              flat(current.map(callback).toArray(), levels).forEach((flatted) => acc.addToRight(flatted));
             } else {
-              acc.push(callback(current, index, self));
+              acc.addToRight(callback(current, index, self));
             }
             return acc;
           }, []);
