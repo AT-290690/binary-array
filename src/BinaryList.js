@@ -94,6 +94,11 @@ export class BinaryList {
   removeFromRight() {
     this.size && this._delete(--this._offsetRight);
   }
+  
+   vectorIndexOf(index) {
+    const key = index + this._offsetLeft;
+    return key < 0 ? [key * -1, -1] : [key, 1];
+  }
 
   set(key, value) {
     const index = this.vectorIndexOf(key);
