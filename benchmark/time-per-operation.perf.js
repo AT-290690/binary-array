@@ -31,7 +31,7 @@ console.log('-------------Regular Array----------------');
 console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
 console.time('regular array total');
 console.time('regular array insert at start');
-for (let i = 0; i < iterations; i++) array.unshift(i);
+for (let i = 0; i < iterations; i++) regularArray.unshift(i);
 console.timeEnd('regular array insert at start');
 console.time('regular array get');
 regularArray[Math.floor(regularArray.length / 2)];
