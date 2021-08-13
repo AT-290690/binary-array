@@ -37,12 +37,12 @@ array insert at end: 4.508ms
 array get: 0.005ms
 array remove at end: 3.265ms
 array total: 2.205s
-
-result: 
-array is: 
-up to ~2ms faster for push and pop, 
-up to ~0.030ms faster for access,
-but for shift and unshift with an input of size 100000
-its ~972ms slower and grows quadratically.
+  
+result:   
+array is:   
+up to ~2ms faster for push and pop,   
+up to ~0.030ms faster for access,  
+but for shift and unshift with an input of size 100000. 
+its ~972ms slower and grows quadratically.  
 
 
