@@ -1,7 +1,7 @@
 import { BinaryArray } from '../src/BinaryArray.js';
 import Benchmark from 'nanobench';
 
-Benchmark('regularArray.get 200.000 items', b => {
+Benchmark('regularArray.get middle 200.000 items', b => {
   const regularArray = [];
   for (let i = 0; i < 200000; i++) {
     regularArray.push(i);
@@ -12,7 +12,7 @@ Benchmark('regularArray.get 200.000 items', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.get 200.000 items', b => {
+Benchmark('binaryArray.get middle 200.000 items', b => {
   const binaryArray = new BinaryArray();
   for (let i = 0; i < 200000; i++) {
     binaryArray.push(i);
