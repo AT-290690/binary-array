@@ -211,22 +211,18 @@ export class BinaryArray extends BinaryList {
   }
 
   flatMap(callback) {
-    const levels = 1;
-    const flat = (collection, levels) => {
-      levels--;
-      return levels === -1
-        ? collection
-        : collection.reduce((acc, current, index, self) => {
-            if (BinaryArray.isBinaryArray(current)) {
-              acc.push(...flat(current.map(callback).toArray(), levels));
-            } else {
-              acc.push(callback(current, index, self));
-            }
-            return acc;
-          }, []);
-    };
-    const result = flat(this, levels);
-    return new BinaryArray(result);
+    const flat = collection =>
+      collection.reduce((acc, current, index, self) => {
+        if (BinaryArray.isBinaryArray(current)) {
+          current.forEach(item => {
+            acc.push(callback(item));
+          });
+        } else {
+          acc.push(callback(current, index, self));
+        }
+        return acc;
+      }, []);
+    return new BinaryArray(flat(this));
   }
 
   balance() {

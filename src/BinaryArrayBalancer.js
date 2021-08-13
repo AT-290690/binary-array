@@ -213,21 +213,17 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
   }
 
   flatMap(callback) {
-    const levels = 1;
-    const flat = (collection, levels) => {
-      levels--;
-      return levels === -1
-        ? collection
-        : collection.reduce((acc, current, index, self) => {
-            if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              acc.push(...flat(current.map(callback).toArray(), levels));
-            } else {
-              acc.push(callback(current, index, self));
-            }
-            return acc;
-          }, []);
-    };
-    const result = flat(this, levels);
-    return new BinaryArrayBalancer(result);
+    const flat = collection =>
+      collection.reduce((acc, current, index, self) => {
+        if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
+          current.forEach(item => {
+            acc.push(callback(item));
+          });
+        } else {
+          acc.push(callback(current, index, self));
+        }
+        return acc;
+      }, []);
+    return new isBinaryArrayBalancer(flat(this));
   }
 }
