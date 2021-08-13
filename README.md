@@ -45,6 +45,6 @@ array is:
 up to ~2ms faster for push and pop,   
 up to ~0.030ms faster for access,  
 but for shift and unshift with an input of size 100000    
-its ~972ms slower and grows quadratically.  
+its ~972ms slower and growing.  
 
 
