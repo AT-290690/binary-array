@@ -2,20 +2,22 @@
 
 Making the JavaScript array fast for large inputs.
 
-insert O(1)
-remove O(1)
-access O(1)
-memory O(N) ~ O(N*2)
+insert O(1)  
+remove O(1)  
+access O(1)  
+memory O(N) ~ O(N*2)  
 
 npm i --save-dev
-
-npm i npm-run-all 
 
 run tests:
 npm run test
 
 run benchmarks:
-npm run bench
+
+npm run binary-array-bench  
+npm run binary-array-balancer-bench  
+npm run time-per-operation-bench  
+npm run time-per-operation-bench-balancer  
 
   
 Comparison for N = 100000 (runned on MacBook Pro M1 chip laptop)   
