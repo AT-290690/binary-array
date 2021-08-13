@@ -9,6 +9,7 @@ Benchmark('regularArray.get middle 200.000 items', b => {
   for (let i = 0; i < N; i++) {
     regularArray.push(i);
   }
+      
   b.start();
   regularArray[mid];
   b.end();
@@ -21,6 +22,7 @@ Benchmark('binaryArrayBalancer.get middle 200.000 items', b => {
   for (let i = 0; i < N; i++) {
     binaryArray.push(i);
   }
+      
   b.start();
   binaryArray.get(mid);
   b.end();
@@ -29,6 +31,7 @@ Benchmark('binaryArrayBalancer.get middle 200.000 items', b => {
 
 Benchmark('regularArray.push 200.000 times', b => {
   const regularArray = [];
+      
   b.start();
   for (let i = 0; i < N; i++) {
     regularArray.push(1);
@@ -75,6 +78,7 @@ Benchmark('regularArray.shift 200.000 times', b => {
   for (let i = 0; i < N; i++) {
     regularArray.push(i);
   }
+      
   b.start();
   for (let i = 0; i < N; i++) {
     regularArray.shift();
@@ -88,6 +92,7 @@ Benchmark('binaryArrayBalancer.shift 200.000 times', b => {
   for (let i = 0; i < N; i++) {
     binaryArray.push(i);
   }
+      
   b.start();
   for (let i = 0; i < N; i++) {
     binaryArray.shift();
