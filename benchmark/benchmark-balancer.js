@@ -1,24 +1,28 @@
 import { BinaryArrayBalancer } from '../src/BinaryArrayBalancer.js';
 import Benchmark from 'nanobench';
 
+const N = 200000;
+      
 Benchmark('regularArray.get middle 200.000 items', b => {
   const regularArray = [];
-  for (let i = 0; i < 200000; i++) {
+  const mid = N/2;
+  for (let i = 0; i < N; i++) {
     regularArray.push(i);
   }
   b.start();
-  regularArray[100000];
+  regularArray[mid];
   b.end();
   regularArray.length = 0;
 });
 
 Benchmark('binaryArrayBalancer.get middle 200.000 items', b => {
   const binaryArray = new BinaryArrayBalancer();
-  for (let i = 0; i < 200000; i++) {
+  const mid = N/2;
+  for (let i = 0; i < N; i++) {
     binaryArray.push(i);
   }
   b.start();
-  binaryArray.get(100000);
+  binaryArray.get(mid);
   b.end();
   binaryArray.clear();
 });
@@ -26,7 +30,7 @@ Benchmark('binaryArrayBalancer.get middle 200.000 items', b => {
 Benchmark('regularArray.push 200.000 times', b => {
   const regularArray = [];
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     regularArray.push(1);
   }
   b.end();
@@ -37,7 +41,7 @@ Benchmark('binaryArrayBalancer.push 200.000 times', b => {
   const binaryArray = new BinaryArrayBalancer();
 
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     binaryArray.push(1);
   }
   b.end();
@@ -48,7 +52,7 @@ Benchmark('regularArray.pop 200.000 times', b => {
   const regularArray = [];
 
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     regularArray.pop();
   }
   b.end();
@@ -59,7 +63,7 @@ Benchmark('binaryArrayBalancer.pop 200.000 times', b => {
   const binaryArray = new BinaryArrayBalancer();
 
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     binaryArray.pop();
   }
   b.end();
@@ -68,11 +72,11 @@ Benchmark('binaryArrayBalancer.pop 200.000 times', b => {
 
 Benchmark('regularArray.shift 200.000 times', b => {
   const regularArray = [];
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     regularArray.push(i);
   }
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     regularArray.shift();
   }
   b.end();
@@ -81,11 +85,11 @@ Benchmark('regularArray.shift 200.000 times', b => {
 
 Benchmark('binaryArrayBalancer.shift 200.000 times', b => {
   const binaryArray = new BinaryArrayBalancer();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     binaryArray.push(i);
   }
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     binaryArray.shift();
   }
   b.end();
@@ -96,7 +100,7 @@ Benchmark('regularArray.unshift 200.000 times', b => {
   const regularArray = [];
 
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     regularArray.unshift(1);
   }
   b.end();
@@ -107,7 +111,7 @@ Benchmark('binaryArrayBalancer.unshift 200.000 times', b => {
   const binaryArray = new BinaryArrayBalancer();
 
   b.start();
-  for (let i = 0; i < 200000; i++) {
+  for (let i = 0; i < N; i++) {
     binaryArray.unshift(1);
   }
   b.end();
