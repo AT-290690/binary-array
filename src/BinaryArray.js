@@ -211,8 +211,8 @@ export class BinaryArray extends BinaryList {
   }
 
   flatMap(callback) {
-    const flat = collection =>
-      collection.reduce((acc, current, index, self) => {
+    return new BinaryArray(
+      this.reduce((acc, current, index, self) => {
         if (BinaryArray.isBinaryArray(current)) {
           current.forEach(item => {
             acc.push(callback(item));
@@ -221,8 +221,8 @@ export class BinaryArray extends BinaryList {
           acc.push(callback(current, index, self));
         }
         return acc;
-      }, []);
-    return new BinaryArray(flat(this));
+      }, [])
+    );
   }
 
   balance() {

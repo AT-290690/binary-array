@@ -213,8 +213,8 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
   }
 
   flatMap(callback) {
-    const flat = collection =>
-      collection.reduce((acc, current, index, self) => {
+    return new BinaryArrayBalancer(
+      this.reduce((acc, current, index, self) => {
         if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
           current.forEach(item => {
             acc.push(callback(item));
@@ -223,7 +223,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
           acc.push(callback(current, index, self));
         }
         return acc;
-      }, []);
-    return new isBinaryArrayBalancer(flat(this));
+      }, [])
+    );
   }
 }
