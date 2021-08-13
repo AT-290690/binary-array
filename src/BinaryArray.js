@@ -83,7 +83,7 @@ export class BinaryArray extends BinaryList {
     }
     return false;
   }
-  
+
   find(callback) {
     for (let i = 0; i < this.size; i++) {
       const current = this.get(i);
@@ -187,6 +187,13 @@ export class BinaryArray extends BinaryList {
 
   flat(levels = 1) {
     const flat = (collection, levels) => {
+      if (levels === Infinity) {
+        const result = flat(this, 1);
+        if (result.some(item => BinaryArray.isBinaryArray(item))) {
+          return result;
+        }
+        return flat(result, Infinity);
+      }
       levels--;
       return levels === -1
         ? collection
