@@ -83,7 +83,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
     }
     return false;
   }
-  
+
   find(callback) {
     for (let i = 0; i < this.size; i++) {
       const current = this.get(i);
@@ -187,11 +187,20 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
 
   flat(levels = 1) {
     const flat = (collection, levels) => {
+      if (levels === Infinity) {
+        const result = flat(this, 1);
+        if (
+          result.some(item => BinaryArrayBalancer.isBinaryArrayBalancer(item))
+        ) {
+          return result;
+        }
+        return flat(result, Infinity);
+      }
       levels--;
       return levels === -1
         ? collection
         : collection.reduce((acc, current) => {
-        if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
+            if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
               acc.push(...flat(current.toArray(), levels));
             } else {
               acc.push(current);
@@ -221,5 +230,4 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
     const result = flat(this, levels);
     return new BinaryArrayBalancer(result);
   }
-  
 }
