@@ -77,5 +77,46 @@ describe('BinaryArrayBalancer', () => {
     expect(flatBinArr.reduce((acc, i) => acc + i, 1)).toEqual(
       flatArr.reduce((acc, i) => acc + i, 1)
     );
+
+    const infiniteArrNest = [
+      [
+        [[1, 2, 3, 4], [1, 2, 3, 4], 3, 4],
+        [1, [1, 2, [1, 2, 3, 4], 4], 3, 4]
+      ],
+      [
+        [1, 2, 3, 4],
+        [1, 2, 3, 4]
+      ]
+    ];
+
+    const infiniteBinNest = new BinaryArrayBalancer([
+      new BinaryArrayBalancer([
+        new BinaryArrayBalancer([
+          new BinaryArrayBalancer([1, 2, 3, 4]),
+          new BinaryArrayBalancer([1, 2, 3, 4]),
+          3,
+          4
+        ]),
+        new BinaryArrayBalancer([
+          1,
+          new BinaryArrayBalancer([
+            1,
+            2,
+            new BinaryArrayBalancer([1, 2, 3, 4]),
+            4
+          ]),
+          3,
+          4
+        ])
+      ]),
+      new BinaryArrayBalancer([
+        new BinaryArrayBalancer([1, 2, 3, 4]),
+        new BinaryArrayBalancer([1, 2, 3, 4])
+      ])
+    ]);
+
+    expect(infiniteBinNest.flat(Infinity).toArray()).toEqual(
+      infiniteArrNest.flat(Infinity)
+    );
   });
 });

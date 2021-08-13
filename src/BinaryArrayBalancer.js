@@ -186,19 +186,33 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
   }
 
   flat(levels = 1) {
-    const flat = (collection, levels) => {
-      levels--;
-      return levels === -1
-        ? collection
-        : collection.reduce((acc, current) => {
-            if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-              acc.push(...flat(current.toArray(), levels));
-            } else {
-              acc.push(current);
-            }
-            return acc;
-          }, []);
-    };
+    let flat;
+    if (levels === Infinity) {
+      flat = (collection, levels) => {
+        return collection.reduce((acc, current) => {
+          if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
+            acc.push(...flat(current.toArray(), levels));
+          } else {
+            acc.push(current);
+          }
+          return acc;
+        }, []);
+      };
+    } else {
+      flat = (collection, levels) => {
+        levels--;
+        return levels === -1
+          ? collection
+          : collection.reduce((acc, current) => {
+              if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
+                acc.push(...flat(current.toArray(), levels));
+              } else {
+                acc.push(current);
+              }
+              return acc;
+            }, []);
+      };
+    }
     return new BinaryArrayBalancer(flat(this, levels));
   }
 
