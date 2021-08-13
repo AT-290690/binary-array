@@ -187,15 +187,6 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
 
   flat(levels = 1) {
     const flat = (collection, levels) => {
-      if (levels === Infinity) {
-        const result = flat(this, 1);
-        if (
-          result.some(item => BinaryArrayBalancer.isBinaryArrayBalancer(item))
-        ) {
-          return result;
-        }
-        return flat(result, Infinity);
-      }
       levels--;
       return levels === -1
         ? collection
@@ -208,8 +199,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
             return acc;
           }, []);
     };
-    const result = flat(this, levels);
-    return new BinaryArrayBalancer(result);
+    return new BinaryArrayBalancer(flat(this, levels));
   }
 
   flatMap(callback) {
