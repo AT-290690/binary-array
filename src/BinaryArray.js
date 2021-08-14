@@ -186,33 +186,24 @@ export class BinaryArray extends BinaryList {
   }
 
   flat(levels = 1) {
-    let flat;
-    if (levels === Infinity) {
-      flat = (collection, levels) => {
-        return collection.reduce((acc, current) => {
-          if (BinaryArray.isBinaryArray(current)) {
-            acc.push(...flat(current.toArray(), levels));
-          } else {
-            acc.push(current);
+    const flatten = collection =>
+      collection.reduce((acc, current) => {
+        if (BinaryArray.isBinaryArray(current)) {
+          acc.push(...flat(current.toArray(), levels));
+        } else {
+          acc.push(current);
+        }
+        return acc;
+      }, []);
+    const flat =
+      levels === Infinity
+        ? (collection, levels) => {
+            return flatten(collection, levels);
           }
-          return acc;
-        }, []);
-      };
-    } else {
-      flat = (collection, levels) => {
-        levels--;
-        return levels === -1
-          ? collection
-          : collection.reduce((acc, current) => {
-              if (BinaryArray.isBinaryArray(current)) {
-                acc.push(...flat(current.toArray(), levels));
-              } else {
-                acc.push(current);
-              }
-              return acc;
-            }, []);
-      };
-    }
+        : (collection, levels) => {
+            levels--;
+            return levels === -1 ? collection : flatten(collection, levels);
+          };
     return new BinaryArray(flat(this, levels));
   }
 
