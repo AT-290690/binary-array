@@ -84,7 +84,7 @@ export class BinaryList {
   }
 
   addToRight(item) {
-    this.size && this._add(this._offsetRight++, item);
+    this._add(this._offsetRight++, item);
   }
 
   removeFromLeft() {
