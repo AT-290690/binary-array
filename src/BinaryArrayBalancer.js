@@ -182,14 +182,14 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
   }
 
   concat(second) {
-    return new BinaryArrayBalancer([...this.toArray(), ...second.toArray()]);
+    return new BinaryArrayBalancer([...this, ...second]);
   }
 
   flat(levels = 1) {
     const flatten = collection =>
       collection.reduce((acc, current) => {
         if (BinaryArrayBalancer.isBinaryArrayBalancer(current)) {
-          acc.push(...flat(current.toArray(), levels));
+          acc.push(...flat(current, levels));
         } else {
           acc.push(current);
         }

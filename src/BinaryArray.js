@@ -182,14 +182,14 @@ export class BinaryArray extends BinaryList {
   }
 
   concat(second) {
-    return new BinaryArray([...this.toArray(), ...second.toArray()]);
+    return new BinaryArray([...this, ...second]);
   }
 
   flat(levels = 1) {
     const flatten = collection =>
       collection.reduce((acc, current) => {
         if (BinaryArray.isBinaryArray(current)) {
-          acc.push(...flat(current.toArray(), levels));
+          acc.push(...flat(current, levels));
         } else {
           acc.push(current);
         }
