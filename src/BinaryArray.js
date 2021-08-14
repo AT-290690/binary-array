@@ -157,6 +157,15 @@ export class BinaryArray extends BinaryList {
   }
 
   reverse() {
+    if (this.size <= 2) {
+      if (this.size === 1) {
+        return this;
+      }
+      const temp = this.get(0);
+      this.set(0, this.get(1));
+      this.set(1, temp);
+      return this;
+    }
     const diff = this._offsetRight + this._offsetLeft;
     const temp = this._offsetRight * -1;
     this._offsetRight = this._offsetLeft * -1;
