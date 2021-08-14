@@ -4,7 +4,7 @@ describe('BinaryArrayBalancer', () => {
     const arr = [1, 2, 3];
     const binArr = new BinaryArrayBalancer(arr);
 
-    expect(binArr.toArray()).toEqual(arr);
+    expect([...binArr]).toEqual(arr);
 
     binArr.push(6, 7, 8);
     binArr.set(3, binArr.pop());
@@ -16,7 +16,7 @@ describe('BinaryArrayBalancer', () => {
     arr.unshift(5, 4, 1);
     arr.shift();
 
-    expect(binArr.toArray()).toEqual(arr);
+    expect([...binArr]).toEqual(arr);
   });
   it('.map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
@@ -73,7 +73,7 @@ describe('BinaryArrayBalancer', () => {
         ]
       ].flat(3)
     );
-    expect(flatBinArr.toArray()).toEqual(flatArr);
+    expect([...flatBinArr]).toEqual(flatArr);
     expect(flatBinArr.reduce((acc, i) => acc + i, 1)).toEqual(
       flatArr.reduce((acc, i) => acc + i, 1)
     );

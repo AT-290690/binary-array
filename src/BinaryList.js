@@ -94,8 +94,8 @@ export class BinaryList {
   removeFromRight() {
     this.size && this._delete(--this._offsetRight);
   }
-  
-   vectorIndexOf(index) {
+
+  vectorIndexOf(index) {
     const key = index + this._offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
@@ -107,15 +107,11 @@ export class BinaryList {
       : (this.vector[index[0]][0] = value);
   }
 
+  [Symbol.iterator] = function* () {
+    for (let i = 0; i < this.size; i++) yield this.get(i);
+  };
+
   toArray() {
-    const result = [];
-    const vector = this.vector;
-    for (let i = 0, len = vector.length; i < len; i++) {
-      const values = vector[i];
-      if (!values) continue;
-      if (values[1] !== null) result[i - this._offsetLeft] = values[1];
-      if (values[0] !== null) result[i * -1 - this._offsetLeft] = values[0];
-    }
-    return result;
+    return [...this];
   }
 }
