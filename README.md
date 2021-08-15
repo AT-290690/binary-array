@@ -41,3 +41,9 @@ array get: 0.005ms
 array remove at end: 3.265ms  
 
 array total: 2.205s  
+
+result:   
+BinaryArray is ~40 times faster than regular array
+for input of 100000 items  
+(and as the input grows beyond that - it gets even more times faster)
+
