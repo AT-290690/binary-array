@@ -211,7 +211,7 @@ export class BinaryArray extends BinaryList {
           }
         : (collection, levels) => {
             levels--;
-            return levels === -1 ? collection : flatten(collection, levels);
+            return levels === -1 ? collection : flatten(collection);
           };
     return new BinaryArray(flat(this, levels));
   }
