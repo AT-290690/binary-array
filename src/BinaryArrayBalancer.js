@@ -166,17 +166,17 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       this.set(1, temp);
       return this;
     }
-    const diff = this._offsetRight + this._offsetLeft;
     const temp = this._offsetRight * -1;
-    this._offsetRight = this._offsetLeft * -1;
-    this._offsetLeft = temp + diff;
+    this._offsetRight = this._offsetLeft * -1 + 1;
+    this._offsetLeft = temp + 1;
     for (let i = 0; i < this.size; i++) {
       const right = this.vector[i]?.[1] ?? null;
       const left = this.vector[i]?.[0] ?? null;
-      if (right || left) this.vector[i] = [right, left];
+      this.vector[i] = [right, left];
     }
-    if (this.vector[0][1] === null)
+    if (this.vector[0][1] === null) {
       this.vector[0] = [this.vector[0][1], this.vector[0][0]];
+    }
     return this;
   }
 
