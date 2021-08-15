@@ -211,7 +211,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
           }
         : (collection, levels) => {
             levels--;
-            return levels === -1 ? collection : flatten(collection, levels);
+            return levels === -1 ? collection : flatten(collection);
           };
     return new BinaryArrayBalancer(flat(this, levels));
   }
