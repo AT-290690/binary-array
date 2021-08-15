@@ -102,4 +102,18 @@ describe('BinaryArray', () => {
       infiniteArrNest.flat(Infinity)
     );
   });
+  it('.reverse should modify the collection the same', () => {
+    const arr1 = [4, 1, 1, 2, 3, 8, 7];
+    const binArr1 = new BinaryArray(arr1);
+    expect(binArr1.reverse().toArray()).toEqual(arr1.reverse());
+    expect(binArr1.reverse().reverse().toArray()).toEqual(
+      arr1.reverse().reverse()
+    );
+    const arr2 = [4, 1, 1, 2, 3, 8, 7, 8];
+    const binArr2 = new BinaryArray(arr2);
+    expect(binArr2.reverse().toArray()).toEqual(arr2.reverse());
+    expect(binArr2.reverse().reverse().toArray()).toEqual(
+      arr2.reverse().reverse()
+    );
+  });
 });
