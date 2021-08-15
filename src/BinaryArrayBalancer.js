@@ -110,7 +110,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       const current = this.get(i);
       if (callback(current, i, this)) return i;
     }
-     return -1;
+    return -1;
   }
 
   map(callback) {
