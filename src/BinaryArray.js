@@ -110,6 +110,7 @@ export class BinaryArray extends BinaryList {
       const current = this.get(i);
       if (callback(current, i, this)) return i;
     }
+    return -1;
   }
 
   map(callback) {
