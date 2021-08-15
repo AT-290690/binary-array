@@ -206,8 +206,8 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       }, []);
     const flat =
       levels === Infinity
-        ? (collection, levels) => {
-            return flatten(collection, levels);
+        ? collection => {
+            return flatten(collection);
           }
         : (collection, levels) => {
             levels--;
