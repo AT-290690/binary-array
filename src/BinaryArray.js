@@ -57,9 +57,7 @@ export class BinaryArray extends BinaryList {
 
   slice(start, end = this.size) {
     const collection = [];
-    for (let i = start; i < end; i++) {
-      collection.push(this.get(i));
-    }
+    for (let i = start; i < end; i++) collection.push(this.get(i));
     return new BinaryArray(collection);
   }
 
