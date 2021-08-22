@@ -116,4 +116,13 @@ describe('BinaryArray', () => {
       arr2.reverse().reverse()
     );
   });
+  it('.slice should create a new collection from the same range', () => {
+    const arr = [4, 1, 1, 2, 3, 8, 7];
+    const binArr = new BinaryArray(arr);
+    expect(arr.slice(1)).toEqual(binArr.slice(1).toArray());
+    expect(arr.slice(1, 2)).toEqual(binArr.slice(1, 2).toArray());
+    expect(arr.slice(3)).toEqual(binArr.slice(3).toArray());
+    expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).toArray());
+    expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray());
+  });
 });

@@ -56,11 +56,11 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
   }
 
   slice(start, end = this.size) {
-    const result = new BinaryArrayBalancer();
-    const half = Math.floor(end / 2);
-    for (let i = half - 1; i >= start; i--) result.addToLeft(this.get(i));
-    for (let i = half; i < end; i++) result.addToRight(this.get(i));
-    return result;
+    const collection = [];
+    for (let i = start; i < end; i++) {
+      collection.push(this.get(i));
+    }
+    return new BinaryArrayBalancer(collection);
   }
 
   indexOf(item) {
@@ -110,7 +110,7 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       const current = this.get(i);
       if (callback(current, i, this)) return i;
     }
-     return -1;
+    return -1;
   }
 
   map(callback) {

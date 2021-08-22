@@ -56,11 +56,11 @@ export class BinaryArray extends BinaryList {
   }
 
   slice(start, end = this.size) {
-    const result = new BinaryArray();
-    const half = Math.floor(end / 2);
-    for (let i = half - 1; i >= start; i--) result.addToLeft(this.get(i));
-    for (let i = half; i < end; i++) result.addToRight(this.get(i));
-    return result;
+    const collection = [];
+    for (let i = start; i < end; i++) {
+      collection.push(this.get(i));
+    }
+    return new BinaryArray(collection);
   }
 
   indexOf(item) {
