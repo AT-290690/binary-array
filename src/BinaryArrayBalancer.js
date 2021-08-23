@@ -229,4 +229,18 @@ export class BinaryArrayBalancer extends BinaryListBalancer {
       }, [])
     );
   }
+
+  addTo(key, value) {
+    if (key >= this.size) {
+      for (let i = this.size; i <= key; i++) {
+        this.addToRight(undefined);
+      }
+    }
+    const index = this.vectorIndexOf(key);
+    index[1] >= 0
+      ? (this.vector[index[0]][1] = value)
+      : (this.vector[index[0]][0] = value);
+    this.applyBalance();
+    return this.size;
+  }
 }

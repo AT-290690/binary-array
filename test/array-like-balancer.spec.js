@@ -128,4 +128,12 @@ describe('BinaryArrayBalancer', () => {
     expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).toArray());
     expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray());
   });
+  it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
+    const arr = [4, 1, 1, 2, 3, 8, 7];
+    const binArr = new BinaryArrayBalancer(arr);
+    arr[20] = 10;
+    binArr.addTo(20, 10);
+    expect(arr).toEqual(binArr.toArray());
+    expect(arr[15]).toEqual(binArr.get(15));
+  });
 });
