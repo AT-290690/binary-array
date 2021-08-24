@@ -5,7 +5,7 @@ Making the JavaScript array fast for large inputs.
 insert O(1)  
 remove O(1)  
 access O(1)  
-memory O(N) ~ O(N*2)  
+memory O(N)
 
 npm i --save-dev
 
