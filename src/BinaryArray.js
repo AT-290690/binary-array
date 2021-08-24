@@ -30,7 +30,7 @@ export class BinaryArray extends BinaryList {
   }
 
   get pivot() {
-    return this.vector[0][1];
+    return this.right[0];
   }
 
   push(...items) {
@@ -165,17 +165,16 @@ export class BinaryArray extends BinaryList {
       this.set(1, temp);
       return this;
     }
-    const temp = this._offsetRight * -1;
-    this._offsetRight = this._offsetLeft * -1 + 1;
-    this._offsetLeft = temp + 1;
+    const temp = this.offsetRight * -1;
+    this.offsetRight = this.offsetLeft * -1 + 1;
+    this.offsetLeft = temp + 1;
     for (let i = 0; i < this.size; i++) {
-      const right = this.vector[i]?.[1] ?? null;
-      const left = this.vector[i]?.[0] ?? null;
-      this.vector[i] = [right, left];
+      const right = this.right[i] ?? this.left[i];
+      const left = this.left[i] ?? this.right[i];
+      this.right[i] = left;
+      this.left[i] = right;
     }
-    if (this.vector[0][1] === null) {
-      this.vector[0] = [this.vector[0][1], this.vector[0][0]];
-    }
+
     return this;
   }
 
@@ -236,16 +235,14 @@ export class BinaryArray extends BinaryList {
         this.addToRight(undefined);
       }
     }
-    const index = this.vectorIndexOf(key);
-    index[1] >= 0
-      ? (this.vector[index[0]][1] = value)
-      : (this.vector[index[0]][0] = value);
+    const [index, direction] = this.vectorIndexOf(key);
+    direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
     this.balance();
     return this.size;
   }
 
   balance() {
-    if (this._offsetRight + this._offsetLeft === 0) return;
+    if (this.offsetRight + this.offsetLeft === 0) return;
     const array = this.toArray();
     this.clear();
     return this.init(array);

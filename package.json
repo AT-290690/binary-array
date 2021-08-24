@@ -7,10 +7,7 @@
   },
   "scripts": {
     "test": "jest test test",
-    "binary-array-balancer-bench": "node benchmark/benchmark-balancer.js",
-    "binary-array-bench": "node benchmark/benchmark.js",
-    "time-per-operation-bench": "node benchmark/time-per-operation.perf.js",
-    "time-per-operation-balancer-bench": "node benchmark/time-per-operation-balancer.perf.js"
+    "bench": "node benchmark/benchmark.js"
   },
   "jest": {
     "preset": "./jest.json"

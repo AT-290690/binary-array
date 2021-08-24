@@ -1,7 +1,8 @@
 export class BinaryList {
-  _offsetRight = 0;
-  _offsetLeft = 0;
-  vector = [[null, null]];
+  offsetRight = 0;
+  offsetLeft = 0;
+  left = [];
+  right = [];
   size = 0;
   constructor(initial = []) {
     this.init(initial);
@@ -9,44 +10,24 @@ export class BinaryList {
 
   _access(key) {
     const index = this.abs(key);
-    const current = this.vector[index];
-    if (!current) return null;
-    return key >= 0 ? current[1] : current[0];
+    return key >= 0 ? this.right[index] : this.left[index];
   }
 
   _add(key, value) {
     const index = this.abs(key);
-    if (!this.vector[index]) this.vector[index] = [null, null];
-    const current = this.vector[index];
-    if (key >= 0) current[1] = value;
-    else current[0] = value;
+    if (key >= 0) this.right[index] = value;
+    else this.left[index] = value;
     this.size++;
   }
 
   _delete(key) {
-    const index = this.abs(key);
-    const current = this.vector[index];
-    if (!current) return null;
-
     if (this.size === 1) {
-      this.vector = [[null, null]];
+      this.left = [];
+      this.right = [];
       this.size = 0;
     }
-
-    if (key < 0) current[0] = null;
-    if (key >= 0) current[1] = null;
-    const next = this.vector[index + 1] || [null, null];
-    const prev = this.vector[index - 1] || [null, null];
-    if (
-      current[0] === null &&
-      current[1] === null &&
-      next[0] === null &&
-      next[1] === null &&
-      prev[0] === null &&
-      prev[1] === null
-    ) {
-      this.vector.length--;
-    }
+    if (key < 0 && this.left.lenght > 0) this.left.length--;
+    if (key >= 0 && this.right.lenght > 0) this.right.length--;
     this.size--;
   }
 
@@ -69,42 +50,43 @@ export class BinaryList {
   }
 
   get(index) {
-    return this._access(index + this._offsetLeft);
+    return this._access(index + this.offsetLeft);
   }
 
   clear() {
-    this.vector = [[null, null]];
+    this.right = [];
+    this.left = [];
     this.size = 0;
-    this._offsetLeft = 0;
-    this._offsetRight = 0;
+    this.offsetLeft = 0;
+    this.offsetRight = 0;
   }
 
   addToLeft(item) {
-    this._add(--this._offsetLeft, item);
+    this._add(--this.offsetLeft, item);
   }
 
   addToRight(item) {
-    this._add(this._offsetRight++, item);
+    this._add(this.offsetRight++, item);
   }
 
   removeFromLeft() {
-    this.size && this._delete(this._offsetLeft++);
+    this.size && this._delete(this.offsetLeft++);
   }
 
   removeFromRight() {
-    this.size && this._delete(--this._offsetRight);
+    this.size && this._delete(--this.offsetRight);
   }
 
   vectorIndexOf(index) {
-    const key = index + this._offsetLeft;
+    const key = index + this.offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
 
   set(key, value) {
-    const index = this.vectorIndexOf(key);
-    return index[1] >= 0
-      ? (this.vector[index[0]][1] = value)
-      : (this.vector[index[0]][0] = value);
+    const [index, direction] = this.vectorIndexOf(key);
+    return direction >= 0
+      ? (this.right[index] = value)
+      : (this.left[index] = value);
   }
 
   [Symbol.iterator] = function* () {
