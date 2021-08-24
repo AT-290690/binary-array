@@ -237,7 +237,6 @@ export class BinaryArray extends BinaryList {
     }
     const [index, direction] = this.vectorIndexOf(key);
     direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
-    this.balance();
     return this.size;
   }
 
