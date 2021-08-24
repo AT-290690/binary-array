@@ -165,9 +165,9 @@ export class BinaryArray extends BinaryList {
       this.set(1, temp);
       return this;
     }
-    const temp = this.offsetRight * -1;
-    this.offsetRight = this.offsetLeft * -1 + 1;
-    this.offsetLeft = temp + 1;
+    const temp = this._offsetRight * -1;
+    this._offsetRight = this._offsetLeft * -1 + 1;
+    this._offsetLeft = temp + 1;
     for (let i = 0; i < this.size; i++) {
       const right = this.right[i] ?? this.left[i];
       const left = this.left[i] ?? this.right[i];
@@ -242,7 +242,7 @@ export class BinaryArray extends BinaryList {
   }
 
   balance() {
-    if (this.offsetRight + this.offsetLeft === 0) return;
+    if (this._offsetRight + this._offsetLeft === 0) return;
     const array = this.toArray();
     this.clear();
     return this.init(array);

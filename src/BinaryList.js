@@ -1,6 +1,6 @@
 export class BinaryList {
-  offsetRight = 0;
-  offsetLeft = 0;
+  _offsetRight = 0;
+  _offsetLeft = 0;
   left = [];
   right = [];
   size = 0;
@@ -50,35 +50,35 @@ export class BinaryList {
   }
 
   get(index) {
-    return this._access(index + this.offsetLeft);
+    return this._access(index + this._offsetLeft);
   }
 
   clear() {
     this.right = [];
     this.left = [];
     this.size = 0;
-    this.offsetLeft = 0;
-    this.offsetRight = 0;
+    this._offsetLeft = 0;
+    this._offsetRight = 0;
   }
 
   addToLeft(item) {
-    this._add(--this.offsetLeft, item);
+    this._add(--this._offsetLeft, item);
   }
 
   addToRight(item) {
-    this._add(this.offsetRight++, item);
+    this._add(this._offsetRight++, item);
   }
 
   removeFromLeft() {
-    this.size && this._delete(this.offsetLeft++);
+    this.size && this._delete(this._offsetLeft++);
   }
 
   removeFromRight() {
-    this.size && this._delete(--this.offsetRight);
+    this.size && this._delete(--this._offsetRight);
   }
 
   vectorIndexOf(index) {
-    const key = index + this.offsetLeft;
+    const key = index + this._offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
 
