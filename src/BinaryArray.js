@@ -237,8 +237,63 @@ export class BinaryArray extends BinaryList {
     }
     const [index, direction] = this.vectorIndexOf(key);
     direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
-    this.balance();
     return this.size;
+  }
+
+  addAt(key, ...value) {
+    const temp = [];
+    if (this._offsetLeft + key > 0) {
+      const len = this.size - key;
+      for (let i = 0; i < len; i++) {
+        temp.push(this.pop());
+      }
+      this.push(...value, ...temp);
+    } else {
+      for (let i = 0; i < key; i++) {
+        temp.push(this.shift());
+      }
+      this.unshift(...temp, ...value);
+    }
+  }
+
+  removeFrom(key, amount) {
+    const temp = [];
+    if (this._offsetLeft + key > 0) {
+      const len = this.size - key;
+      for (let i = 0; i < len; i++) {
+        temp.push(this.pop());
+      }
+      for (let i = 0; i < amount; i++) {
+        this.pop();
+      }
+      this.push(...temp);
+    } else {
+      for (let i = 0; i < key; i++) {
+        temp.push(this.shift());
+      }
+      for (let i = 0; i < amount; i++) {
+        this.shift();
+      }
+      this.unshift(...temp);
+    }
+  }
+
+  rotateLeft(n = 1) {
+    for (let i = 0; i < n; i++) {
+      this.addToRight(this.first);
+      this.removeFromLeft();
+    }
+  }
+
+  rotateRight(n = 1) {
+    for (let i = 0; i < n; i++) {
+      this.addToLeft(this.last);
+      this.removeFromRight();
+    }
+  }
+
+  rotate(n = 1, direction = 1) {
+    direction === 1 ? this.rotateRight(n) : this.rotateLeft(n);
   }
 
   balance() {
