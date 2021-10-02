@@ -32,7 +32,7 @@ export class BinaryArray extends BinaryList {
   get pivot() {
     return this.right[0];
   }
-  
+
   at(index) {
     if (index < 0) {
       return this.get(this.size + index);
