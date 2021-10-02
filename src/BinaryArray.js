@@ -241,40 +241,40 @@ export class BinaryArray extends BinaryList {
   }
 
   addAt(key, ...value) {
-    const temp = [];
     if (this._offsetLeft + key > 0) {
       const len = this.size - key;
+      this.rotateRight(len);
+      this.push(...value);
       for (let i = 0; i < len; i++) {
-        temp.push(this.pop());
+        this.push(this.shift());
       }
-      this.push(...value, ...temp);
     } else {
+      this.rotateLeft(key);
+      this.unshift(...value);
       for (let i = 0; i < key; i++) {
-        temp.push(this.shift());
+        this.unshift(this.pop());
       }
-      this.unshift(...temp, ...value);
     }
   }
 
   removeFrom(key, amount) {
-    const temp = [];
     if (this._offsetLeft + key > 0) {
       const len = this.size - key;
-      for (let i = 0; i < len; i++) {
-        temp.push(this.pop());
-      }
+      this.rotateRight(len);
       for (let i = 0; i < amount; i++) {
         this.pop();
       }
-      this.push(...temp);
-    } else {
-      for (let i = 0; i < key; i++) {
-        temp.push(this.shift());
+      for (let i = 0; i < len; i++) {
+        this.push(this.shift());
       }
+    } else {
+      this.rotateLeft(key);
       for (let i = 0; i < amount; i++) {
         this.shift();
       }
-      this.unshift(...temp);
+      for (let i = 0; i < key; i++) {
+        this.unshift(this.pop());
+      }
     }
   }
 
