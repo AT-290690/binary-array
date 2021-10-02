@@ -136,6 +136,25 @@ describe('BinaryArray', () => {
     expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).toArray());
     expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray());
   });
+  it('.splice should modify the array in place', () => {
+    const months = ['Jan', 'March', 'April', 'June'];
+    const binMonths = new BinaryArray(months);
+    expect(months.splice(1, 0, 'Feb')).toEqual(binMonths.splice(1, 0, 'Feb'));
+    expect(months).toEqual([...binMonths]);
+    expect(months.length).toEqual(binMonths.size);
+    expect(months.splice(4, 1, 'May')).toEqual(binMonths.splice(4, 1, 'May'));
+    expect(months).toEqual([...binMonths]);
+    expect(months.length).toEqual(binMonths.size);
+
+    const arr = [1, 2, 3, 4, 5, 6];
+    const binArr = new BinaryArray(arr);
+
+    expect(arr.splice(2, 3, 'a', 'b', 'c')).toEqual(
+      binArr.splice(2, 3, 'a', 'b', 'c')
+    );
+    expect(arr).toEqual([...binArr]);
+    expect(arr.length).toEqual(binArr.size);
+  });
   it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);

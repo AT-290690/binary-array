@@ -61,6 +61,35 @@ export class BinaryArray extends BinaryList {
     return new BinaryArray(collection);
   }
 
+  splice(start, deleteCount = 0, ...items) {
+    const deleted = [];
+    if (this._offsetLeft + start > 0) {
+      const len = this.size - start - deleteCount;
+      this.rotateRight(len);
+      if (deleteCount > 0) {
+        for (let i = 0; i < deleteCount; i++) {
+          deleted.push(this.pop());
+        }
+      }
+      this.push(...items);
+      for (let i = 0; i < len; i++) {
+        this.push(this.shift());
+      }
+    } else {
+      this.rotateLeft(start);
+      if (deleteCount > 0) {
+        for (let i = 0; i < deleteCount; i++) {
+          deleted.push(this.shift());
+        }
+      }
+      this.unshift(...items);
+      for (let i = 0; i < start; i++) {
+        this.unshift(this.pop());
+      }
+    }
+    return deleted;
+  }
+
   indexOf(item) {
     for (let i = 0; i < this.size; i++) {
       if (this.get(i) === item) return i;
