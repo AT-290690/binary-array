@@ -25,6 +25,7 @@ export class BinaryList {
       this.left = [];
       this.right = [];
       this.size = 0;
+      return;
     }
     if (key < 0 && this.left.lenght > 0) this.left.length--;
     if (key >= 0 && this.right.lenght > 0) this.right.length--;
