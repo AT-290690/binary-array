@@ -32,6 +32,14 @@ export class BinaryArray extends BinaryList {
   get pivot() {
     return this.right[0];
   }
+  
+  at(index) {
+    if (index < 0) {
+      return this.get(this.size + index);
+    } else {
+      return this.get(index);
+    }
+  }
 
   push(...items) {
     for (let i = 0; i < items.length; i++) this.addToRight(items[i]);
