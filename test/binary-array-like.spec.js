@@ -17,6 +17,7 @@ describe('BinaryArray', () => {
     arr.shift();
 
     expect([...binArr]).toEqual(arr);
+    expect(arr.length).toEqual(binArr.size);
   });
   it('.map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
@@ -37,6 +38,7 @@ describe('BinaryArray', () => {
       .slice(1);
 
     expect([...rasultBinaryArray]).toEqual(resultArray);
+    expect(resultArray.length).toEqual(rasultBinaryArray.size);
 
     const flatBinArr = rasultBinaryArray.concat(
       new BinaryArray([
@@ -66,6 +68,8 @@ describe('BinaryArray', () => {
     expect(flatBinArr.reduce((acc, i) => acc + i, 1)).toEqual(
       flatArr.reduce((acc, i) => acc + i, 1)
     );
+    expect(flatArr.length).toEqual(flatBinArr.size);
+
     const infiniteArrNest = [
       [
         [[1, 2, 3, 4], [1, 2, 3, 4], 3, 4],
@@ -101,6 +105,10 @@ describe('BinaryArray', () => {
     expect(infiniteBinNest.flat(Infinity).toArray()).toEqual(
       infiniteArrNest.flat(Infinity)
     );
+    expect(infiniteArrNest.length).toEqual(infiniteBinNest.size);
+    expect(infiniteArrNest.flat(Infinity).length).toEqual(
+      infiniteBinNest.flat(Infinity).toArray().length
+    );
   });
   it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7];
@@ -109,12 +117,15 @@ describe('BinaryArray', () => {
     expect(binArr1.reverse().reverse().toArray()).toEqual(
       arr1.reverse().reverse()
     );
+    expect(arr1.length).toEqual(binArr1.size);
+
     const arr2 = [4, 1, 1, 2, 3, 8, 7, 8];
     const binArr2 = new BinaryArray(arr2);
     expect(binArr2.reverse().toArray()).toEqual(arr2.reverse());
     expect(binArr2.reverse().reverse().toArray()).toEqual(
       arr2.reverse().reverse()
     );
+    expect(arr2.length).toEqual(binArr2.size);
   });
   it('.slice should create a new collection from the same range', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
@@ -132,5 +143,6 @@ describe('BinaryArray', () => {
     binArr.addTo(20, 10);
     expect(arr).toEqual(binArr.toArray());
     expect(arr[15]).toEqual(binArr.get(15));
+    expect(arr.length).toEqual(binArr.size);
   });
 });
