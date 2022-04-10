@@ -303,16 +303,15 @@ export class BinaryArray {
       this.set(1, temp);
       return this;
     }
-    const temp = this._offsetRight * -1;
-    this._offsetRight = this._offsetLeft * -1 + 1;
-    this._offsetLeft = temp + 1;
-    for (let i = 0; i < this.size; i++) {
-      const right = this.right[i] ?? this.left[i];
-      const left = this.left[i] ?? this.right[i];
-      this.right[i] = left;
-      this.left[i] = right;
-    }
 
+    const temp = this._offsetRight * -1;
+    this._offsetRight = this._offsetLeft * -1;
+    this._offsetLeft = temp;
+    const left = this.left;
+    const right = this.right;
+    right.unshift(left.shift());
+    this.left = right;
+    this.right = left;
     return this;
   }
 
