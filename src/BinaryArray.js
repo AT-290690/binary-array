@@ -58,8 +58,8 @@ export class BinaryArray {
       this._offsetRight = 0;
       return;
     }
-    if (key < 0 && this.left.lenght > 0) this.left.length--;
-    if (key >= 0 && this.right.lenght > 0) this.right.length--;
+    if (key < 0 && this.left.length > 0) this.left.length--;
+    if (key >= 0 && this.right.length > 0) this.right.length--;
     this.size--;
   }
 
