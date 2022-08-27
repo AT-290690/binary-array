@@ -1,9 +1,8 @@
 export class BinaryArray {
   _offsetRight = 0;
   _offsetLeft = 0;
-  left = [];
+  left = [null];
   right = [];
-  size = 0;
 
   constructor(initial = []) {
     this.init(initial);
@@ -25,6 +24,10 @@ export class BinaryArray {
     return new BinaryArray(items);
   }
 
+  get size() {
+    return this.left.length + this.right.length - 1;
+  }
+
   get first() {
     return this.get(0);
   }
@@ -42,25 +45,16 @@ export class BinaryArray {
     return key >= 0 ? this.right[index] : this.left[index];
   }
 
-  _add(key, value) {
-    const index = this.abs(key);
-    if (key >= 0) this.right[index] = value;
-    else this.left[index] = value;
-    this.size++;
-  }
-
   _delete(key) {
     if (this.size === 1) {
-      this.left = [];
+      this.left = [null];
       this.right = [];
-      this.size = 0;
       this._offsetLeft = 0;
       this._offsetRight = 0;
       return;
     }
-    if (key < 0 && this.left.length > 0) this.left.length--;
-    if (key >= 0 && this.right.length > 0) this.right.length--;
-    this.size--;
+    if (key === -1 && this.left.length > 0) this.left.length--;
+    else if (key === 1 && this.right.length > 0) this.right.length--;
   }
 
   abs(key) {
@@ -87,26 +81,33 @@ export class BinaryArray {
 
   clear() {
     this.right = [];
-    this.left = [];
-    this.size = 0;
+    this.left = [null];
     this._offsetLeft = 0;
     this._offsetRight = 0;
   }
 
   _addToLeft(item) {
-    this._add(--this._offsetLeft, item);
+    --this._offsetLeft;
+    this.left.push(item);
   }
 
   _addToRight(item) {
-    this._add(this._offsetRight++, item);
+    this.right.push(item);
+    this._offsetRight++;
   }
 
   _removeFromLeft() {
-    this.size && this._delete(this._offsetLeft++);
+    if (this.size) {
+      this._offsetLeft++;
+      this._delete(-1);
+    }
   }
 
   _removeFromRight() {
-    this.size && this._delete(--this._offsetRight);
+    if (this.size) {
+      --this._offsetRight;
+      this._delete(1);
+    }
   }
 
   vectorIndexOf(index) {
@@ -416,6 +417,7 @@ export class BinaryArray {
   }
 
   rotateLeft(n = 1) {
+    n = n % this.size;
     for (let i = 0; i < n; i++) {
       this._addToRight(this.first);
       this._removeFromLeft();
@@ -423,6 +425,7 @@ export class BinaryArray {
   }
 
   rotateRight(n = 1) {
+    n = n % this.size;
     for (let i = 0; i < n; i++) {
       this._addToLeft(this.last);
       this._removeFromRight();
@@ -431,6 +434,12 @@ export class BinaryArray {
 
   rotate(n = 1, direction = 1) {
     direction === 1 ? this.rotateRight(n) : this.rotateLeft(n);
+  }
+
+  rotateCopy(n = 1, direction = 1) {
+    const copy = new BinaryArray(this);
+    direction === 1 ? copy.rotateRight(n) : copy.rotateLeft(n);
+    return copy;
   }
 
   balance() {
