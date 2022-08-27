@@ -1,6 +1,4 @@
 export class BinaryArray {
-  _offsetRight = 0;
-  _offsetLeft = 0;
   left = [null];
   right = [];
 
@@ -23,7 +21,13 @@ export class BinaryArray {
   static of(...items) {
     return new BinaryArray(items);
   }
+  get offsetLeft() {
+    return (this.left.length - 1) * -1;
+  }
 
+  get offsetRight() {
+    return this.right.length;
+  }
   get size() {
     return this.left.length + this.right.length - 1;
   }
@@ -49,8 +53,6 @@ export class BinaryArray {
     if (this.size === 1) {
       this.left = [null];
       this.right = [];
-      this._offsetLeft = 0;
-      this._offsetRight = 0;
       return;
     }
     if (key === -1 && this.left.length > 0) this.left.length--;
@@ -76,42 +78,36 @@ export class BinaryArray {
   }
 
   get(index) {
-    return this._access(index + this._offsetLeft);
+    return this._access(index + this.offsetLeft);
   }
 
   clear() {
     this.right = [];
     this.left = [null];
-    this._offsetLeft = 0;
-    this._offsetRight = 0;
   }
 
   _addToLeft(item) {
-    --this._offsetLeft;
     this.left.push(item);
   }
 
   _addToRight(item) {
     this.right.push(item);
-    this._offsetRight++;
   }
 
   _removeFromLeft() {
     if (this.size) {
-      this._offsetLeft++;
       this._delete(-1);
     }
   }
 
   _removeFromRight() {
     if (this.size) {
-      --this._offsetRight;
       this._delete(1);
     }
   }
 
   vectorIndexOf(index) {
-    const key = index + this._offsetLeft;
+    const key = index + this.offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
 
@@ -149,7 +145,7 @@ export class BinaryArray {
   }
 
   pop() {
-    if (this._offsetRight === 0) {
+    if (this.offsetRight === 0) {
       this.balance();
     }
     const last = this.last;
@@ -157,7 +153,7 @@ export class BinaryArray {
     return last;
   }
   shift() {
-    if (this._offsetLeft === 0) {
+    if (this.offsetLeft === 0) {
       this.balance();
     }
     const first = this.first;
@@ -173,7 +169,7 @@ export class BinaryArray {
 
   splice(start, deleteCount = 0, ...items) {
     const deleted = [];
-    if (this._offsetLeft + start > 0) {
+    if (this.offsetLeft + start > 0) {
       const len = this.size - start - deleteCount;
       this.rotateRight(len);
       if (deleteCount > 0) {
@@ -305,9 +301,6 @@ export class BinaryArray {
       return this;
     }
 
-    const temp = this._offsetRight * -1;
-    this._offsetRight = this._offsetLeft * -1;
-    this._offsetLeft = temp;
     const left = this.left;
     const right = this.right;
     right.unshift(left.shift());
@@ -379,7 +372,7 @@ export class BinaryArray {
   }
 
   addAt(key, ...value) {
-    if (this._offsetLeft + key > 0) {
+    if (this.offsetLeft + key > 0) {
       const len = this.size - key;
       this.rotateRight(len);
       this.push(...value);
@@ -396,7 +389,7 @@ export class BinaryArray {
   }
 
   removeFrom(key, amount) {
-    if (this._offsetLeft + key > 0) {
+    if (this.offsetLeft + key > 0) {
       const len = this.size - key;
       this.rotateRight(len);
       for (let i = 0; i < amount; i++) {
@@ -443,7 +436,7 @@ export class BinaryArray {
   }
 
   balance() {
-    if (this._offsetRight + this._offsetLeft === 0) return;
+    if (this.offsetRight + this.offsetLeft === 0) return;
     const array = this.toArray();
     this.clear();
     return this.init(array);
