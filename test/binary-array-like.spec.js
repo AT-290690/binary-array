@@ -19,6 +19,7 @@ describe('BinaryArray', () => {
     expect([...binArr]).toEqual(arr);
     expect(arr.length).toEqual(binArr.size);
   });
+
   it('.map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
@@ -110,6 +111,7 @@ describe('BinaryArray', () => {
       infiniteBinNest.flat(Infinity).toArray().length
     );
   });
+
   it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7];
     const binArr1 = new BinaryArray(arr1);
@@ -127,6 +129,7 @@ describe('BinaryArray', () => {
     );
     expect(arr2.length).toEqual(binArr2.size);
   });
+
   it('.slice should create a new collection from the same range', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
@@ -136,6 +139,7 @@ describe('BinaryArray', () => {
     expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).toArray());
     expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray());
   });
+
   it('.splice should modify the array in place', () => {
     const months = ['Jan', 'March', 'April', 'June'];
     const binMonths = new BinaryArray(months);
@@ -155,6 +159,7 @@ describe('BinaryArray', () => {
     expect(arr).toEqual([...binArr]);
     expect(arr.length).toEqual(binArr.size);
   });
+
   it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
@@ -166,17 +171,48 @@ describe('BinaryArray', () => {
   });
 
   it('non-array functions should also work as expected', () => {
-    const arr = [1, 2, 3];
-    expect(new BinaryArray(arr).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2]);
-    expect(new BinaryArray(arr).rotateCopy(2, 1).toArray()).toEqual([2, 3, 1]);
-    expect(new BinaryArray(arr).rotateCopy(3, 1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr).rotateCopy(6, 1).toArray()).toEqual([1, 2, 3]);
+    const arr1 = [1, 2, 3];
+    expect(new BinaryArray(arr1).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3]);
+    expect(new BinaryArray(arr1).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2]);
+    expect(new BinaryArray(arr1).rotateCopy(2, 1).toArray()).toEqual([2, 3, 1]);
+    expect(new BinaryArray(arr1).rotateCopy(3, 1).toArray()).toEqual([1, 2, 3]);
+    expect(new BinaryArray(arr1).rotateCopy(4, 1).toArray()).toEqual([3, 1, 2]);
+    expect(new BinaryArray(arr1).rotateCopy(6, 1).toArray()).toEqual([1, 2, 3]);
+    expect(new BinaryArray(arr1).rotateCopy(0, -1).toArray()).toEqual([
+      1, 2, 3
+    ]);
+    expect(new BinaryArray(arr1).rotateCopy(1, -1).toArray()).toEqual([
+      2, 3, 1
+    ]);
+    expect(new BinaryArray(arr1).rotateCopy(2, -1).toArray()).toEqual([
+      3, 1, 2
+    ]);
+    expect(new BinaryArray(arr1).rotateCopy(3, -1).toArray()).toEqual([
+      1, 2, 3
+    ]);
+    expect(new BinaryArray(arr1).rotateCopy(4, -1).toArray()).toEqual([
+      2, 3, 1
+    ]);
+    expect(new BinaryArray(arr1).rotateCopy(6, -1).toArray()).toEqual([
+      1, 2, 3
+    ]);
 
-    expect(new BinaryArray(arr).rotateCopy(0, -1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr).rotateCopy(1, -1).toArray()).toEqual([2, 3, 1]);
-    expect(new BinaryArray(arr).rotateCopy(2, -1).toArray()).toEqual([3, 1, 2]);
-    expect(new BinaryArray(arr).rotateCopy(3, -1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr).rotateCopy(6, -1).toArray()).toEqual([1, 2, 3]);
+    const arr2 = [1, 2, 3, 4];
+
+    expect(new BinaryArray(arr2).rotateCopy(0, 1).toArray()).toEqual([
+      1, 2, 3, 4
+    ]);
+    expect(new BinaryArray(arr2).rotateCopy(1, 1).toArray()).toEqual([
+      4, 1, 2, 3
+    ]);
+    expect(new BinaryArray(arr2).rotateCopy(2, 1).toArray()).toEqual([
+      3, 4, 1, 2
+    ]);
+    expect(new BinaryArray(arr2).rotateCopy(3, 1).toArray()).toEqual([
+      2, 3, 4, 1
+    ]);
+    expect(new BinaryArray(arr2).rotateCopy(4, 1).toArray()).toEqual([
+      1, 2, 3, 4
+    ]);
   });
 });

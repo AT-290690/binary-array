@@ -412,6 +412,9 @@ export class BinaryArray {
   rotateLeft(n = 1) {
     n = n % this.size;
     for (let i = 0; i < n; i++) {
+      if (this.offsetLeft === 0) {
+        this.balance();
+      }
       this._addToRight(this.first);
       this._removeFromLeft();
     }
@@ -420,6 +423,9 @@ export class BinaryArray {
   rotateRight(n = 1) {
     n = n % this.size;
     for (let i = 0; i < n; i++) {
+      if (this.offsetRight === 0) {
+        this.balance();
+      }
       this._addToLeft(this.last);
       this._removeFromRight();
     }
