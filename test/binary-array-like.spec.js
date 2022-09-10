@@ -169,8 +169,25 @@ describe('BinaryArray', () => {
     expect(arr[15]).toEqual(binArr.get(15));
     expect(arr.length).toEqual(binArr.size);
   });
-
-  it('non-array functions should also work as expected', () => {
+  it('.removeFrom (non-array function) should work as expected', () => {
+    const arr = [1, 2, 3, 4, 5, 6, 7];
+    expect(new BinaryArray(arr).removeFromCopy(1, 3).toArray()).toEqual([
+      1, 5, 6, 7
+    ]);
+    expect(
+      new BinaryArray(arr).removeFromCopy(1, arr.length).toArray()
+    ).toEqual([1]);
+    expect(new BinaryArray(arr).removeFromCopy(3, 1).toArray()).toEqual([
+      1, 2, 3, 5, 6, 7
+    ]);
+    expect(new BinaryArray(arr).removeFromCopy(3, 0).toArray()).toEqual([
+      1, 2, 3, 4, 5, 6, 7
+    ]);
+    expect(
+      new BinaryArray(arr).removeFromCopy(0, arr.length).toArray()
+    ).toEqual([]);
+  });
+  it('rotate (non-array function) should work as expected', () => {
     const arr1 = [1, 2, 3];
     expect(new BinaryArray(arr1).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3]);
     expect(new BinaryArray(arr1).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2]);
