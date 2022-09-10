@@ -31,10 +31,10 @@ describe('BinaryArray', () => {
     arr.shift();
 
     expect([...binArr]).toEqual(arr);
-    expect(arr.length).toEqual(binArr.size);
+    expect(arr.length).toEqual(binArr.length);
   });
 
-  it('operations 1 .map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
+  it('operations 1 .map, .filter, .sort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
 
@@ -53,7 +53,7 @@ describe('BinaryArray', () => {
       .slice(1);
 
     expect([...rasultBinaryArray]).toEqual(resultArray);
-    expect(resultArray.length).toEqual(rasultBinaryArray.size);
+    expect(resultArray.length).toEqual(rasultBinaryArray.length);
 
     const flatBinArr = rasultBinaryArray.concat(
       new BinaryArray([
@@ -83,7 +83,7 @@ describe('BinaryArray', () => {
     expect(flatBinArr.reduce((acc, i) => acc + i, 1)).toEqual(
       flatArr.reduce((acc, i) => acc + i, 1)
     );
-    expect(flatArr.length).toEqual(flatBinArr.size);
+    expect(flatArr.length).toEqual(flatBinArr.length);
 
     const infiniteArrNest = [
       [
@@ -120,13 +120,13 @@ describe('BinaryArray', () => {
     expect(infiniteBinNest.flat(Infinity).toArray()).toEqual(
       infiniteArrNest.flat(Infinity)
     );
-    expect(infiniteArrNest.length).toEqual(infiniteBinNest.size);
+    expect(infiniteArrNest.length).toEqual(infiniteBinNest.length);
     expect(infiniteArrNest.flat(Infinity).length).toEqual(
       infiniteBinNest.flat(Infinity).toArray().length
     );
   });
 
-  it('operations 2 .map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
+  it('operations 2 .map, .filter, .sort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
 
@@ -143,7 +143,7 @@ describe('BinaryArray', () => {
       .slice(2);
 
     expect([...rasultBinaryArray]).toEqual(resultArray);
-    expect(resultArray.length).toEqual(rasultBinaryArray.size);
+    expect(resultArray.length).toEqual(rasultBinaryArray.length);
 
     const flatBinArr = rasultBinaryArray.concat(
       new BinaryArray([
@@ -185,7 +185,7 @@ describe('BinaryArray', () => {
     );
 
     expect(toArrayDeep(flatBinArr)).toEqual(flatArr);
-    expect(flatArr.length).toEqual(flatBinArr.size);
+    expect(flatArr.length).toEqual(flatBinArr.length);
 
     const flatMapArray = [[1, 2, 3, 4], [1, 2, 3, 4].reverse()];
     const flatMapBinaryArray = new BinaryArray([
@@ -193,7 +193,7 @@ describe('BinaryArray', () => {
       new BinaryArray([1, 2, 3, 4]).reverse()
     ]);
 
-    expect(toArrayDeep(flatMapBinaryArray.flatMap(x => x * 10 + 4))).toEqual(
+    expect(toArrayDeep(flatMapBinaryArray.flatten(x => x * 10 + 4))).toEqual(
       flatMapArray.flatMap(item => item.map(x => x * 10 + 4))
     );
   });
@@ -205,7 +205,7 @@ describe('BinaryArray', () => {
     expect(binArr1.reverse().reverse().toArray()).toEqual(
       arr1.reverse().reverse()
     );
-    expect(arr1.length).toEqual(binArr1.size);
+    expect(arr1.length).toEqual(binArr1.length);
 
     const arr2 = [4, 1, 1, 2, 3, 8, 7, 8];
     const binArr2 = new BinaryArray(arr2);
@@ -213,7 +213,7 @@ describe('BinaryArray', () => {
     expect(binArr2.reverse().reverse().toArray()).toEqual(
       arr2.reverse().reverse()
     );
-    expect(arr2.length).toEqual(binArr2.size);
+    expect(arr2.length).toEqual(binArr2.length);
   });
 
   it('.slice should create a new collection from the same range', () => {
@@ -231,10 +231,10 @@ describe('BinaryArray', () => {
     const binMonths = new BinaryArray(months);
     expect(months.splice(1, 0, 'Feb')).toEqual(binMonths.splice(1, 0, 'Feb'));
     expect(months).toEqual([...binMonths]);
-    expect(months.length).toEqual(binMonths.size);
+    expect(months.length).toEqual(binMonths.length);
     expect(months.splice(4, 1, 'May')).toEqual(binMonths.splice(4, 1, 'May'));
     expect(months).toEqual([...binMonths]);
-    expect(months.length).toEqual(binMonths.size);
+    expect(months.length).toEqual(binMonths.length);
 
     const arr = [1, 2, 3, 4, 5, 6];
     const binArr = new BinaryArray(arr);
@@ -243,7 +243,7 @@ describe('BinaryArray', () => {
       binArr.splice(2, 3, 'a', 'b', 'c')
     );
     expect(arr).toEqual([...binArr]);
-    expect(arr.length).toEqual(binArr.size);
+    expect(arr.length).toEqual(binArr.length);
   });
 
   it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
@@ -253,7 +253,7 @@ describe('BinaryArray', () => {
     binArr.addTo(20, 10);
     expect(arr).toEqual(binArr.toArray());
     expect(arr[15]).toEqual(binArr.get(15));
-    expect(arr.length).toEqual(binArr.size);
+    expect(arr.length).toEqual(binArr.length);
   });
   it('.removeFrom (non-array function) should work as expected', () => {
     const arr = [1, 2, 3, 4, 5, 6, 7];
@@ -273,7 +273,19 @@ describe('BinaryArray', () => {
       new BinaryArray(arr).removeFromCopy(0, arr.length).toArray()
     ).toEqual([]);
   });
-  it('rotate (non-array function) should work as expected', () => {
+  it('.join should return expected array', () => {
+    const string = '0101010101.01010101010101000.010101001.01.0101001.010.101';
+    expect(
+      BinaryArray.from(string)
+        .filter(x => x !== '.')
+        .join('.')
+    ).toEqual(
+      Array.from(string)
+        .filter(x => x !== '.')
+        .join('.')
+    );
+  });
+  it('.rotate (non-array function) should work as expected', () => {
     const arr1 = [1, 2, 3];
     expect(new BinaryArray(arr1).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3]);
     expect(new BinaryArray(arr1).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2]);
