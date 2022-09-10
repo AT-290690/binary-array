@@ -1,4 +1,18 @@
 import { BinaryArray } from '../src/BinaryArray.js';
+
+const toArrayDeep = entity => {
+  return BinaryArray.isBinaryArray(entity)
+    ? entity
+        .map(item =>
+          BinaryArray.isBinaryArray(item)
+            ? item.some(BinaryArray.isBinaryArray)
+              ? toArrayDeep(item)
+              : item.toArray()
+            : item
+        )
+        .toArray()
+    : entity;
+};
 describe('BinaryArray', () => {
   it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
     const arr = [1, 2, 3];
@@ -20,7 +34,7 @@ describe('BinaryArray', () => {
     expect(arr.length).toEqual(binArr.size);
   });
 
-  it('.map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
+  it('operations 1 .map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
     const binArr = new BinaryArray(arr);
 
@@ -109,6 +123,78 @@ describe('BinaryArray', () => {
     expect(infiniteArrNest.length).toEqual(infiniteBinNest.size);
     expect(infiniteArrNest.flat(Infinity).length).toEqual(
       infiniteBinNest.flat(Infinity).toArray().length
+    );
+  });
+
+  it('operations 2 .map, .filter, .sort, .reverse, .slice, .reduce, flat should modify the collection the same', () => {
+    const arr = [4, 1, 1, 2, 3, 8, 7];
+    const binArr = new BinaryArray(arr);
+
+    const rasultBinaryArray = binArr
+      .map(i => i ** i)
+      .reverse()
+      .sort((a, b) => a + b)
+      .slice(2);
+
+    const resultArray = arr
+      .map(i => i ** i)
+      .reverse()
+      .sort((a, b) => a + b)
+      .slice(2);
+
+    expect([...rasultBinaryArray]).toEqual(resultArray);
+    expect(resultArray.length).toEqual(rasultBinaryArray.size);
+
+    const flatBinArr = rasultBinaryArray.concat(
+      new BinaryArray([
+        51,
+        12,
+        33,
+        new BinaryArray([
+          new BinaryArray([
+            1,
+            2,
+            3,
+            4,
+            5,
+            rasultBinaryArray,
+            new BinaryArray([1, 2, 3, 4]).reverse().splice(1, 2),
+            1
+          ]),
+          new BinaryArray([2, 3, 4, 5]).slice(2, 4),
+          new BinaryArray([23, new BinaryArray([222, 33, 1, 2])])
+        ])
+      ])
+        .reverse()
+        .flat(2)
+    );
+
+    const flatArr = resultArray.concat(
+      [
+        51,
+        12,
+        33,
+        [
+          [1, 2, 3, 4, 5, resultArray, [1, 2, 3, 4].reverse().splice(1, 2), 1],
+          [2, 3, 4, 5].slice(2, 4),
+          [23, [222, 33, 1, 2]]
+        ]
+      ]
+        .reverse()
+        .flat(2)
+    );
+
+    expect(toArrayDeep(flatBinArr)).toEqual(flatArr);
+    expect(flatArr.length).toEqual(flatBinArr.size);
+
+    const flatMapArray = [[1, 2, 3, 4], [1, 2, 3, 4].reverse()];
+    const flatMapBinaryArray = new BinaryArray([
+      new BinaryArray([1, 2, 3, 4]),
+      new BinaryArray([1, 2, 3, 4]).reverse()
+    ]);
+
+    expect(toArrayDeep(flatMapBinaryArray.flatMap(x => x * 10 + 4))).toEqual(
+      flatMapArray.flatMap(item => item.map(x => x * 10 + 4))
     );
   });
 
