@@ -29,6 +29,34 @@ Benchmark('binaryArray.get middle 200.000 items', b => {
   binaryArray.clear();
 });
 
+Benchmark('regularArray.get random 200.000 items', b => {
+  const regularArray = [];
+  for (let i = 0; i < N; i++) {
+    regularArray.push(i);
+  }
+
+  b.start();
+  for (let i = 0; i < N; i++) {
+    regularArray[Math.floor(Math.random() * N)];
+  }
+  b.end();
+  regularArray.length = 0;
+});
+
+Benchmark('binaryArray.get random 200.000 items', b => {
+  const binaryArray = new BinaryArray();
+  for (let i = 0; i < N; i++) {
+    binaryArray.push(i);
+  }
+
+  b.start();
+  for (let i = 0; i < N; i++) {
+    binaryArray.get(Math.floor(Math.random() * N));
+  }
+  b.end();
+  binaryArray.clear();
+});
+
 Benchmark('regularArray.push 200.000 times', b => {
   const regularArray = [];
 

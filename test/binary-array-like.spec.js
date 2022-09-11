@@ -1,19 +1,6 @@
 import { BinaryArray } from '../src/BinaryArray.js';
 
-const toArrayDeep = entity => {
-  return BinaryArray.isBinaryArray(entity)
-    ? entity
-        .map(item =>
-          BinaryArray.isBinaryArray(item)
-            ? item.some(BinaryArray.isBinaryArray)
-              ? toArrayDeep(item)
-              : item.toArray()
-            : item
-        )
-        .toArray()
-    : entity;
-};
-describe('BinaryArray', () => {
+describe('BinaryArray mimic Array', () => {
   it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
     const arr = [1, 2, 3];
     const binArr = new BinaryArray(arr);
@@ -184,7 +171,7 @@ describe('BinaryArray', () => {
         .flat(2)
     );
 
-    expect(toArrayDeep(flatBinArr)).toEqual(flatArr);
+    expect(flatBinArr.toArray(true)).toEqual(flatArr);
     expect(flatArr.length).toEqual(flatBinArr.length);
 
     const flatMapArray = [[1, 2, 3, 4], [1, 2, 3, 4].reverse()];
@@ -193,7 +180,7 @@ describe('BinaryArray', () => {
       new BinaryArray([1, 2, 3, 4]).reverse()
     ]);
 
-    expect(toArrayDeep(flatMapBinaryArray.flatten(x => x * 10 + 4))).toEqual(
+    expect(flatMapBinaryArray.flatten(x => x * 10 + 4).toArray(true)).toEqual(
       flatMapArray.flatMap(item => item.map(x => x * 10 + 4))
     );
   });
@@ -284,50 +271,5 @@ describe('BinaryArray', () => {
         .filter(x => x !== '.')
         .join('.')
     );
-  });
-  it('.rotate (non-array function) should work as expected', () => {
-    const arr1 = [1, 2, 3];
-    expect(new BinaryArray(arr1).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr1).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2]);
-    expect(new BinaryArray(arr1).rotateCopy(2, 1).toArray()).toEqual([2, 3, 1]);
-    expect(new BinaryArray(arr1).rotateCopy(3, 1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr1).rotateCopy(4, 1).toArray()).toEqual([3, 1, 2]);
-    expect(new BinaryArray(arr1).rotateCopy(6, 1).toArray()).toEqual([1, 2, 3]);
-    expect(new BinaryArray(arr1).rotateCopy(0, -1).toArray()).toEqual([
-      1, 2, 3
-    ]);
-    expect(new BinaryArray(arr1).rotateCopy(1, -1).toArray()).toEqual([
-      2, 3, 1
-    ]);
-    expect(new BinaryArray(arr1).rotateCopy(2, -1).toArray()).toEqual([
-      3, 1, 2
-    ]);
-    expect(new BinaryArray(arr1).rotateCopy(3, -1).toArray()).toEqual([
-      1, 2, 3
-    ]);
-    expect(new BinaryArray(arr1).rotateCopy(4, -1).toArray()).toEqual([
-      2, 3, 1
-    ]);
-    expect(new BinaryArray(arr1).rotateCopy(6, -1).toArray()).toEqual([
-      1, 2, 3
-    ]);
-
-    const arr2 = [1, 2, 3, 4];
-
-    expect(new BinaryArray(arr2).rotateCopy(0, 1).toArray()).toEqual([
-      1, 2, 3, 4
-    ]);
-    expect(new BinaryArray(arr2).rotateCopy(1, 1).toArray()).toEqual([
-      4, 1, 2, 3
-    ]);
-    expect(new BinaryArray(arr2).rotateCopy(2, 1).toArray()).toEqual([
-      3, 4, 1, 2
-    ]);
-    expect(new BinaryArray(arr2).rotateCopy(3, 1).toArray()).toEqual([
-      2, 3, 4, 1
-    ]);
-    expect(new BinaryArray(arr2).rotateCopy(4, 1).toArray()).toEqual([
-      1, 2, 3, 4
-    ]);
   });
 });

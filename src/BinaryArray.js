@@ -8,6 +8,22 @@ const flatten = (collection, levels, flat) =>
     return acc;
   }, []);
 
+const abs = key => (key < 0 ? key * -1 : key);
+
+const toArrayDeep = entity => {
+  return BinaryArray.isBinaryArray(entity)
+    ? entity
+        .map(item =>
+          BinaryArray.isBinaryArray(item)
+            ? item.some(BinaryArray.isBinaryArray)
+              ? toArrayDeep(item)
+              : item.toArray()
+            : item
+        )
+        .toArray()
+    : entity;
+};
+
 export class BinaryArray {
   left = [undefined];
   right = [];
@@ -79,10 +95,6 @@ export class BinaryArray {
     else if (key === 1 && this.right.length > 0) this.right.length--;
   }
 
-  abs(key) {
-    return key < 0 ? key * -1 : key;
-  }
-
   init(initial) {
     if (
       initial &&
@@ -96,6 +108,14 @@ export class BinaryArray {
     for (let i = half - 1; i >= 0; i--) this._addToLeft(initial[i]);
     for (let i = half; i < initial.length; i++) this._addToRight(initial[i]);
   }
+
+  with(...initial) {
+    if (this.length) this.clear();
+    const half = Math.floor(initial.length / 2);
+    for (let i = half - 1; i >= 0; i--) this._addToLeft(initial[i]);
+    for (let i = half; i < initial.length; i++) this._addToRight(initial[i]);
+    return this;
+  }
   /**
    *  index = |key + offset left|
    *  if (key + offset left >= 0) -> right [index]
@@ -103,7 +123,7 @@ export class BinaryArray {
    */
   get(key) {
     const offsetKey = key + this.offsetLeft;
-    const index = this.abs(offsetKey);
+    const index = abs(offsetKey);
     return offsetKey >= 0 ? this.right[index] : this.left[index];
   }
 
@@ -132,13 +152,23 @@ export class BinaryArray {
     }
   }
 
-  vectorIndexOf(index) {
+  tail() {
+    this._removeFromLeft();
+    return this;
+  }
+
+  head() {
+    this.removeFromRight();
+    return this;
+  }
+
+  binaryIndex(index) {
     const key = index + this.offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
 
   set(key, value) {
-    const [index, direction] = this.vectorIndexOf(key);
+    const [index, direction] = this.binaryIndex(key);
     return direction >= 0
       ? (this.right[index] = value)
       : (this.left[index] = value);
@@ -148,8 +178,8 @@ export class BinaryArray {
     for (let i = 0; i < this.length; i++) yield this.get(i);
   };
 
-  toArray() {
-    return [...this];
+  toArray(deep) {
+    return !deep ? [...this] : toArrayDeep(this);
   }
 
   at(index) {
@@ -390,9 +420,9 @@ export class BinaryArray {
         this._addToRight(undefined);
       }
     }
-    const [index, direction] = this.vectorIndexOf(key);
+    const [index, direction] = this.binaryIndex(key);
     direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
-    return this.length;
+    return this;
   }
 
   addAt(key, ...value) {
@@ -410,6 +440,7 @@ export class BinaryArray {
         this.unshift(this.pop());
       }
     }
+    return this;
   }
 
   removeFrom(key, amount) {
@@ -433,6 +464,7 @@ export class BinaryArray {
         this.unshift(this.pop());
       }
     }
+    return this;
   }
 
   removeFromCopy(key, amount) {
@@ -450,6 +482,7 @@ export class BinaryArray {
       this._addToRight(this.first);
       this._removeFromLeft();
     }
+    return this;
   }
 
   rotateRight(n = 1) {
@@ -461,10 +494,11 @@ export class BinaryArray {
       this._addToLeft(this.last);
       this._removeFromRight();
     }
+    return this;
   }
 
   rotate(n = 1, direction = 1) {
-    direction === 1 ? this.rotateRight(n) : this.rotateLeft(n);
+    return direction === 1 ? this.rotateRight(n) : this.rotateLeft(n);
   }
 
   rotateCopy(n = 1, direction = 1) {
@@ -473,10 +507,121 @@ export class BinaryArray {
     return copy;
   }
 
+  compact() {
+    return this.filter(Boolean);
+  }
+
+  union(b) {
+    const a = this;
+    const out = new BinaryArray();
+    const A = new Set(a.toArray());
+    const B = new Set(b.toArray());
+    A.forEach(item => out.push(item));
+    B.forEach(item => out.push(item));
+    out.balance();
+    return out;
+  }
+
+  symetricdifference(b) {
+    const a = this;
+    const out = new BinaryArray();
+    const A = new Set(a.toArray());
+    const B = new Set(b.toArray());
+    B.forEach(item => {
+      if (!A.has(item)) out.push(item);
+    });
+    A.forEach(item => {
+      if (!B.has(item)) out.push(item);
+    });
+    out.balance();
+    return out;
+  }
+
+  intersection(b) {
+    const a = this;
+    const out = new BinaryArray();
+    const A = new Set(a.toArray());
+    const B = new Set(b.toArray());
+    B.forEach(item => {
+      if (A.has(item)) out.push(item);
+    });
+    out.balance();
+    return out;
+  }
+
+  difference(b) {
+    const a = this;
+    const out = new BinaryArray();
+    const A = new Set(a.toArray());
+    const B = new Set(b.toArray());
+    A.forEach(item => {
+      if (!B.has(item)) out.push(item);
+    });
+    out.balance();
+    return out;
+  }
+
+  partition(groups = 1) {
+    const res = this.reduce((acc, _, index, arr) => {
+      if (index % groups === 0) {
+        const part = new BinaryArray();
+        for (let i = 0; i < groups; i++) {
+          const current = arr.get(index + i);
+          if (current !== undefined) part.push(current);
+        }
+        part.balance();
+        acc.push(part);
+      }
+      return acc;
+    }, new BinaryArray());
+    res.balance();
+    return res;
+  }
+
+  unique() {
+    const set = new Set();
+    return BinaryArray.from(
+      this.reduce((acc, item) => {
+        if (!set.has(item)) {
+          set.add(item);
+          acc.push(item);
+        }
+        return acc;
+      }, [])
+    );
+  }
+
+  duplicates() {
+    const set = new Set();
+    const extra = [];
+    const out = this.reduce((acc, item) => {
+      if (set.has(item)) {
+        acc.push(item);
+      } else {
+        set.add(item);
+      }
+      return acc;
+    }, []);
+
+    out.forEach(item => {
+      if (set.has(item)) {
+        set.delete(item);
+        extra.push(item);
+      }
+    });
+    return BinaryArray.from(out.concat(extra));
+  }
+
+  scan(callback) {
+    for (let i = 0; i < this.length; i++) callback(this.get(i), i, this);
+    return this;
+  }
+
   balance() {
-    if (this.offsetRight + this.offsetLeft === 0) return;
+    if (this.offsetRight + this.offsetLeft === 0) return this;
     const array = this.toArray();
     this.clear();
-    return this.init(array);
+    this.init(array);
+    return this;
   }
 }
