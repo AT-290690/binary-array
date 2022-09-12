@@ -3,7 +3,7 @@ import Benchmark from 'nanobench';
 
 const N = 200000;
 
-Benchmark('regularArray.get middle 200.000 items', b => {
+Benchmark('regularArray.get middle N = 200 000', b => {
   const regularArray = [];
   const mid = N / 2;
   for (let i = 0; i < N; i++) {
@@ -16,7 +16,7 @@ Benchmark('regularArray.get middle 200.000 items', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.get middle 200.000 items', b => {
+Benchmark('binaryArray.get middle N = 200 000', b => {
   const binaryArray = new BinaryArray();
   const mid = N / 2;
   for (let i = 0; i < N; i++) {
@@ -29,7 +29,7 @@ Benchmark('binaryArray.get middle 200.000 items', b => {
   binaryArray.clear();
 });
 
-Benchmark('regularArray.get random 200.000 items', b => {
+Benchmark('regularArray.get random N = 200 000', b => {
   const regularArray = [];
   for (let i = 0; i < N; i++) {
     regularArray.push(i);
@@ -43,7 +43,7 @@ Benchmark('regularArray.get random 200.000 items', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.get random 200.000 items', b => {
+Benchmark('binaryArray.get random N = 200 000', b => {
   const binaryArray = new BinaryArray();
   for (let i = 0; i < N; i++) {
     binaryArray.push(i);
@@ -57,7 +57,7 @@ Benchmark('binaryArray.get random 200.000 items', b => {
   binaryArray.clear();
 });
 
-Benchmark('regularArray.push 200.000 times', b => {
+Benchmark('regularArray.push N = 200 000', b => {
   const regularArray = [];
 
   b.start();
@@ -68,7 +68,7 @@ Benchmark('regularArray.push 200.000 times', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.push 200.000 times', b => {
+Benchmark('binaryArray.push N = 200 000', b => {
   const binaryArray = new BinaryArray();
 
   b.start();
@@ -79,7 +79,7 @@ Benchmark('binaryArray.push 200.000 times', b => {
   binaryArray.clear();
 });
 
-Benchmark('regularArray.pop 200.000 times', b => {
+Benchmark('regularArray.pop N = 200 000', b => {
   const regularArray = [];
 
   b.start();
@@ -90,7 +90,7 @@ Benchmark('regularArray.pop 200.000 times', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.pop 200.000 times', b => {
+Benchmark('binaryArray.pop N = 200 000', b => {
   const binaryArray = new BinaryArray();
 
   b.start();
@@ -101,7 +101,7 @@ Benchmark('binaryArray.pop 200.000 times', b => {
   binaryArray.clear();
 });
 
-Benchmark('regularArray.shift 200.000 times', b => {
+Benchmark('regularArray.shift N = 200 000', b => {
   const regularArray = [];
   for (let i = 0; i < N; i++) {
     regularArray.push(i);
@@ -115,7 +115,7 @@ Benchmark('regularArray.shift 200.000 times', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.shift 200.000 times', b => {
+Benchmark('binaryArray.shift N = 200 000', b => {
   const binaryArray = new BinaryArray();
   for (let i = 0; i < N; i++) {
     binaryArray.push(i);
@@ -129,7 +129,7 @@ Benchmark('binaryArray.shift 200.000 times', b => {
   binaryArray.clear();
 });
 
-Benchmark('regularArray.unshift 200.000 times', b => {
+Benchmark('regularArray.unshift N = 200 000', b => {
   const regularArray = [];
 
   b.start();
@@ -140,7 +140,7 @@ Benchmark('regularArray.unshift 200.000 times', b => {
   regularArray.length = 0;
 });
 
-Benchmark('binaryArray.unshift 200.000 times', b => {
+Benchmark('binaryArray.unshift N = 200 000', b => {
   const binaryArray = new BinaryArray();
 
   b.start();
