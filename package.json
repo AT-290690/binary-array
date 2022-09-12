@@ -7,7 +7,9 @@
   },
   "scripts": {
     "test": "jest test test",
-    "bench": "node benchmark/benchmark.js"
+    "bench": "node benchmark/benchmark.js",
+    "stress": "node benchmark/stresstest.js"
+
   },
   "jest": {
     "preset": "./jest.json"

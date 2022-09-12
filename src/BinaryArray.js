@@ -1,3 +1,7 @@
+/**
+ * Helper functions
+ */
+
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (BinaryArray.isBinaryArray(current)) {
@@ -7,8 +11,6 @@ const flatten = (collection, levels, flat) =>
     }
     return acc;
   }, []);
-
-const abs = key => (key < 0 ? key * -1 : key);
 
 const toArrayDeep = entity => {
   return BinaryArray.isBinaryArray(entity)
@@ -24,36 +26,14 @@ const toArrayDeep = entity => {
     : entity;
 };
 
-export class BinaryArray {
+export default class BinaryArray {
+  /**
+   * Main methods
+   */
   left = [undefined];
   right = [];
 
-  constructor(initial = []) {
-    this.init(initial);
-  }
-
-  static isBinaryArray(entity) {
-    return entity instanceof BinaryArray;
-  }
-
-  static from(iterable) {
-    if (iterable.length !== undefined) {
-      const initial =
-        iterable[0] !== undefined ? iterable : Array.from(iterable);
-      return new BinaryArray([...initial]);
-    }
-  }
-
-  static from(iterable) {
-    if (iterable.length !== undefined) {
-      const initial =
-        iterable[0] !== undefined ? iterable : Array.from(iterable);
-      return new BinaryArray([...initial]);
-    }
-  }
-  static of(...items) {
-    return new BinaryArray(items);
-  }
+  constructor() {}
 
   get offsetLeft() {
     return (this.left.length - 1) * -1;
@@ -66,10 +46,6 @@ export class BinaryArray {
    *  size = offset left - offset right - 1
    */
   get size() {
-    return this.left.length + this.right.length - 1;
-  }
-  // alias for size
-  get length() {
     return this.left.length + this.right.length - 1;
   }
 
@@ -85,101 +61,101 @@ export class BinaryArray {
     return this.right[0];
   }
 
-  _delete(key) {
-    if (this.length === 1) {
-      this.left = [undefined];
-      this.right = [];
-      return;
-    }
-    if (key === -1 && this.left.length > 0) this.left.length--;
-    else if (key === 1 && this.right.length > 0) this.right.length--;
-  }
-
-  init(initial) {
-    if (
-      initial &&
-      !Array.isArray(initial) &&
-      typeof initial[Symbol.iterator] === 'function'
-    ) {
-      initial = [...initial];
-    }
-    if (this.length) this.clear();
-    const half = Math.floor(initial.length / 2);
-    for (let i = half - 1; i >= 0; i--) this._addToLeft(initial[i]);
-    for (let i = half; i < initial.length; i++) this._addToRight(initial[i]);
-  }
-
   with(...initial) {
-    if (this.length) this.clear();
     const half = Math.floor(initial.length / 2);
-    for (let i = half - 1; i >= 0; i--) this._addToLeft(initial[i]);
-    for (let i = half; i < initial.length; i++) this._addToRight(initial[i]);
+    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i]);
+    for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
     return this;
   }
   /**
-   *  index = |key + offset left|
-   *  if (key + offset left >= 0) -> right [index]
+   *  index = |offset + offset left|
+   *  if (offset + offset left >= 0) -> right [index]
    *  else ->  left [index]
    */
-  get(key) {
-    const offsetKey = key + this.offsetLeft;
-    const index = abs(offsetKey);
-    return offsetKey >= 0 ? this.right[index] : this.left[index];
+  get(offset) {
+    const offsetIndex = offset + this.offsetLeft;
+    const index = Math.abs(offsetIndex);
+    return offsetIndex >= 0 ? this.right[index] : this.left[index];
   }
 
-  clear() {
-    this.right = [];
-    this.left = [undefined];
-  }
-
-  _addToLeft(item) {
-    this.left.push(item);
-  }
-
-  _addToRight(item) {
-    this.right.push(item);
-  }
-
-  _removeFromLeft() {
-    if (this.length) {
-      this._delete(-1);
-    }
-  }
-
-  _removeFromRight() {
-    if (this.length) {
-      this._delete(1);
-    }
-  }
-
-  tail() {
-    this._removeFromLeft();
-    return this;
-  }
-
-  head() {
-    this.removeFromRight();
-    return this;
-  }
-
-  binaryIndex(index) {
+  index(index) {
     const key = index + this.offsetLeft;
     return key < 0 ? [key * -1, -1] : [key, 1];
   }
 
   set(key, value) {
-    const [index, direction] = this.binaryIndex(key);
+    const [index, direction] = this.index(key);
     return direction >= 0
       ? (this.right[index] = value)
       : (this.left[index] = value);
+  }
+
+  clear() {
+    this.left = [undefined];
+    this.right = [];
+  }
+
+  addToLeft(item) {
+    this.left.push(item);
+  }
+
+  addToRight(item) {
+    this.right.push(item);
+  }
+
+  removeFromLeft() {
+    if (this.size) {
+      if (this.size === 1) {
+        this.clear();
+      } else if (this.left.length > 0) this.left.length--;
+    }
+  }
+
+  removeFromRight() {
+    if (this.size) {
+      if (this.size === 1) {
+        this.clear();
+      } else if (this.right.length > 0) this.right.length--;
+    }
   }
 
   [Symbol.iterator] = function* () {
     for (let i = 0; i < this.length; i++) yield this.get(i);
   };
 
-  toArray(deep) {
-    return !deep ? [...this] : toArrayDeep(this);
+  balance() {
+    if (this.offsetRight + this.offsetLeft === 0) return this;
+    const initial = [...this];
+    this.clear();
+    const half = Math.floor(initial.length / 2);
+    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i]);
+    for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
+    return this;
+  }
+
+  /**
+   * Array methods
+   */
+
+  // alias for size
+  get length() {
+    return this.left.length + this.right.length - 1;
+  }
+
+  static of(...items) {
+    return BinaryArray.from(items);
+  }
+
+  static isBinaryArray(entity) {
+    return entity instanceof BinaryArray;
+  }
+
+  static from(iterable) {
+    if (iterable.length !== undefined) {
+      const initial =
+        iterable[0] !== undefined ? iterable : Array.from(iterable);
+      return new BinaryArray().with(...initial);
+    }
   }
 
   at(index) {
@@ -191,12 +167,12 @@ export class BinaryArray {
   }
 
   push(...items) {
-    for (let i = 0; i < items.length; i++) this._addToRight(items[i]);
+    for (let i = 0; i < items.length; i++) this.addToRight(items[i]);
     return this.length;
   }
 
   unshift(...items) {
-    for (let i = items.length - 1; i >= 0; i--) this._addToLeft(items[i]);
+    for (let i = items.length - 1; i >= 0; i--) this.addToLeft(items[i]);
     return this.length;
   }
 
@@ -205,22 +181,23 @@ export class BinaryArray {
       this.balance();
     }
     const last = this.last;
-    this._removeFromRight();
+    this.removeFromRight();
     return last;
   }
+
   shift() {
     if (this.offsetLeft === 0) {
       this.balance();
     }
     const first = this.first;
-    this._removeFromLeft();
+    this.removeFromLeft();
     return first;
   }
 
   slice(start, end = this.length) {
     const collection = [];
     for (let i = start; i < end; i++) collection.push(this.get(i));
-    return new BinaryArray(collection);
+    return BinaryArray.from(collection);
   }
 
   splice(start, deleteCount = 0, ...items) {
@@ -306,9 +283,9 @@ export class BinaryArray {
     const result = new BinaryArray();
     const half = Math.floor(this.length / 2);
     for (let i = half - 1; i >= 0; i--)
-      result._addToLeft(callback(this.get(i), i, this));
+      result.addToLeft(callback(this.get(i), i, this));
     for (let i = half; i < this.length; i++)
-      result._addToRight(callback(this.get(i), i, this));
+      result.addToRight(callback(this.get(i), i, this));
     return result;
   }
 
@@ -343,7 +320,7 @@ export class BinaryArray {
       const predicat = callback(current, i, this);
       if (predicat) out.push(current);
     }
-    return new BinaryArray(out);
+    return BinaryArray.from(out);
   }
 
   reverse() {
@@ -366,13 +343,13 @@ export class BinaryArray {
   }
 
   reverseCopy() {
-    const copy = new BinaryArray(this);
+    const copy = BinaryArray.from(this);
     copy.reverse();
     return copy;
   }
 
   sort(callback) {
-    return new BinaryArray(this.toArray().sort(callback));
+    return BinaryArray.from(this.toArray().sort(callback));
   }
 
   join(separator = ',') {
@@ -383,7 +360,7 @@ export class BinaryArray {
   }
 
   concat(second) {
-    return new BinaryArray([...this, ...second]);
+    return BinaryArray.from([...this, ...second]);
   }
 
   flat(levels = 1) {
@@ -396,11 +373,11 @@ export class BinaryArray {
               ? collection
               : flatten(collection, levels, flat);
           };
-    return new BinaryArray(flat(this, levels));
+    return BinaryArray.from(flat(this, levels));
   }
 
   flatten(callback) {
-    return new BinaryArray(
+    return BinaryArray.from(
       this.reduce((acc, current, index, self) => {
         if (BinaryArray.isBinaryArray(current)) {
           current.forEach(item => {
@@ -417,10 +394,10 @@ export class BinaryArray {
   addTo(key, value) {
     if (key >= this.length) {
       for (let i = this.length; i <= key; i++) {
-        this._addToRight(undefined);
+        this.addToRight(undefined);
       }
     }
-    const [index, direction] = this.binaryIndex(key);
+    const [index, direction] = this.index(key);
     direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
     return this;
   }
@@ -468,9 +445,43 @@ export class BinaryArray {
   }
 
   removeFromCopy(key, amount) {
-    const copy = new BinaryArray(this);
+    const copy = BinaryArray.from(this);
     copy.removeFrom(key, amount);
     return copy;
+  }
+
+  /**
+   * Extra methods
+   */
+
+  toArray(deep) {
+    return !deep ? [...this] : toArrayDeep(this);
+  }
+
+  append(item) {
+    this.addToRight(item);
+    return this;
+  }
+
+  prepend(item) {
+    this.addToLeft(item);
+    return this;
+  }
+
+  head() {
+    if (this.offsetRight === 0) {
+      this.balance();
+    }
+    this.removeFromRight();
+    return this;
+  }
+
+  tail() {
+    if (this.offsetLeft === 0) {
+      this.balance();
+    }
+    this.removeFromLeft();
+    return this;
   }
 
   rotateLeft(n = 1) {
@@ -479,8 +490,8 @@ export class BinaryArray {
       if (this.offsetLeft === 0) {
         this.balance();
       }
-      this._addToRight(this.first);
-      this._removeFromLeft();
+      this.addToRight(this.first);
+      this.removeFromLeft();
     }
     return this;
   }
@@ -491,8 +502,8 @@ export class BinaryArray {
       if (this.offsetRight === 0) {
         this.balance();
       }
-      this._addToLeft(this.last);
-      this._removeFromRight();
+      this.addToLeft(this.last);
+      this.removeFromRight();
     }
     return this;
   }
@@ -502,7 +513,7 @@ export class BinaryArray {
   }
 
   rotateCopy(n = 1, direction = 1) {
-    const copy = new BinaryArray(this);
+    const copy = BinaryArray.from(this);
     direction === 1 ? copy.rotateRight(n) : copy.rotateLeft(n);
     return copy;
   }
@@ -614,14 +625,6 @@ export class BinaryArray {
 
   scan(callback) {
     for (let i = 0; i < this.length; i++) callback(this.get(i), i, this);
-    return this;
-  }
-
-  balance() {
-    if (this.offsetRight + this.offsetLeft === 0) return this;
-    const array = this.toArray();
-    this.clear();
-    this.init(array);
     return this;
   }
 }

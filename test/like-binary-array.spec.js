@@ -1,9 +1,9 @@
-import { BinaryArray } from '../src/BinaryArray.js';
+import BinaryArray from '../src/BinaryArray.js';
 
 describe('BinaryArray mimic Array', () => {
   it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
-    const arr = [1, 2, 3];
-    const binArr = new BinaryArray(arr);
+    const arr = Array.from([1, 2, 3]);
+    const binArr = BinaryArray.from(arr);
 
     expect([...binArr]).toEqual(arr);
 
@@ -23,7 +23,7 @@ describe('BinaryArray mimic Array', () => {
 
   it('operations 1 .map, .filter, .sort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
-    const binArr = new BinaryArray(arr);
+    const binArr = BinaryArray.from(arr);
 
     const rasultBinaryArray = binArr
       .map(i => i * i)
@@ -43,14 +43,14 @@ describe('BinaryArray mimic Array', () => {
     expect(resultArray.length).toEqual(rasultBinaryArray.length);
 
     const flatBinArr = rasultBinaryArray.concat(
-      new BinaryArray([
+      BinaryArray.from([
         51,
         12,
         33,
-        new BinaryArray([
-          new BinaryArray([1, 2, 3, 4, 5, new BinaryArray([1, 2, 3, 4]), 1]),
-          new BinaryArray([2, 3, 4, 5]),
-          new BinaryArray([23, new BinaryArray([222, 33, 1, 2])])
+        BinaryArray.from([
+          BinaryArray.from([1, 2, 3, 4, 5, BinaryArray.from([1, 2, 3, 4]), 1]),
+          BinaryArray.from([2, 3, 4, 5]),
+          BinaryArray.from([23, BinaryArray.from([222, 33, 1, 2])])
         ])
       ]).flat(3)
     );
@@ -83,24 +83,24 @@ describe('BinaryArray mimic Array', () => {
       ]
     ];
 
-    const infiniteBinNest = new BinaryArray([
-      new BinaryArray([
-        new BinaryArray([
-          new BinaryArray([1, 2, 3, 4]),
-          new BinaryArray([1, 2, 3, 4]),
+    const infiniteBinNest = BinaryArray.from([
+      BinaryArray.from([
+        BinaryArray.from([
+          BinaryArray.from([1, 2, 3, 4]),
+          BinaryArray.from([1, 2, 3, 4]),
           3,
           4
         ]),
-        new BinaryArray([
+        BinaryArray.from([
           1,
-          new BinaryArray([1, 2, new BinaryArray([1, 2, 3, 4]), 4]),
+          BinaryArray.from([1, 2, BinaryArray.from([1, 2, 3, 4]), 4]),
           3,
           4
         ])
       ]),
-      new BinaryArray([
-        new BinaryArray([1, 2, 3, 4]),
-        new BinaryArray([1, 2, 3, 4])
+      BinaryArray.from([
+        BinaryArray.from([1, 2, 3, 4]),
+        BinaryArray.from([1, 2, 3, 4])
       ])
     ]);
 
@@ -115,7 +115,7 @@ describe('BinaryArray mimic Array', () => {
 
   it('operations 2 .map, .filter, .sort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
-    const binArr = new BinaryArray(arr);
+    const binArr = BinaryArray.from(arr);
 
     const rasultBinaryArray = binArr
       .map(i => i ** i)
@@ -133,23 +133,23 @@ describe('BinaryArray mimic Array', () => {
     expect(resultArray.length).toEqual(rasultBinaryArray.length);
 
     const flatBinArr = rasultBinaryArray.concat(
-      new BinaryArray([
+      BinaryArray.from([
         51,
         12,
         33,
-        new BinaryArray([
-          new BinaryArray([
+        BinaryArray.from([
+          BinaryArray.from([
             1,
             2,
             3,
             4,
             5,
             rasultBinaryArray,
-            new BinaryArray([1, 2, 3, 4]).reverse().splice(1, 2),
+            BinaryArray.from([1, 2, 3, 4]).reverse().splice(1, 2),
             1
           ]),
-          new BinaryArray([2, 3, 4, 5]).slice(2, 4),
-          new BinaryArray([23, new BinaryArray([222, 33, 1, 2])])
+          BinaryArray.from([2, 3, 4, 5]).slice(2, 4),
+          BinaryArray.from([23, BinaryArray.from([222, 33, 1, 2])])
         ])
       ])
         .reverse()
@@ -175,9 +175,9 @@ describe('BinaryArray mimic Array', () => {
     expect(flatArr.length).toEqual(flatBinArr.length);
 
     const flatMapArray = [[1, 2, 3, 4], [1, 2, 3, 4].reverse()];
-    const flatMapBinaryArray = new BinaryArray([
-      new BinaryArray([1, 2, 3, 4]),
-      new BinaryArray([1, 2, 3, 4]).reverse()
+    const flatMapBinaryArray = BinaryArray.from([
+      BinaryArray.from([1, 2, 3, 4]),
+      BinaryArray.from([1, 2, 3, 4]).reverse()
     ]);
 
     expect(flatMapBinaryArray.flatten(x => x * 10 + 4).toArray(true)).toEqual(
@@ -187,7 +187,7 @@ describe('BinaryArray mimic Array', () => {
 
   it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7];
-    const binArr1 = new BinaryArray(arr1);
+    const binArr1 = BinaryArray.from(arr1);
     expect(binArr1.reverse().toArray()).toEqual(arr1.reverse());
     expect(binArr1.reverse().reverse().toArray()).toEqual(
       arr1.reverse().reverse()
@@ -195,7 +195,7 @@ describe('BinaryArray mimic Array', () => {
     expect(arr1.length).toEqual(binArr1.length);
 
     const arr2 = [4, 1, 1, 2, 3, 8, 7, 8];
-    const binArr2 = new BinaryArray(arr2);
+    const binArr2 = BinaryArray.from(arr2);
     expect(binArr2.reverse().toArray()).toEqual(arr2.reverse());
     expect(binArr2.reverse().reverse().toArray()).toEqual(
       arr2.reverse().reverse()
@@ -205,7 +205,7 @@ describe('BinaryArray mimic Array', () => {
 
   it('.slice should create a new collection from the same range', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
-    const binArr = new BinaryArray(arr);
+    const binArr = BinaryArray.from(arr);
     expect(arr.slice(1)).toEqual(binArr.slice(1).toArray());
     expect(arr.slice(1, 2)).toEqual(binArr.slice(1, 2).toArray());
     expect(arr.slice(3)).toEqual(binArr.slice(3).toArray());
@@ -215,7 +215,7 @@ describe('BinaryArray mimic Array', () => {
 
   it('.splice should modify the array in place', () => {
     const months = ['Jan', 'March', 'April', 'June'];
-    const binMonths = new BinaryArray(months);
+    const binMonths = BinaryArray.from(months);
     expect(months.splice(1, 0, 'Feb')).toEqual(binMonths.splice(1, 0, 'Feb'));
     expect(months).toEqual([...binMonths]);
     expect(months.length).toEqual(binMonths.length);
@@ -224,7 +224,7 @@ describe('BinaryArray mimic Array', () => {
     expect(months.length).toEqual(binMonths.length);
 
     const arr = [1, 2, 3, 4, 5, 6];
-    const binArr = new BinaryArray(arr);
+    const binArr = BinaryArray.from(arr);
 
     expect(arr.splice(2, 3, 'a', 'b', 'c')).toEqual(
       binArr.splice(2, 3, 'a', 'b', 'c')
@@ -235,31 +235,33 @@ describe('BinaryArray mimic Array', () => {
 
   it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7];
-    const binArr = new BinaryArray(arr);
+    const binArr = BinaryArray.from(arr);
     arr[20] = 10;
     binArr.addTo(20, 10);
     expect(arr).toEqual(binArr.toArray());
     expect(arr[15]).toEqual(binArr.get(15));
     expect(arr.length).toEqual(binArr.length);
   });
+
   it('.removeFrom (non-array function) should work as expected', () => {
     const arr = [1, 2, 3, 4, 5, 6, 7];
-    expect(new BinaryArray(arr).removeFromCopy(1, 3).toArray()).toEqual([
+    expect(BinaryArray.from(arr).removeFromCopy(1, 3).toArray()).toEqual([
       1, 5, 6, 7
     ]);
     expect(
-      new BinaryArray(arr).removeFromCopy(1, arr.length).toArray()
+      BinaryArray.from(arr).removeFromCopy(1, arr.length).toArray()
     ).toEqual([1]);
-    expect(new BinaryArray(arr).removeFromCopy(3, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr).removeFromCopy(3, 1).toArray()).toEqual([
       1, 2, 3, 5, 6, 7
     ]);
-    expect(new BinaryArray(arr).removeFromCopy(3, 0).toArray()).toEqual([
+    expect(BinaryArray.from(arr).removeFromCopy(3, 0).toArray()).toEqual([
       1, 2, 3, 4, 5, 6, 7
     ]);
     expect(
-      new BinaryArray(arr).removeFromCopy(0, arr.length).toArray()
+      BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
     ).toEqual([]);
   });
+
   it('.join should return expected array', () => {
     const string = '0101010101.01010101010101000.010101001.01.0101001.010.101';
     expect(
@@ -271,5 +273,30 @@ describe('BinaryArray mimic Array', () => {
         .filter(x => x !== '.')
         .join('.')
     );
+  });
+
+  it('.includes should return expected array', () => {
+    const arr = ['apple', 'orange', 'peach', 'lemon'];
+    const binArr = BinaryArray.from(arr);
+    expect(binArr.includes('orange')).toBe(arr.includes('orange'));
+    expect(binArr.includes('lemon')).toBe(arr.includes('lemon'));
+    expect(binArr.includes('pomegranate')).toBe(arr.includes('pomegranate'));
+  });
+
+  it('.find should return expected array', () => {
+    const arr = ['apple', 'orange', 'peach', 'lemon'];
+    const binArr = BinaryArray.from(arr);
+    expect(binArr.find(item => item === 'orange')).toBe(
+      arr.find(item => item === 'orange')
+    );
+    expect(binArr.find(item => item === 'lemon')).toBe(
+      arr.find(item => item === 'lemon')
+    );
+    expect(binArr.find(item => item === 'pomegranate')).toBe(
+      arr.find(item => item === 'pomegranate')
+    );
+    expect(binArr.indexOf('orange')).toBe(arr.indexOf('orange'));
+    expect(binArr.indexOf('lemon')).toBe(arr.indexOf('lemon'));
+    expect(binArr.indexOf('pomegranate')).toBe(arr.indexOf('pomegranate'));
   });
 });
