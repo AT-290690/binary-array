@@ -15,7 +15,7 @@ npm run test
 run benchmarks:
 npm run bench
 
-Comparison for N = 100000 (runned on MacBook Pro M1 chip laptop)
+Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
 
 yarn run v1.22.15
 $ node benchmark/benchmark.js
