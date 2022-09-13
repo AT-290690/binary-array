@@ -194,8 +194,8 @@ export default class BinaryArray {
       if (deleteCount > 0)
         for (let i = 0; i < deleteCount; i++) deleted.push(this.pop());
 
-      this.push(...items);
-      for (let i = 0; i < len; i++) this.push(this.shift());
+      this.append(...items);
+      for (let i = 0; i < len; i++) this.append(this.shift());
     } else {
       this.rotateLeft(start);
       if (deleteCount > 0)
@@ -364,7 +364,7 @@ export default class BinaryArray {
     if (this.offsetLeft + key > 0) {
       const len = this.length - key;
       this.rotateRight(len);
-      this.push(...value);
+      this.append(...value);
       for (let i = 0; i < len; i++) this.append(this.shift());
     } else {
       this.rotateLeft(key);
@@ -381,11 +381,11 @@ export default class BinaryArray {
     if (this.offsetLeft + key > 0) {
       this.rotateRight(len);
       for (let i = 0; i < amount; i++) this.pop();
-      for (let i = 0; i < len; i++) this.push(this.shift());
+      for (let i = 0; i < len; i++) this.append(this.shift());
     } else {
       this.rotateLeft(key);
       for (let i = 0; i < amount; i++) this.shift();
-      for (let i = 0; i < key; i++) this.unshift(this.pop());
+      for (let i = 0; i < key; i++) this.prepend(this.pop());
     }
     return this;
   }
@@ -465,8 +465,8 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    A.forEach(item => out.push(item));
-    B.forEach(item => out.push(item));
+    A.forEach(item => out.append(item));
+    B.forEach(item => out.append(item));
     out.balance();
     return out;
   }
@@ -476,8 +476,8 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    B.forEach(item => !A.has(item) && out.push(item));
-    A.forEach(item => !B.has(item) && out.push(item));
+    B.forEach(item => !A.has(item) && out.append(item));
+    A.forEach(item => !B.has(item) && out.append(item));
     out.balance();
     return out;
   }
@@ -487,7 +487,7 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    B.forEach(item => A.has(item) && out.push(item));
+    B.forEach(item => A.has(item) && out.append(item));
     out.balance();
     return out;
   }
@@ -497,7 +497,7 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    A.forEach(item => !B.has(item) && out.push(item));
+    A.forEach(item => !B.has(item) && out.append(item));
     out.balance();
     return out;
   }
@@ -508,10 +508,10 @@ export default class BinaryArray {
         const part = new BinaryArray();
         for (let i = 0; i < groups; i++) {
           const current = arr.get(index + i);
-          if (current !== undefined) part.push(current);
+          if (current !== undefined) part.append(current);
         }
         part.balance();
-        acc.push(part);
+        acc.append(part);
       }
       return acc;
     }, new BinaryArray());
