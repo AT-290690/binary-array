@@ -4,11 +4,8 @@
 
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
-    if (BinaryArray.isBinaryArray(current)) {
-      acc.push(...flat(current, levels));
-    } else {
-      acc.push(current);
-    }
+    if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels));
+    else acc.push(current);
     return acc;
   }, []);
 
@@ -32,8 +29,6 @@ export default class BinaryArray {
    */
   left = [undefined];
   right = [];
-
-  constructor() {}
 
   get offsetLeft() {
     return (this.left.length - 1) * -1;
@@ -62,7 +57,7 @@ export default class BinaryArray {
   }
 
   with(...initial) {
-    const half = Math.floor(initial.length / 2);
+    const half = (initial.length / 2) | 0.5;
     for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i]);
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
     return this;
@@ -74,7 +69,7 @@ export default class BinaryArray {
    */
   get(offset) {
     const offsetIndex = offset + this.offsetLeft;
-    const index = Math.abs(offsetIndex);
+    const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex;
     return offsetIndex >= 0 ? this.right[index] : this.left[index];
   }
 
@@ -105,17 +100,15 @@ export default class BinaryArray {
 
   removeFromLeft() {
     if (this.size) {
-      if (this.size === 1) {
-        this.clear();
-      } else if (this.left.length > 0) this.left.length--;
+      if (this.size === 1) this.clear();
+      else if (this.left.length > 0) this.left.length--;
     }
   }
 
   removeFromRight() {
     if (this.size) {
-      if (this.size === 1) {
-        this.clear();
-      } else if (this.right.length > 0) this.right.length--;
+      if (this.size === 1) this.clear();
+      else if (this.right.length > 0) this.right.length--;
     }
   }
 
@@ -127,7 +120,7 @@ export default class BinaryArray {
     if (this.offsetRight + this.offsetLeft === 0) return this;
     const initial = [...this];
     this.clear();
-    const half = Math.floor(initial.length / 2);
+    const half = (initial.length / 2) | 0.5;
     for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i]);
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
     return this;
@@ -159,11 +152,8 @@ export default class BinaryArray {
   }
 
   at(index) {
-    if (index < 0) {
-      return this.get(this.length + index);
-    } else {
-      return this.get(index);
-    }
+    if (index < 0) return this.get(this.length + index);
+    else return this.get(index);
   }
 
   push(...items) {
@@ -177,18 +167,14 @@ export default class BinaryArray {
   }
 
   pop() {
-    if (this.offsetRight === 0) {
-      this.balance();
-    }
+    if (this.offsetRight === 0) this.balance();
     const last = this.last;
     this.removeFromRight();
     return last;
   }
 
   shift() {
-    if (this.offsetLeft === 0) {
-      this.balance();
-    }
+    if (this.offsetLeft === 0) this.balance();
     const first = this.first;
     this.removeFromLeft();
     return first;
@@ -205,48 +191,33 @@ export default class BinaryArray {
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount;
       this.rotateRight(len);
-      if (deleteCount > 0) {
-        for (let i = 0; i < deleteCount; i++) {
-          deleted.push(this.pop());
-        }
-      }
+      if (deleteCount > 0)
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.pop());
+
       this.push(...items);
-      for (let i = 0; i < len; i++) {
-        this.push(this.shift());
-      }
+      for (let i = 0; i < len; i++) this.push(this.shift());
     } else {
       this.rotateLeft(start);
-      if (deleteCount > 0) {
-        for (let i = 0; i < deleteCount; i++) {
-          deleted.push(this.shift());
-        }
-      }
+      if (deleteCount > 0)
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.shift());
       this.unshift(...items);
-      for (let i = 0; i < start; i++) {
-        this.unshift(this.pop());
-      }
+      for (let i = 0; i < start; i++) this.unshift(this.pop());
     }
     return deleted;
   }
 
   indexOf(item) {
-    for (let i = 0; i < this.length; i++) {
-      if (this.get(i) === item) return i;
-    }
+    for (let i = 0; i < this.length; i++) if (this.get(i) === item) return i;
     return -1;
   }
 
   lastIndexOf(item) {
-    for (let i = this.length - 1; i >= 0; i--) {
+    for (let i = this.length - 1; i >= 0; i--)
       if (this.get(i) === item) return i;
-    }
-    return -1;
   }
 
   includes(val) {
-    for (let i = 0; i < this.length; i++) {
-      if (this.get(i) === val) return true;
-    }
+    for (let i = 0; i < this.length; i++) if (this.get(i) === val) return true;
     return false;
   }
 
@@ -258,16 +229,14 @@ export default class BinaryArray {
   }
 
   some(callback) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++)
       if (callback(this.get(i), i, this)) return true;
-    }
     return false;
   }
 
   every(callback) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++)
       if (!callback(this.get(i), i, this)) return false;
-    }
     return true;
   }
 
@@ -281,7 +250,7 @@ export default class BinaryArray {
 
   map(callback) {
     const result = new BinaryArray();
-    const half = Math.floor(this.length / 2);
+    const half = (this.length / 2) | 0.5;
     for (let i = half - 1; i >= 0; i--)
       result.addToLeft(callback(this.get(i), i, this));
     for (let i = half; i < this.length; i++)
@@ -300,16 +269,14 @@ export default class BinaryArray {
   }
 
   reduce(callback, initial) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0; i < this.length; i++)
       initial = callback(initial, this.get(i), i, this);
-    }
     return initial;
   }
 
   reduceRight(callback, initial) {
-    for (let i = this.length - 1; i >= 0; i--) {
+    for (let i = this.length - 1; i >= 0; i--)
       initial = callback(initial, this.get(i), i, this);
-    }
     return initial;
   }
 
@@ -325,9 +292,7 @@ export default class BinaryArray {
 
   reverse() {
     if (this.length <= 2) {
-      if (this.length === 1) {
-        return this;
-      }
+      if (this.length === 1) return this;
       const temp = this.get(0);
       this.set(0, this.get(1));
       this.set(1, temp);
@@ -379,24 +344,17 @@ export default class BinaryArray {
   flatten(callback) {
     return BinaryArray.from(
       this.reduce((acc, current, index, self) => {
-        if (BinaryArray.isBinaryArray(current)) {
-          current.forEach(item => {
-            acc.push(callback(item));
-          });
-        } else {
-          acc.push(callback(current, index, self));
-        }
+        if (BinaryArray.isBinaryArray(current))
+          current.forEach(item => acc.push(callback(item)));
+        else acc.push(callback(current, index, self));
         return acc;
       }, [])
     );
   }
 
   addTo(key, value) {
-    if (key >= this.length) {
-      for (let i = this.length; i <= key; i++) {
-        this.addToRight(undefined);
-      }
-    }
+    if (key >= this.length)
+      for (let i = this.length; i <= key; i++) this.addToRight(undefined);
     const [index, direction] = this.index(key);
     direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
     return this;
@@ -407,39 +365,27 @@ export default class BinaryArray {
       const len = this.length - key;
       this.rotateRight(len);
       this.push(...value);
-      for (let i = 0; i < len; i++) {
-        this.push(this.shift());
-      }
+      for (let i = 0; i < len; i++) this.push(this.shift());
     } else {
       this.rotateLeft(key);
       this.unshift(...value);
-      for (let i = 0; i < key; i++) {
-        this.unshift(this.pop());
-      }
+      for (let i = 0; i < key; i++) this.unshift(this.pop());
     }
     return this;
   }
 
   removeFrom(key, amount) {
     const len = this.length - key;
-    amount = Math.min(len, amount);
+    amount = len < amount ? len : amount;
 
     if (this.offsetLeft + key > 0) {
       this.rotateRight(len);
-      for (let i = 0; i < amount; i++) {
-        this.pop();
-      }
-      for (let i = 0; i < len; i++) {
-        this.push(this.shift());
-      }
+      for (let i = 0; i < amount; i++) this.pop();
+      for (let i = 0; i < len; i++) this.push(this.shift());
     } else {
       this.rotateLeft(key);
-      for (let i = 0; i < amount; i++) {
-        this.shift();
-      }
-      for (let i = 0; i < key; i++) {
-        this.unshift(this.pop());
-      }
+      for (let i = 0; i < amount; i++) this.shift();
+      for (let i = 0; i < key; i++) this.unshift(this.pop());
     }
     return this;
   }
@@ -469,17 +415,13 @@ export default class BinaryArray {
   }
 
   head() {
-    if (this.offsetRight === 0) {
-      this.balance();
-    }
+    if (this.offsetRight === 0) this.balance();
     this.removeFromRight();
     return this;
   }
 
   tail() {
-    if (this.offsetLeft === 0) {
-      this.balance();
-    }
+    if (this.offsetLeft === 0) this.balance();
     this.removeFromLeft();
     return this;
   }
@@ -487,9 +429,7 @@ export default class BinaryArray {
   rotateLeft(n = 1) {
     n = n % this.length;
     for (let i = 0; i < n; i++) {
-      if (this.offsetLeft === 0) {
-        this.balance();
-      }
+      if (this.offsetLeft === 0) this.balance();
       this.addToRight(this.first);
       this.removeFromLeft();
     }
@@ -499,9 +439,7 @@ export default class BinaryArray {
   rotateRight(n = 1) {
     n = n % this.length;
     for (let i = 0; i < n; i++) {
-      if (this.offsetRight === 0) {
-        this.balance();
-      }
+      if (this.offsetRight === 0) this.balance();
       this.addToLeft(this.last);
       this.removeFromRight();
     }
@@ -538,12 +476,8 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    B.forEach(item => {
-      if (!A.has(item)) out.push(item);
-    });
-    A.forEach(item => {
-      if (!B.has(item)) out.push(item);
-    });
+    B.forEach(item => !A.has(item) && out.push(item));
+    A.forEach(item => !B.has(item) && out.push(item));
     out.balance();
     return out;
   }
@@ -553,9 +487,7 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    B.forEach(item => {
-      if (A.has(item)) out.push(item);
-    });
+    B.forEach(item => A.has(item) && out.push(item));
     out.balance();
     return out;
   }
@@ -565,9 +497,7 @@ export default class BinaryArray {
     const out = new BinaryArray();
     const A = new Set(a.toArray());
     const B = new Set(b.toArray());
-    A.forEach(item => {
-      if (!B.has(item)) out.push(item);
-    });
+    A.forEach(item => !B.has(item) && out.push(item));
     out.balance();
     return out;
   }
@@ -606,11 +536,7 @@ export default class BinaryArray {
     const set = new Set();
     const extra = [];
     const out = this.reduce((acc, item) => {
-      if (set.has(item)) {
-        acc.push(item);
-      } else {
-        set.add(item);
-      }
+      set.has(item) ? acc.push(item) : set.add(item);
       return acc;
     }, []);
 

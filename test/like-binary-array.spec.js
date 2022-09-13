@@ -1,6 +1,23 @@
 import BinaryArray from '../src/BinaryArray.js';
 
 describe('BinaryArray mimic Array', () => {
+  it('.get and .at should access the correct element', () => {
+    const arr = Array.from([1, 2, 3]);
+    const binArr = BinaryArray.from(arr);
+
+    expect(arr[0]).toEqual(binArr.get(0));
+    expect(arr[1]).toEqual(binArr.get(1));
+    expect(arr[2]).toEqual(binArr.get(2));
+
+    expect(arr.at(-1)).toEqual(binArr.at(-1));
+    expect(arr.at(-2)).toEqual(binArr.at(-2));
+    expect(arr.at(-3)).toEqual(binArr.at(-3));
+
+    expect(arr.at(0)).toEqual(binArr.at(0));
+    expect(arr.at(1)).toEqual(binArr.at(1));
+    expect(arr.at(2)).toEqual(binArr.at(2));
+  });
+
   it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
     const arr = Array.from([1, 2, 3]);
     const binArr = BinaryArray.from(arr);
@@ -241,25 +258,6 @@ describe('BinaryArray mimic Array', () => {
     expect(arr).toEqual(binArr.toArray());
     expect(arr[15]).toEqual(binArr.get(15));
     expect(arr.length).toEqual(binArr.length);
-  });
-
-  it('.removeFrom (non-array function) should work as expected', () => {
-    const arr = [1, 2, 3, 4, 5, 6, 7];
-    expect(BinaryArray.from(arr).removeFromCopy(1, 3).toArray()).toEqual([
-      1, 5, 6, 7
-    ]);
-    expect(
-      BinaryArray.from(arr).removeFromCopy(1, arr.length).toArray()
-    ).toEqual([1]);
-    expect(BinaryArray.from(arr).removeFromCopy(3, 1).toArray()).toEqual([
-      1, 2, 3, 5, 6, 7
-    ]);
-    expect(BinaryArray.from(arr).removeFromCopy(3, 0).toArray()).toEqual([
-      1, 2, 3, 4, 5, 6, 7
-    ]);
-    expect(
-      BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
-    ).toEqual([]);
   });
 
   it('.join should return expected array', () => {

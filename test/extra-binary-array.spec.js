@@ -158,4 +158,23 @@ describe('BinaryArray extra features', () => {
     expect(arr.left).toEqual([undefined, 1, 0, -1, -2, 6, 6, 6, -4, -3]);
     expect(arr.right).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10]);
   });
+
+  it('.removeFrom (non-array function) should work as expected', () => {
+    const arr = [1, 2, 3, 4, 5, 6, 7];
+    expect(BinaryArray.from(arr).removeFromCopy(1, 3).toArray()).toEqual([
+      1, 5, 6, 7
+    ]);
+    expect(
+      BinaryArray.from(arr).removeFromCopy(1, arr.length).toArray()
+    ).toEqual([1]);
+    expect(BinaryArray.from(arr).removeFromCopy(3, 1).toArray()).toEqual([
+      1, 2, 3, 5, 6, 7
+    ]);
+    expect(BinaryArray.from(arr).removeFromCopy(3, 0).toArray()).toEqual([
+      1, 2, 3, 4, 5, 6, 7
+    ]);
+    expect(
+      BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
+    ).toEqual([]);
+  });
 });
