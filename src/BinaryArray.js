@@ -37,10 +37,8 @@ export default class BinaryArray {
   get offsetRight() {
     return this.right.length;
   }
-  /**
-   *  size = offset left - offset right - 1
-   */
-  get size() {
+
+  get length() {
     return this.left.length + this.right.length - 1;
   }
 
@@ -99,15 +97,15 @@ export default class BinaryArray {
   }
 
   removeFromLeft() {
-    if (this.size) {
-      if (this.size === 1) this.clear();
+    if (this.length) {
+      if (this.length === 1) this.clear();
       else if (this.left.length > 0) this.left.length--;
     }
   }
 
   removeFromRight() {
-    if (this.size) {
-      if (this.size === 1) this.clear();
+    if (this.length) {
+      if (this.length === 1) this.clear();
       else if (this.right.length > 0) this.right.length--;
     }
   }
@@ -129,11 +127,6 @@ export default class BinaryArray {
   /**
    * Array methods
    */
-
-  // alias for size
-  get length() {
-    return this.left.length + this.right.length - 1;
-  }
 
   static of(...items) {
     return BinaryArray.from(items);
