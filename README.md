@@ -2,17 +2,13 @@
 
 Making the JavaScript array fast for large inputs.
 
+![1_zVaXjvuxUmALcBbQW6Ttlg](https://user-images.githubusercontent.com/88512646/189848446-db97cd75-58ac-483f-82ab-4e8924308f79.png)
+
+
 insert O(1)  
 remove O(1)  
 access O(1)  
 memory O(N)
-
-![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
-
-![1_ErCCPAEcI3Gh1R4My8n8lQ](https://user-images.githubusercontent.com/88512646/189848214-2e149311-6074-41ad-ab15-669c61a2298f.png)
-![1_RiphOyRvYqkB4Z3Dv9PGgg](https://user-images.githubusercontent.com/88512646/189848227-c44ba7c9-c720-465d-bac9-5cfc76b47001.png)
-![1_3sZTCd-Ca1ua3I0i5SG3xw](https://user-images.githubusercontent.com/88512646/189848250-d4ae2333-93c4-411c-94e7-66dbf6e9794d.png)
-![1_St47XmG6lkAsb9oO8jBqdw](https://user-images.githubusercontent.com/88512646/189848282-876398a4-72f6-420a-a2b9-3a8d46c0bafa.png)
 
 npm i --save-dev
 
@@ -71,4 +67,14 @@ all benchmarks completed
 ok ~9.68 s (9 s + 679287250 ns)
 
 ✨  Done in 10.22s.
+
+
+Binary Array view 
+![1_ErCCPAEcI3Gh1R4My8n8lQ](https://user-images.githubusercontent.com/88512646/189848214-2e149311-6074-41ad-ab15-669c61a2298f.png)
+![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
+Array view
+![1_3sZTCd-Ca1ua3I0i5SG3xw](https://user-images.githubusercontent.com/88512646/189848250-d4ae2333-93c4-411c-94e7-66dbf6e9794d.png)
+Balanced view 
+![1_St47XmG6lkAsb9oO8jBqdw](https://user-images.githubusercontent.com/88512646/189848282-876398a4-72f6-420a-a2b9-3a8d46c0bafa.png)
+
 
