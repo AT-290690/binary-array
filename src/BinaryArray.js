@@ -365,11 +365,11 @@ export default class BinaryArray {
       const len = this.length - key;
       this.rotateRight(len);
       this.push(...value);
-      for (let i = 0; i < len; i++) this.push(this.shift());
+      for (let i = 0; i < len; i++) this.append(this.shift());
     } else {
       this.rotateLeft(key);
       this.unshift(...value);
-      for (let i = 0; i < key; i++) this.unshift(this.pop());
+      for (let i = 0; i < key; i++) this.prepend(this.pop());
     }
     return this;
   }
