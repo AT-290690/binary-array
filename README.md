@@ -69,12 +69,9 @@ ok ~9.68 s (9 s + 679287250 ns)
 ✨  Done in 10.22s.
 
 
-Binary Array view 
 ![1_ErCCPAEcI3Gh1R4My8n8lQ](https://user-images.githubusercontent.com/88512646/189848214-2e149311-6074-41ad-ab15-669c61a2298f.png)
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
-Array view
 ![1_3sZTCd-Ca1ua3I0i5SG3xw](https://user-images.githubusercontent.com/88512646/189848250-d4ae2333-93c4-411c-94e7-66dbf6e9794d.png)
-Balanced view 
 ![1_St47XmG6lkAsb9oO8jBqdw](https://user-images.githubusercontent.com/88512646/189848282-876398a4-72f6-420a-a2b9-3a8d46c0bafa.png)
 
 
