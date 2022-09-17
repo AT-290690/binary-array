@@ -408,14 +408,14 @@ export default class BinaryArray {
   }
 
   head() {
-    if (this.offsetRight === 0) this.balance();
     this.removeFromRight();
+    if (this.offsetRight === 0) this.balance();
     return this;
   }
 
   tail() {
-    if (this.offsetLeft === 0) this.balance();
     this.removeFromLeft();
+    if (this.offsetLeft === 0) this.balance();
     return this;
   }
 
