@@ -615,7 +615,7 @@ export default class BinaryArray {
   }
 
   copy() {
-    return [...this]
+    return BinaryArray.from([...this])
   }
 
   scan(callback) {
