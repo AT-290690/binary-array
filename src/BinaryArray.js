@@ -159,13 +159,13 @@ export default class BinaryArray {
         for (let i = 0; i < deleteCount; i++) deleted.push(this.pop())
 
       this.append(...items)
-      for (let i = 0; i < len; i++) this.append(this.shift())
+      for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(start)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i++) deleted.push(this.shift())
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.chop())
       this.unshift(...items)
-      for (let i = 0; i < start; i++) this.unshift(this.pop())
+      for (let i = 0; i < start; i++) this.prepend(this.pop())
     }
     return deleted
   }
@@ -408,15 +408,29 @@ export default class BinaryArray {
     return this
   }
 
-  head() {
-    this.removeFromRight()
+  cut() {
     if (this.offsetRight === 0) this.balance()
+    const last = this.last
+    this.removeFromRight()
+    return last
+  }
+
+  chop() {
+    if (this.offsetLeft === 0) this.balance()
+    const first = this.first
+    this.removeFromLeft()
+    return first
+  }
+
+  head() {
+    if (this.offsetRight === 0) this.balance()
+    this.removeFromRight()
     return this
   }
 
   tail() {
-    this.removeFromLeft()
     if (this.offsetLeft === 0) this.balance()
+    this.removeFromLeft()
     return this
   }
 
@@ -670,8 +684,8 @@ const merge = (left, right, callback) => {
   const arr = []
   while (left.length && right.length) {
     callback(right.at(0), left.at(0)) > 0
-      ? arr.push(left.shift())
-      : arr.push(right.shift())
+      ? arr.push(left.chop())
+      : arr.push(right.chop())
   }
 
   for (let i = 0; i < left.length; i++) {

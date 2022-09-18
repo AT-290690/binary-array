@@ -138,6 +138,12 @@ describe("BinaryArray extra features", () => {
       arr.append(4).append(5).prepend(0).prepend(-1).prepend(-2).toArray()
     ).toEqual([-2, -1, 0, 1, 2, 3, 4, 5])
     expect(arr.tail().head().tail().head().toArray()).toEqual([0, 1, 2, 3])
+    expect(arr.cut()).toBe(3)
+    expect(arr.toArray()).toEqual([0, 1, 2])
+    expect(arr.chop()).toBe(0)
+    expect(arr.toArray()).toEqual([1, 2])
+    expect(arr.chop()).toBe(1)
+    expect(arr.chop()).toBe(2)
   })
 
   it(".balance should work as expected", () => {

@@ -93,6 +93,18 @@ Benchmark(`binaryArray.search N = ${N}`, (bench) => {
   binaryArray.clear()
 })
 
+Benchmark(`binaryArray.quickSort and binaryArray.search N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+  for (let i = 0; i < N / 10; i++) binaryArray.append(Math.random() * 1000)
+  const target = -1
+  binaryArray.append(target)
+  binaryArray.balance()
+  bench.start()
+  binaryArray.quickSort("asc").search(target)
+  bench.end()
+  binaryArray.clear()
+})
+
 Benchmark(`binaryArray.mergeSort and binaryArray.search N = ${N}`, (bench) => {
   const binaryArray = new BinaryArray()
   for (let i = 0; i < N / 10; i++) binaryArray.append(Math.random() * 1000)
@@ -102,18 +114,6 @@ Benchmark(`binaryArray.mergeSort and binaryArray.search N = ${N}`, (bench) => {
   bench.start()
   const sorted = binaryArray.mergeSort()
   sorted.search(target)
-  bench.end()
-  binaryArray.clear()
-})
-
-Benchmark(`binaryArray.quickSort and binaryArray.search N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
-  for (let i = 0; i < N / 10; i++) binaryArray.append(Math.random() * 1000)
-  const target = -1
-  binaryArray.append(target)
-  binaryArray.balance()
-  bench.start()
-  binaryArray.quickSort("asc").search(target)
   bench.end()
   binaryArray.clear()
 })
