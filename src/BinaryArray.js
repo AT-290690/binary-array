@@ -559,6 +559,13 @@ export default class BinaryArray {
     return BinaryArray.from(out.concat(extra))
   }
 
+  swap(i1, i2) {
+    const temp = this.get(i1)
+    this.set(i1, this.get(i2))
+    this.set(i2, temp)
+    return this
+  }
+
   scan(callback) {
     for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
     return this

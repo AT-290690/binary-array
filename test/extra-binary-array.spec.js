@@ -114,6 +114,14 @@ describe("BinaryArray extra features", () => {
     ).toEqual([1, 5])
   })
 
+  it(".swap should work as expected", () => {
+    const arr = new BinaryArray().with(1, 2, 3)
+    arr.swap(0, 2)
+    expect([...arr]).toEqual([3, 2, 1])
+    arr.swap(0, 2)
+    expect([...arr]).toEqual([1, 2, 3])
+  })
+
   it(".scan should work as expected", () => {
     const out = []
     new BinaryArray()
