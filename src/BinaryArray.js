@@ -290,6 +290,14 @@ export default class BinaryArray {
     return -1
   }
 
+  findLastIndex(callback) {
+    for (let i = this.length - 1; i >= 0; i--) {
+      const current = this.get(i)
+      if (callback(current, i, this)) return i
+    }
+    return -1
+  }
+
   map(callback) {
     const result = new BinaryArray()
     const half = (this.length / 2) | 0.5
@@ -604,6 +612,10 @@ export default class BinaryArray {
     this.set(i1, this.get(i2))
     this.set(i2, temp)
     return this
+  }
+
+  copy() {
+    return [...this]
   }
 
   scan(callback) {
