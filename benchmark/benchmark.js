@@ -1,161 +1,161 @@
-import BinaryArray from '../src/BinaryArray.js';
-import Benchmark from 'nanobench';
+import BinaryArray from "../src/BinaryArray.js"
+import Benchmark from "nanobench"
 
-const N = 200_000;
+const N = 200_000
 
-Benchmark(`binaryArray.get middle N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
-  const mid = N / 2;
+Benchmark(`binaryArray.get middle N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+  const mid = N / 2
   for (let i = 0; i < N; i++) {
-    binaryArray.push(i);
+    binaryArray.push(i)
   }
-  binaryArray.balance();
+  binaryArray.balance()
 
-  bench.start();
-  binaryArray.get(mid);
-  bench.end();
-  binaryArray.clear();
-});
+  bench.start()
+  binaryArray.get(mid)
+  bench.end()
+  binaryArray.clear()
+})
 
-Benchmark(`regularArray.get middle N = ${N}`, bench => {
-  const regularArray = [];
-  const mid = N / 2;
+Benchmark(`regularArray.get middle N = ${N}`, (bench) => {
+  const regularArray = []
+  const mid = N / 2
   for (let i = 0; i < N; i++) {
-    regularArray.push(i);
-  }
-
-  bench.start();
-  regularArray[mid];
-  bench.end();
-  regularArray.length = 0;
-});
-
-Benchmark(`binaryArray.get random N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
-  for (let i = 0; i < N; i++) {
-    binaryArray.push(i);
-  }
-  binaryArray.balance();
-
-  bench.start();
-  for (let i = 0; i < N; i++) {
-    binaryArray.get(Math.floor(Math.random() * N));
-  }
-  bench.end();
-  binaryArray.clear();
-});
-
-Benchmark(`regularArray.get random N = ${N}`, bench => {
-  const regularArray = [];
-  for (let i = 0; i < N; i++) {
-    regularArray.push(i);
+    regularArray.push(i)
   }
 
-  bench.start();
+  bench.start()
+  regularArray[mid]
+  bench.end()
+  regularArray.length = 0
+})
+
+Benchmark(`binaryArray.get random N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
   for (let i = 0; i < N; i++) {
-    regularArray[Math.floor(Math.random() * N)];
+    binaryArray.push(i)
   }
-  bench.end();
-  regularArray.length = 0;
-});
+  binaryArray.balance()
 
-Benchmark(`binaryArray.push N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
-
-  bench.start();
+  bench.start()
   for (let i = 0; i < N; i++) {
-    binaryArray.push(1);
+    binaryArray.get(Math.floor(Math.random() * N))
   }
-  bench.end();
-  binaryArray.clear();
-});
+  bench.end()
+  binaryArray.clear()
+})
 
-Benchmark(`regularArray.push N = ${N}`, bench => {
-  const regularArray = [];
-
-  bench.start();
+Benchmark(`regularArray.get random N = ${N}`, (bench) => {
+  const regularArray = []
   for (let i = 0; i < N; i++) {
-    regularArray.push(1);
-  }
-  bench.end();
-  regularArray.length = 0;
-});
-
-Benchmark(`binaryArray.pop N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
-  for (let i = 0; i < N; i++) {
-    binaryArray.push(i);
-  }
-  binaryArray.balance();
-
-  bench.start();
-  for (let i = 0; i < N; i++) {
-    binaryArray.pop();
-  }
-  bench.end();
-  binaryArray.clear();
-});
-
-Benchmark(`regularArray.pop N = ${N}`, bench => {
-  const regularArray = [];
-  for (let i = 0; i < N; i++) {
-    regularArray.push(i);
-  }
-  bench.start();
-  for (let i = 0; i < N; i++) {
-    regularArray.pop();
-  }
-  bench.end();
-  regularArray.length = 0;
-});
-
-Benchmark(`binaryArray.shift N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
-  for (let i = 0; i < N; i++) {
-    binaryArray.push(i);
-  }
-  binaryArray.balance();
-
-  bench.start();
-  for (let i = 0; i < N; i++) {
-    binaryArray.shift();
-  }
-  bench.end();
-  binaryArray.clear();
-});
-
-Benchmark(`regularArray.shift N = ${N}`, bench => {
-  const regularArray = [];
-  for (let i = 0; i < N; i++) {
-    regularArray.push(i);
+    regularArray.push(i)
   }
 
-  bench.start();
+  bench.start()
   for (let i = 0; i < N; i++) {
-    regularArray.shift();
+    regularArray[Math.floor(Math.random() * N)]
   }
-  bench.end();
-  regularArray.length = 0;
-});
+  bench.end()
+  regularArray.length = 0
+})
 
-Benchmark(`binaryArray.unshift N = ${N}`, bench => {
-  const binaryArray = new BinaryArray();
+Benchmark(`binaryArray.push N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
 
-  bench.start();
+  bench.start()
   for (let i = 0; i < N; i++) {
-    binaryArray.unshift(1);
+    binaryArray.push(1)
   }
-  bench.end();
-  binaryArray.clear();
-});
+  bench.end()
+  binaryArray.clear()
+})
 
-Benchmark(`regularArray.unshift N = ${N}`, bench => {
-  const regularArray = [];
+Benchmark(`regularArray.push N = ${N}`, (bench) => {
+  const regularArray = []
 
-  bench.start();
+  bench.start()
   for (let i = 0; i < N; i++) {
-    regularArray.unshift(1);
+    regularArray.push(1)
   }
-  bench.end();
-  regularArray.length = 0;
-});
+  bench.end()
+  regularArray.length = 0
+})
+
+Benchmark(`binaryArray.pop N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+  for (let i = 0; i < N; i++) {
+    binaryArray.push(i)
+  }
+  binaryArray.balance()
+
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    binaryArray.pop()
+  }
+  bench.end()
+  binaryArray.clear()
+})
+
+Benchmark(`regularArray.pop N = ${N}`, (bench) => {
+  const regularArray = []
+  for (let i = 0; i < N; i++) {
+    regularArray.push(i)
+  }
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    regularArray.pop()
+  }
+  bench.end()
+  regularArray.length = 0
+})
+
+Benchmark(`binaryArray.shift N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+  for (let i = 0; i < N; i++) {
+    binaryArray.push(i)
+  }
+  binaryArray.balance()
+
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    binaryArray.shift()
+  }
+  bench.end()
+  binaryArray.clear()
+})
+
+Benchmark(`regularArray.shift N = ${N}`, (bench) => {
+  const regularArray = []
+  for (let i = 0; i < N; i++) {
+    regularArray.push(i)
+  }
+
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    regularArray.shift()
+  }
+  bench.end()
+  regularArray.length = 0
+})
+
+Benchmark(`binaryArray.unshift N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    binaryArray.unshift(1)
+  }
+  bench.end()
+  binaryArray.clear()
+})
+
+Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
+  const regularArray = []
+
+  bench.start()
+  for (let i = 0; i < N; i++) {
+    regularArray.unshift(1)
+  }
+  bench.end()
+  regularArray.length = 0
+})

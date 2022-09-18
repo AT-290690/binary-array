@@ -10,10 +10,12 @@
     "bench": "node benchmark/benchmark.js",
     "stress": "node benchmark/stresstest.js",
     "sample": "node benchmark/sample.js"
-
   },
   "jest": {
     "preset": "./jest.json"
+  },
+  "prettier": {
+    "semi": false
   },
   "devDependencies": {
     "@babel/preset-env": "^7.14.9"
