@@ -1,75 +1,4 @@
-/**
- * Helper functions
- */
-
-const flatten = (collection, levels, flat) =>
-  collection.reduce((acc, current) => {
-    if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
-    else acc.push(current)
-    return acc
-  }, [])
-
-const toArrayDeep = (entity) => {
-  return BinaryArray.isBinaryArray(entity)
-    ? entity
-        .map((item) =>
-          BinaryArray.isBinaryArray(item)
-            ? item.some(BinaryArray.isBinaryArray)
-              ? toArrayDeep(item)
-              : item.toArray()
-            : item
-        )
-        .toArray()
-    : entity
-}
-
-const merge = (left, right, callback) => {
-  const arr = []
-  while (left.length && right.length) {
-    callback(right.at(0), left.at(0)) > 0
-      ? arr.push(left.shift())
-      : arr.push(right.shift())
-  }
-
-  for (let i = 0; i < left.length; i++) {
-    arr.push(left.get(i))
-  }
-  for (let i = 0; i < right.length; i++) {
-    arr.push(right.get(i))
-  }
-  const out = new BinaryArray()
-  const half = (arr.length / 2) | 0.5
-  for (let i = half - 1; i >= 0; i--) out.addToLeft(arr[i])
-  for (let i = half; i < arr.length; i++) out.addToRight(arr[i])
-  return out
-}
-
-const mergeSort = (array, callback) => {
-  const half = (array.length / 2) | 0.5
-  if (array.length < 2) {
-    return array
-  }
-  const left = array.splice(0, half)
-  return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
-}
-
-const binarySearch = (arr, by, start, end) => {
-  const index = ((end - start) / 2 + start) | 0.5
-  const current = arr.at(index)
-  if (current === undefined) return undefined
-  const [is, gt] = by(current)
-  if (end < start && !is) return undefined
-  if (is) return current
-  else {
-    if (gt) return binarySearch(arr, by, start, index - 1)
-    else return binarySearch(arr, by, index + 1, end)
-  }
-}
-
 export default class BinaryArray {
-  /**
-   * Main methods
-   */
   left = [BinaryArray.negativeZeroEmptyValue]
   right = []
 
@@ -364,7 +293,7 @@ export default class BinaryArray {
   }
 
   /**
-   * perform erge sort - requires extra memory
+   * perform merge sort - requires extra memory
    * @param callback - the condition of sorting
    * defaults to ascending
    * @example
@@ -372,6 +301,17 @@ export default class BinaryArray {
    * */
   mergeSort(callback = (a, b) => (a < b ? -1 : 1)) {
     return mergeSort(this, callback)
+  }
+  /**
+   * perform quick sort - requires extra memory
+   * @param order - the order of sorting
+   * defaults to ascending
+   * @example
+   * arr.quickSort('asc')
+   * arr.quickSort('des')
+   * */
+  quickSort(dir) {
+    return quickSort(this, 0, this.length - 1, dir)
   }
 
   join(separator = ",") {
@@ -453,10 +393,6 @@ export default class BinaryArray {
     copy.removeFrom(key, amount)
     return copy
   }
-
-  /**
-   * Extra methods
-   */
 
   toArray(deep) {
     return !deep ? [...this] : toArrayDeep(this)
@@ -660,5 +596,115 @@ export default class BinaryArray {
         ? target
         : (item) => (item === target ? [true, false] : [false, item > target])
     return binarySearch(this, by, 0, this.length)
+  }
+}
+
+/**  Helper functions */
+
+const flatten = (collection, levels, flat) =>
+  collection.reduce((acc, current) => {
+    if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
+    else acc.push(current)
+    return acc
+  }, [])
+
+const toArrayDeep = (entity) => {
+  return BinaryArray.isBinaryArray(entity)
+    ? entity
+        .map((item) =>
+          BinaryArray.isBinaryArray(item)
+            ? item.some(BinaryArray.isBinaryArray)
+              ? toArrayDeep(item)
+              : item.toArray()
+            : item
+        )
+        .toArray()
+    : entity
+}
+
+const partition = {
+  asc: (items, left, right) => {
+    let pivot = items.get(((right + left) / 2) | 0.5),
+      i = left,
+      j = right
+    while (i <= j) {
+      while (items.get(i) < pivot) i++
+      while (items.get(j) > pivot) j--
+      if (i <= j) {
+        items.swap(i, j)
+        i++
+        j--
+      }
+    }
+    return i
+  },
+  des: (items, left, right) => {
+    let pivot = items.get(((right + left) / 2) | 0.5),
+      i = left,
+      j = right
+    while (i <= j) {
+      while (items.get(i) > pivot) i++
+      while (items.get(j) < pivot) j--
+      if (i <= j) {
+        items.swap(i, j)
+        i++
+        j--
+      }
+    }
+    return i
+  },
+}
+
+const quickSort = (items, left, right, dir) => {
+  let index
+  const sortBy = partition[dir] ?? partition["asc"]
+  if (items.length > 1) {
+    index = sortBy(items, left, right) //index returned from partition
+    if (left < index - 1) quickSort(items, left, index - 1, dir) //more elements on the left side of the pivot
+    if (index < right) quickSort(items, index, right, dir) //more elements on the right side of the pivot
+  }
+  return items
+}
+
+const merge = (left, right, callback) => {
+  const arr = []
+  while (left.length && right.length) {
+    callback(right.at(0), left.at(0)) > 0
+      ? arr.push(left.shift())
+      : arr.push(right.shift())
+  }
+
+  for (let i = 0; i < left.length; i++) {
+    arr.push(left.get(i))
+  }
+  for (let i = 0; i < right.length; i++) {
+    arr.push(right.get(i))
+  }
+  const out = new BinaryArray()
+  const half = (arr.length / 2) | 0.5
+  for (let i = half - 1; i >= 0; i--) out.addToLeft(arr[i])
+  for (let i = half; i < arr.length; i++) out.addToRight(arr[i])
+  return out
+}
+
+const mergeSort = (array, callback) => {
+  const half = (array.length / 2) | 0.5
+  if (array.length < 2) {
+    return array
+  }
+  const left = array.splice(0, half)
+  return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
+}
+
+const binarySearch = (arr, by, start, end) => {
+  const index = ((end - start) / 2 + start) | 0.5
+  const current = arr.at(index)
+  if (current === undefined) return undefined
+  const [is, gt] = by(current)
+  if (end < start && !is) return undefined
+  if (is) return current
+  else {
+    if (gt) return binarySearch(arr, by, start, index - 1)
+    else return binarySearch(arr, by, index + 1, end)
   }
 }

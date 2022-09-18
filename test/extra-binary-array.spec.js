@@ -166,7 +166,7 @@ describe("BinaryArray extra features", () => {
     expect(arr.right).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10])
   })
 
-  it(".removeFrom (non-array function) should work as expected", () => {
+  it(".removeFrom should work as expected", () => {
     const arr = [1, 2, 3, 4, 5, 6, 7]
     expect(BinaryArray.from(arr).removeFromCopy(1, 3).toArray()).toEqual([
       1, 5, 6, 7,
@@ -184,7 +184,7 @@ describe("BinaryArray extra features", () => {
       BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
     ).toEqual([])
   })
-  it(".isSorted (non-array function) should work as expected", () => {
+  it(".isSorted should work as expected", () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
     expect(BinaryArray.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
     expect(BinaryArray.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
@@ -211,7 +211,15 @@ describe("BinaryArray extra features", () => {
       )
     ).toBe(false)
   })
-  it(".search (non-array function) should work as expected", () => {
+  it(".quickSort should work as expected", () => {
+    expect(
+      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("asc").toArray()
+    ).toEqual([1, 1, 2, 3, 4, 5, 8, 9])
+    expect(
+      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("des").toArray()
+    ).toEqual([1, 1, 2, 3, 4, 5, 8, 9].reverse())
+  })
+  it(".search should work as expected", () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
