@@ -67,7 +67,7 @@ describe("BinaryArray extra features", () => {
       new BinaryArray()
         .with(1, 2, 2, 0, 2, 5, 2, 9, 3, 3, 3, 4, 8, 9)
         .duplicates()
-        .sort()
+        .mergeSort()
         .toArray()
     ).toEqual([2, 2, 2, 2, 3, 3, 3, 9, 9])
   })
@@ -232,7 +232,7 @@ describe("BinaryArray extra features", () => {
         { key: "m", value: 24 },
         { key: "l", value: 43 },
       ])
-        .sort((a, b) => (a.key > b.key ? 1 : -1))
+        .mergeSort((a, b) => (a.key > b.key ? 1 : -1))
         .search((target) =>
           target.key === searchKey
             ? [true, false]

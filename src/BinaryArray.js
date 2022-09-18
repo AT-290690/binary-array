@@ -1,6 +1,7 @@
 /**
  * Helper functions
  */
+
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
@@ -20,6 +21,36 @@ const toArrayDeep = (entity) => {
         )
         .toArray()
     : entity
+}
+
+const merge = (left, right, callback) => {
+  const arr = []
+  while (left.length && right.length) {
+    callback(right.at(0), left.at(0)) > 0
+      ? arr.push(left.shift())
+      : arr.push(right.shift())
+  }
+
+  for (let i = 0; i < left.length; i++) {
+    arr.push(left.get(i))
+  }
+  for (let i = 0; i < right.length; i++) {
+    arr.push(right.get(i))
+  }
+  const out = new BinaryArray()
+  const half = (arr.length / 2) | 0.5
+  for (let i = half - 1; i >= 0; i--) out.addToLeft(arr[i])
+  for (let i = half; i < arr.length; i++) out.addToRight(arr[i])
+  return out
+}
+
+const mergeSort = (array, callback) => {
+  const half = (array.length / 2) | 0.5
+  if (array.length < 2) {
+    return array
+  }
+  const left = array.splice(0, half)
+  return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
 }
 
 const binarySearch = (arr, by, start, end) => {
@@ -121,8 +152,12 @@ export default class BinaryArray {
     for (let i = 0; i < this.length; i++) yield this.get(i)
   }
 
+  isBalanced() {
+    return this.offsetRight + this.offsetLeft === 0
+  }
+
   balance() {
-    if (this.offsetRight + this.offsetLeft === 0) return this
+    if (this.isBalanced()) return this
     const initial = [...this]
     this.clear()
     const half = (initial.length / 2) | 0.5
@@ -187,7 +222,7 @@ export default class BinaryArray {
   }
 
   splice(start, deleteCount = 0, ...items) {
-    const deleted = []
+    const deleted = new BinaryArray()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
@@ -313,17 +348,15 @@ export default class BinaryArray {
     return copy
   }
 
-  sort(callback) {
-    return BinaryArray.from(this.toArray().sort(callback))
-  }
-
-  sortMut(callback) {
-    const initial = this.toArray().sort(callback)
-    this.clear()
-    const half = (initial.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i])
-    for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
-    return this
+  /**
+   * perform erge sort - requires extra memory
+   * @param callback - the condition of sorting
+   * defaults to ascending
+   * @example
+   * (a, b) => (a < b ? -1 : 1)
+   * */
+  mergeSort(callback = (a, b) => (a < b ? -1 : 1)) {
+    return mergeSort(this, callback)
   }
 
   join(separator = ",") {
@@ -570,6 +603,7 @@ export default class BinaryArray {
     for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
     return this
   }
+
   /**
    * @param order
    * check if the array is sorted
