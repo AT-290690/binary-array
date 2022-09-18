@@ -263,6 +263,13 @@ export default class BinaryArray {
     }
   }
 
+  findLast(callback) {
+    for (let i = this.length - 1; i >= 0; i--) {
+      const current = this.get(i)
+      if (callback(current, i, this)) return current
+    }
+  }
+
   some(callback) {
     for (let i = 0; i < this.length; i++)
       if (callback(this.get(i), i, this)) return true

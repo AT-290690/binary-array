@@ -1,5 +1,8 @@
 import BinaryArray from "../src/BinaryArray.js"
-
+const isPrime = (num) => {
+  for (let i = 2; num > i; i++) if (num % i === 0) return false
+  return num > 1
+}
 describe("BinaryArray mimic Array", () => {
   it(".get and .at should access the correct element", () => {
     const arr = Array.from([1, 2, 3])
@@ -40,10 +43,6 @@ describe("BinaryArray mimic Array", () => {
 
   it(".filter should work exactly like Array.prototype.filter", () => {
     const array1 = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
-    const isPrime = (num) => {
-      for (let i = 2; num > i; i++) if (num % i === 0) return false
-      return num > 1
-    }
 
     expect(array1.filter(isPrime)).toEqual(
       BinaryArray.from(array1).filter(isPrime).toArray()
@@ -354,5 +353,21 @@ describe("BinaryArray mimic Array", () => {
     expect(binArr.indexOf("orange")).toBe(arr.indexOf("orange"))
     expect(binArr.indexOf("lemon")).toBe(arr.indexOf("lemon"))
     expect(binArr.indexOf("pomegranate")).toBe(arr.indexOf("pomegranate"))
+
+    const lastArr1 = [4, 6, 8, 12]
+    const lastArr2 = [4, 5, 7, 8, 9, 11, 12]
+    // Todo use Array.prototype.findLast once it is available in node
+    expect([...lastArr1].reverse().find(isPrime)).toEqual(
+      BinaryArray.from(lastArr1).findLast(isPrime)
+    ) // undefined, not found
+    expect([...lastArr2].reverse().find(isPrime)).toEqual(
+      BinaryArray.from(lastArr2).findLast(isPrime)
+    ) // 11
+    expect([...lastArr1].reverse().find(isPrime)).toEqual(
+      BinaryArray.from(lastArr1).reverse().find(isPrime)
+    ) // undefined, not found
+    expect([...lastArr2].reverse().find(isPrime)).toEqual(
+      BinaryArray.from(lastArr2).reverse().find(isPrime)
+    ) // 11
   })
 })
