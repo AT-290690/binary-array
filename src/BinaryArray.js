@@ -286,10 +286,28 @@ export default class BinaryArray {
     return this
   }
 
-  reverseCopy() {
-    const copy = BinaryArray.from(this)
-    copy.reverse()
-    return copy
+  /**
+   * The group method executes the callback function once for each index of the Binary Array,
+   * returning a string (or value that can be coerced to a string) indicating the group of the element.
+   * A new property and Binary Array is created in the result object for each unique group name
+   * that is returned by the callback.
+   * Each element is added to the Binary Array in the property that corresponds to its group.
+   * @param callback - (item, index, arr )
+   * @returns Object
+   * @example
+   * BinaryArray.with(1,2,3,4).group((item) => (item % 2 == 0 ? "even" : "odd")
+   * // retunrs (this is array view)
+   * {"odd":[1,3],"even":[2,4]}
+   */
+  group(callback) {
+    const out = this.reduce((acc, item, index, arr) => {
+      const key = callback(item, index, arr)
+      if (key in acc) acc[key].append(item)
+      else acc[key] = new BinaryArray(key).with(item)
+      return acc
+    }, {})
+    for (let key in out) out[key].balance()
+    return out
   }
 
   /**
@@ -310,8 +328,8 @@ export default class BinaryArray {
    * arr.quickSort('asc')
    * arr.quickSort('des')
    * */
-  quickSort(dir) {
-    return quickSort(this, 0, this.length - 1, dir)
+  quickSort(order) {
+    return quickSort(this, 0, this.length - 1, order)
   }
 
   join(separator = ",") {
@@ -388,12 +406,6 @@ export default class BinaryArray {
     return this
   }
 
-  removeFromCopy(key, amount) {
-    const copy = BinaryArray.from(this)
-    copy.removeFrom(key, amount)
-    return copy
-  }
-
   toArray(deep) {
     return !deep ? [...this] : toArrayDeep(this)
   }
@@ -456,12 +468,6 @@ export default class BinaryArray {
 
   rotate(n = 1, direction = 1) {
     return direction === 1 ? this.rotateRight(n) : this.rotateLeft(n)
-  }
-
-  rotateCopy(n = 1, direction = 1) {
-    const copy = BinaryArray.from(this)
-    direction === 1 ? copy.rotateRight(n) : copy.rotateLeft(n)
-    return copy
   }
 
   compact() {
@@ -669,13 +675,13 @@ const partition = {
   },
 }
 
-const quickSort = (items, left, right, dir) => {
+const quickSort = (items, left, right, order) => {
   let index
-  const sortBy = partition[dir] ?? partition["asc"]
+  const sortBy = partition[order] ?? partition["asc"]
   if (items.length > 1) {
     index = sortBy(items, left, right) //index returned from partition
-    if (left < index - 1) quickSort(items, left, index - 1, dir) //more elements on the left side of the pivot
-    if (index < right) quickSort(items, index, right, dir) //more elements on the right side of the pivot
+    if (left < index - 1) quickSort(items, left, index - 1, order) //more elements on the left side of the pivot
+    if (index < right) quickSort(items, index, right, order) //more elements on the right side of the pivot
   }
   return items
 }

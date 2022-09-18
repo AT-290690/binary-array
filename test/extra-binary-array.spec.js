@@ -3,46 +3,58 @@ import BinaryArray from "../src/BinaryArray.js"
 describe("BinaryArray extra features", () => {
   it(".rotate should work as expected", () => {
     const arr1 = [1, 2, 3]
-    expect(BinaryArray.from(arr1).rotateCopy(0, 1).toArray()).toEqual([1, 2, 3])
-    expect(BinaryArray.from(arr1).rotateCopy(1, 1).toArray()).toEqual([3, 1, 2])
-    expect(BinaryArray.from(arr1).rotateCopy(2, 1).toArray()).toEqual([2, 3, 1])
-    expect(BinaryArray.from(arr1).rotateCopy(3, 1).toArray()).toEqual([1, 2, 3])
-    expect(BinaryArray.from(arr1).rotateCopy(4, 1).toArray()).toEqual([3, 1, 2])
-    expect(BinaryArray.from(arr1).rotateCopy(6, 1).toArray()).toEqual([1, 2, 3])
-    expect(BinaryArray.from(arr1).rotateCopy(0, -1).toArray()).toEqual([
+    expect(BinaryArray.from(arr1).copy().rotate(0, 1).toArray()).toEqual([
       1, 2, 3,
     ])
-    expect(BinaryArray.from(arr1).rotateCopy(1, -1).toArray()).toEqual([
-      2, 3, 1,
-    ])
-    expect(BinaryArray.from(arr1).rotateCopy(2, -1).toArray()).toEqual([
+    expect(BinaryArray.from(arr1).copy().rotate(1, 1).toArray()).toEqual([
       3, 1, 2,
     ])
-    expect(BinaryArray.from(arr1).rotateCopy(3, -1).toArray()).toEqual([
-      1, 2, 3,
-    ])
-    expect(BinaryArray.from(arr1).rotateCopy(4, -1).toArray()).toEqual([
+    expect(BinaryArray.from(arr1).copy().rotate(2, 1).toArray()).toEqual([
       2, 3, 1,
     ])
-    expect(BinaryArray.from(arr1).rotateCopy(6, -1).toArray()).toEqual([
+    expect(BinaryArray.from(arr1).copy().rotate(3, 1).toArray()).toEqual([
+      1, 2, 3,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(4, 1).toArray()).toEqual([
+      3, 1, 2,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(6, 1).toArray()).toEqual([
+      1, 2, 3,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(0, -1).toArray()).toEqual([
+      1, 2, 3,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(1, -1).toArray()).toEqual([
+      2, 3, 1,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(2, -1).toArray()).toEqual([
+      3, 1, 2,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(3, -1).toArray()).toEqual([
+      1, 2, 3,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(4, -1).toArray()).toEqual([
+      2, 3, 1,
+    ])
+    expect(BinaryArray.from(arr1).copy().rotate(6, -1).toArray()).toEqual([
       1, 2, 3,
     ])
 
     const arr2 = [1, 2, 3, 4]
 
-    expect(BinaryArray.from(arr2).rotateCopy(0, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr2).copy().rotate(0, 1).toArray()).toEqual([
       1, 2, 3, 4,
     ])
-    expect(BinaryArray.from(arr2).rotateCopy(1, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr2).copy().rotate(1, 1).toArray()).toEqual([
       4, 1, 2, 3,
     ])
-    expect(BinaryArray.from(arr2).rotateCopy(2, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr2).copy().rotate(2, 1).toArray()).toEqual([
       3, 4, 1, 2,
     ])
-    expect(BinaryArray.from(arr2).rotateCopy(3, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr2).copy().rotate(3, 1).toArray()).toEqual([
       2, 3, 4, 1,
     ])
-    expect(BinaryArray.from(arr2).rotateCopy(4, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr2).copy().rotate(4, 1).toArray()).toEqual([
       1, 2, 3, 4,
     ])
   })
@@ -174,22 +186,34 @@ describe("BinaryArray extra features", () => {
 
   it(".removeFrom should work as expected", () => {
     const arr = [1, 2, 3, 4, 5, 6, 7]
-    expect(BinaryArray.from(arr).removeFromCopy(1, 3).toArray()).toEqual([
+    expect(BinaryArray.from(arr).copy().removeFrom(1, 3).toArray()).toEqual([
       1, 5, 6, 7,
     ])
     expect(
-      BinaryArray.from(arr).removeFromCopy(1, arr.length).toArray()
+      BinaryArray.from(arr).copy().removeFrom(1, arr.length).toArray()
     ).toEqual([1])
-    expect(BinaryArray.from(arr).removeFromCopy(3, 1).toArray()).toEqual([
+    expect(BinaryArray.from(arr).copy().removeFrom(3, 1).toArray()).toEqual([
       1, 2, 3, 5, 6, 7,
     ])
-    expect(BinaryArray.from(arr).removeFromCopy(3, 0).toArray()).toEqual([
+    expect(BinaryArray.from(arr).copy().removeFrom(3, 0).toArray()).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ])
     expect(
-      BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
+      BinaryArray.from(arr).copy().removeFrom(0, arr.length).toArray()
     ).toEqual([])
   })
+
+  it(".group should work as expected", () => {
+    const group = new BinaryArray()
+      .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
+      .group((item) => (item % 2 == 0 ? "even" : "odd"))
+    for (const key in group) group[key] = group[key].toArray()
+    expect(group).toEqual({
+      odd: [1, 3, 5, 9, 1],
+      even: [2, 4, 4, 8, 2, 32, 222, 2],
+    })
+  })
+
   it(".isSorted should work as expected", () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
     expect(BinaryArray.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
@@ -217,6 +241,7 @@ describe("BinaryArray extra features", () => {
       )
     ).toBe(false)
   })
+
   it(".quickSort should work as expected", () => {
     expect(
       BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("asc").toArray()
@@ -225,6 +250,7 @@ describe("BinaryArray extra features", () => {
       BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("des").toArray()
     ).toEqual([1, 1, 2, 3, 4, 5, 8, 9].reverse())
   })
+
   it(".search should work as expected", () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
