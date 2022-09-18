@@ -1,7 +1,6 @@
 /**
  * Helper functions
  */
-
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels));
@@ -27,7 +26,7 @@ export default class BinaryArray {
   /**
    * Main methods
    */
-  left = [undefined];
+  left = [BinaryArray.negativeZeroEmptyValue];
   right = [];
 
   get offsetLeft() {
@@ -71,20 +70,14 @@ export default class BinaryArray {
     return offsetIndex >= 0 ? this.right[index] : this.left[index];
   }
 
-  index(index) {
-    const key = index + this.offsetLeft;
-    return key < 0 ? [key * -1, -1] : [key, 1];
-  }
-
-  set(key, value) {
-    const [index, direction] = this.index(key);
-    return direction >= 0
-      ? (this.right[index] = value)
-      : (this.left[index] = value);
+  set(index, value) {
+    const offset = index + this.offsetLeft;
+    if (offset >= 0) this.right[offset] = value;
+    else this.left[offset * -1] = value;
   }
 
   clear() {
-    this.left = [undefined];
+    this.left = [BinaryArray.negativeZeroEmptyValue];
     this.right = [];
   }
 
@@ -123,7 +116,7 @@ export default class BinaryArray {
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i]);
     return this;
   }
-
+  static negativeZeroEmptyValue = -1;
   /**
    * Array methods
    */
@@ -345,11 +338,12 @@ export default class BinaryArray {
     );
   }
 
-  addTo(key, value) {
-    if (key >= this.length)
-      for (let i = this.length; i <= key; i++) this.addToRight(undefined);
-    const [index, direction] = this.index(key);
-    direction >= 0 ? (this.right[index] = value) : (this.left[index] = value);
+  addTo(index, value) {
+    if (index >= this.length)
+      for (let i = this.length; i <= index; i++) this.addToRight(undefined);
+    const offset = index + this.offsetLeft;
+    if (offset >= 0) this.right[offset] = value;
+    else this.left[offset * -1] = value;
     return this;
   }
 
