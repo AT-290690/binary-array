@@ -22,6 +22,19 @@ const toArrayDeep = (entity) => {
     : entity
 }
 
+const binarySearch = (arr, by, start, end) => {
+  const index = ((end - start) / 2 + start) | 0.5
+  const current = arr.at(index)
+  if (current === undefined) return undefined
+  const [is, gt] = by(current)
+  if (end < start && !is) return undefined
+  if (is) return current
+  else {
+    if (gt) return binarySearch(arr, by, start, index - 1)
+    else return binarySearch(arr, by, index + 1, end)
+  }
+}
+
 export default class BinaryArray {
   /**
    * Main methods
@@ -54,6 +67,7 @@ export default class BinaryArray {
   }
 
   with(...initial) {
+    if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i])
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
@@ -303,6 +317,15 @@ export default class BinaryArray {
     return BinaryArray.from(this.toArray().sort(callback))
   }
 
+  sortMut(callback) {
+    const initial = this.toArray().sort(callback)
+    this.clear()
+    const half = (initial.length / 2) | 0.5
+    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i])
+    for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
+    return this
+  }
+
   join(separator = ",") {
     let output = ""
     for (let i = 0; i < this.length - 1; i++) output += this.get(i) + separator
@@ -539,5 +562,43 @@ export default class BinaryArray {
   scan(callback) {
     for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
     return this
+  }
+  /**
+   * @param order
+   * check if the array is sorted
+   * defaults to scending
+   * if a function is provided it will use it instead
+   * the default signature is
+   * @example
+   * (current, index, arr) => !index || arr.at(index - 1) <= current
+   * @returns boolean
+   */
+  isSorted(order = true) {
+    return this.every(
+      typeof order === "function"
+        ? order
+        : order
+        ? (current, index, arr) => !index || arr.at(index - 1) <= current
+        : (current, index, arr) => !index || arr.at(index - 1) >= current
+    )
+  }
+  /**
+   * perform binary search queries in the array
+   * requires the array to be sorted first!
+   * @param target is either:
+   * a primitive value
+   * or a tupple of [item === target, item > 2]
+   * where the second case is for extra validation
+   * like a key in a object or some other edge case assertion
+   * default seach callback is
+   * @example
+   * (item) => (item === target ? [true, false] : [false, item > target])
+   * */
+  search(target) {
+    const by =
+      typeof target === "function"
+        ? target
+        : (item) => (item === target ? [true, false] : [false, item > target])
+    return binarySearch(this, by, 0, this.length)
   }
 }

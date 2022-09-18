@@ -176,4 +176,60 @@ describe("BinaryArray extra features", () => {
       BinaryArray.from(arr).removeFromCopy(0, arr.length).toArray()
     ).toEqual([])
   })
+  it(".isSorted (non-array function) should work as expected", () => {
+    expect(BinaryArray.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
+    expect(BinaryArray.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
+    expect(BinaryArray.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
+    expect(BinaryArray.from(["a", "b", "c"]).isSorted()).toBe(true)
+    expect(BinaryArray.from(["a", "c", "b"]).isSorted()).toBe(false)
+    expect(BinaryArray.from(["c", "b", "a"]).isSorted()).toBe(false)
+    expect(BinaryArray.from(["c", "b", "a"]).isSorted(false)).toBe(true)
+    expect(
+      BinaryArray.from([
+        { key: "a", value: 1 },
+        { key: "b", value: 2 },
+        { key: "c", value: 4 },
+      ]).isSorted(
+        (current, index, arr) => !index || arr.at(index - 1).key <= current.key
+      )
+    ).toBe(true)
+    expect(
+      BinaryArray.from([
+        { key: "b", value: 1 },
+        { key: "a", value: 8 },
+        { key: "c", value: 9 },
+      ]).isSorted(
+        (current, index, arr) => !index || arr.at(index - 1).key <= current.key
+      )
+    ).toBe(false)
+  })
+  it(".search (non-array function) should work as expected", () => {
+    expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
+    expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
+    expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
+      undefined
+    )
+    const searchKey = "d"
+    const objectTarget = { key: searchKey, value: 7 }
+    expect(
+      BinaryArray.from([
+        { key: "f", value: 14 },
+        { key: "g", value: 24 },
+        { key: "g", value: 14 },
+        { key: "b", value: 2 },
+        { key: "c", value: 43 },
+        objectTarget,
+        { key: "e", value: 24 },
+        { key: "a", value: 1 },
+        { key: "m", value: 24 },
+        { key: "l", value: 43 },
+      ])
+        .sort((a, b) => (a.key > b.key ? 1 : -1))
+        .search((target) =>
+          target.key === searchKey
+            ? [true, false]
+            : [false, target.key > searchKey]
+        )
+    ).toMatchObject(objectTarget)
+  })
 })

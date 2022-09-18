@@ -2,7 +2,6 @@ import BinaryArray from "../src/BinaryArray.js"
 import Benchmark from "nanobench"
 
 const N = 1_000_000
-
 Benchmark(`binaryArray.get middle N = ${N}`, (bench) => {
   const binaryArray = new BinaryArray()
   for (let i = 0; i < N; i++) {
@@ -107,6 +106,21 @@ Benchmark(`binaryArray.rotateLeft N = ${N}`, (bench) => {
 
   bench.start()
   binaryArray.rotateLeft(N - 1)
+  bench.end()
+  binaryArray.clear()
+})
+
+Benchmark(`binaryArray.search N = ${N}`, (bench) => {
+  const binaryArray = new BinaryArray()
+  for (let i = 0; i < N; i++) {
+    binaryArray.append(i)
+  }
+  const target = (N / 3) | 0.5
+  binaryArray.append(target)
+  binaryArray.balance()
+
+  bench.start()
+  binaryArray.search(target)
   bench.end()
   binaryArray.clear()
 })
