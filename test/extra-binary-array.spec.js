@@ -185,6 +185,42 @@ describe("BinaryArray extra features", () => {
   })
 
   it(".removeFrom should work as expected", () => {
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(0, 0)
+        .toArray()
+    ).toEqual([-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(0, 1)
+        .toArray()
+    ).toEqual([-1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(0, 2)
+        .toArray()
+    ).toEqual([0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(1, 1)
+        .toArray()
+    ).toEqual([-2, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(2, 1)
+        .toArray()
+    ).toEqual([-2, -1, 1, 2, 3, 4, 5, 2, 3, 4, 5])
+    expect(
+      new BinaryArray()
+        .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
+        .removeFrom(2, 4)
+        .toArray()
+    ).toEqual([-2, -1, 4, 5, 2, 3, 4, 5])
     const arr = [1, 2, 3, 4, 5, 6, 7]
     expect(BinaryArray.from(arr).copy().removeFrom(1, 3).toArray()).toEqual([
       1, 5, 6, 7,

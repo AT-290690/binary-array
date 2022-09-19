@@ -393,15 +393,14 @@ export default class BinaryArray {
   removeFrom(key, amount) {
     const len = this.length - key
     amount = len < amount ? len : amount
-
     if (this.offsetLeft + key > 0) {
       this.rotateRight(len)
-      for (let i = 0; i < amount; i++) this.pop()
-      for (let i = 0; i < len; i++) this.append(this.shift())
+      for (let i = 0; i < amount; i++) this.cut()
+      for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(key)
-      for (let i = 0; i < amount; i++) this.shift()
-      for (let i = 0; i < key; i++) this.prepend(this.pop())
+      for (let i = 0; i < amount; i++) this.chop()
+      for (let i = 0; i < key; i++) this.prepend(this.cut())
     }
     return this
   }
