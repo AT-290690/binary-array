@@ -207,8 +207,8 @@ describe("BinaryArray extra features", () => {
     const group = new BinaryArray()
       .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
       .group((item) => (item % 2 == 0 ? "even" : "odd"))
-    for (const key in group) group[key] = group[key].toArray()
-    expect(group).toEqual({
+      .map((item) => item.toArray())
+    expect(group.items).toEqual({
       odd: [1, 3, 5, 9, 1],
       even: [2, 4, 4, 8, 2, 32, 222, 2],
     })

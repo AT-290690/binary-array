@@ -302,11 +302,11 @@ export default class BinaryArray {
   group(callback) {
     const out = this.reduce((acc, item, index, arr) => {
       const key = callback(item, index, arr)
-      if (key in acc) acc[key].append(item)
-      else acc[key] = new BinaryArray(key).with(item)
+      if (acc.has(key)) acc.get(key).append(item)
+      else acc.set(key, new BinaryArray(key).with(item))
       return acc
-    }, {})
-    for (let key in out) out[key].balance()
+    }, new Group())
+    out.forEach((item) => item.balance())
     return out
   }
 
@@ -726,5 +726,45 @@ const binarySearch = (arr, by, start, end) => {
   else {
     if (gt) return binarySearch(arr, by, start, index - 1)
     else return binarySearch(arr, by, index + 1, end)
+  }
+}
+
+class Group {
+  constructor() {
+    this.items = {}
+  }
+  get(key) {
+    return this.items[key]
+  }
+  set(key, value) {
+    this.items[key] = value
+    return this
+  }
+  get values() {
+    return Object.values(this.items)
+  }
+  get keys() {
+    return Object.keys(this.items)
+  }
+  has(key) {
+    return key in this.items
+  }
+  forEntries(callback) {
+    for (let key in this.items) {
+      callback([key, this.items[key]], this.items)
+    }
+    return this
+  }
+  forEach(callback) {
+    for (let key in this.items) {
+      callback(this.items[key], key)
+    }
+    return this
+  }
+  map(callback) {
+    for (let key in this.items) {
+      this.items[key] = callback(this.items[key], key, this.items)
+    }
+    return this
   }
 }
