@@ -309,11 +309,7 @@ describe('BinaryArray extra features', () => {
         { key: 'l', value: 43 },
       ])
         .mergeSort((a, b) => (a.key > b.key ? 1 : -1))
-        .search((target) =>
-          target.key === searchKey
-            ? [true, false]
-            : [false, target.key > searchKey]
-        )
+        .search(searchKey, (current) => current.key)
     ).toMatchObject(objectTarget)
   })
 

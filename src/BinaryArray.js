@@ -180,8 +180,9 @@ export default class BinaryArray {
       if (this.get(i) === item) return i
   }
 
-  includes(val) {
-    for (let i = 0; i < this.length; i++) if (this.get(i) === val) return true
+  includes(val, fromIndex = 0) {
+    for (let i = fromIndex; i < this.length; i++)
+      if (sameValueZero(this.get(i), val)) return true
     return false
   }
 
@@ -609,21 +610,13 @@ export default class BinaryArray {
   /**
    * perform binary search queries in the array
    * requires the array to be sorted first!
-   * @param target is either:
-   * a primitive value
-   * or a tupple of [item === target, item > 2]
-   * where the second case is for extra validation
-   * like a key in a object or some other edge case assertion
-   * default seach callback is
+   * @param target
+   * @param identity
    * @example
-   * (item) => (item === target ? [true, false] : [false, item > target])
+   * (current) => current.key
    * */
-  search(target) {
-    const by =
-      typeof target === 'function'
-        ? target
-        : (item) => (item === target ? [true, false] : [false, item > target])
-    return binarySearch(this, by, 0, this.length)
+  search(target, identity = (current) => current) {
+    return binarySearch(this, target, identity, 0, this.length)
   }
 }
 
@@ -730,16 +723,18 @@ const mergeSort = (array, callback) => {
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
 }
 
-const binarySearch = (arr, by, start, end) => {
+const binarySearch = (arr, target, by, start, end) => {
   const index = ((end - start) / 2 + start) | 0.5
   const current = arr.at(index)
   if (current === undefined) return undefined
-  const [is, gt] = by(current)
-  if (end < start && !is) return undefined
+  const identity = by(current)
+  const is = identity === target
   if (is) return current
+  if (end < start && !is) return undefined
   else {
-    if (gt) return binarySearch(arr, by, start, index - 1)
-    else return binarySearch(arr, by, index + 1, end)
+    if (identity > target)
+      return binarySearch(arr, target, by, start, index - 1)
+    else return binarySearch(arr, target, by, index + 1, end)
   }
 }
 

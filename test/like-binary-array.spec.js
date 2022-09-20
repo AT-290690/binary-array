@@ -336,6 +336,21 @@ describe('BinaryArray mimic Array', () => {
     expect(binArr.includes('orange')).toBe(arr.includes('orange'))
     expect(binArr.includes('lemon')).toBe(arr.includes('lemon'))
     expect(binArr.includes('pomegranate')).toBe(arr.includes('pomegranate'))
+
+    expect([1, 2, 3].includes(2)).toBe(BinaryArray.from([1, 2, 3]).includes(2))
+    expect([1, 2, 3].includes(4)).toBe(BinaryArray.from([1, 2, 3]).includes(4))
+    expect([1, 2, 3].includes(3, 3)).toBe(
+      BinaryArray.from([1, 2, 3]).includes(3, 3)
+    )
+    expect([1, 2, 3].includes(3, -1)).toBe(
+      BinaryArray.from([1, 2, 3]).includes(3, -1)
+    )
+    expect([1, 2, NaN].includes(NaN)).toBe(
+      BinaryArray.from([1, 2, NaN]).includes(NaN)
+    )
+    expect(['1', '2', '3'].includes(3)).toBe(
+      BinaryArray.from(['1', '2', '3']).includes(3)
+    )
   })
 
   it('.find should return expected array', () => {
