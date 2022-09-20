@@ -128,11 +128,9 @@ export default class BinaryArray {
   }
 
   static from(iterable) {
-    if (iterable.length !== undefined) {
-      const initial =
-        iterable[0] !== undefined ? iterable : Array.from(iterable)
-      return new BinaryArray().with(...initial)
-    }
+    return isIterable(iterable)
+      ? new BinaryArray().with(...iterable)
+      : new BinaryArray()
   }
 
   at(index) {
@@ -669,7 +667,10 @@ export default class BinaryArray {
 */
 const sameValueZero = (x, y) => x === y || (Number.isNaN(x) && Number.isNaN(y))
 const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
-
+const isIterable = (iter) =>
+  iter === null || iter === undefined
+    ? false
+    : typeof iter[Symbol.iterator] === 'function'
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
