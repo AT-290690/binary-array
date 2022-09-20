@@ -201,7 +201,12 @@ describe('BinaryArray mimic Array', () => {
 
     expect([...rasultBinaryArray]).toEqual(resultArray)
     expect(resultArray.length).toEqual(rasultBinaryArray.length)
-
+  })
+  it('.flat, flatten should work the same way', () => {
+    const arr = [4, 1, 1, 2, 3, 8, 7]
+    const binArr = BinaryArray.from(arr)
+    const rasultBinaryArray = binArr.map((i) => i ** i + 10 - 2)
+    const resultArray = arr.map((i) => i ** i + 10 - 2)
     const flatBinArr = rasultBinaryArray.concat(
       BinaryArray.from([
         51,
@@ -253,8 +258,48 @@ describe('BinaryArray mimic Array', () => {
     expect(flatMapBinaryArray.flatten((x) => x * 10 + 4).toArray(true)).toEqual(
       flatMapArray.flatMap((item) => item.map((x) => x * 10 + 4))
     )
-  })
+    expect([1, 2, [3, 4]].flat()).toEqual(
+      new BinaryArray()
+        .with(1, 2, new BinaryArray().with(3, 4))
+        .flat()
+        .toArray(true)
+    )
 
+    expect([1, 2, [3, 4, [5, 6]]].flat()).toEqual(
+      new BinaryArray()
+        .with(1, 2, new BinaryArray().with(3, 4, new BinaryArray().with(5, 6)))
+        .flat()
+        .toArray(true)
+    )
+    expect([1, 2, [3, 4, [5, 6]]].flat(2)).toEqual(
+      new BinaryArray()
+        .with(1, 2, new BinaryArray().with(3, 4, new BinaryArray().with(5, 6)))
+        .flat(2)
+        .toArray(true)
+    )
+    expect([1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]].flat(Infinity)).toEqual(
+      new BinaryArray()
+        .with(
+          1,
+          2,
+          new BinaryArray().with(
+            3,
+            4,
+            new BinaryArray().with(
+              5,
+              6,
+              new BinaryArray().with(7, 8, new BinaryArray().with(9, 10))
+            )
+          )
+        )
+        .flat(Infinity)
+        .toArray(true)
+    )
+    // ignore this case for now
+    // expect([1, 2, , 4, 5].flat()).toEqual(
+    //   BinaryArray.from([1, 2, , 4, 5]).flat().toArray(true)
+    // )
+  })
   it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7]
     const binArr1 = BinaryArray.from(arr1)

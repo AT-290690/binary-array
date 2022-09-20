@@ -678,8 +678,8 @@ const quickSortAsc = (items, left, right) => {
         j--
       }
     }
-    if (left < i - 1) quickSortAsc(items, left, i - 1) //more elements on the left side of the pivot
-    if (i < right) quickSortAsc(items, i, right) //more elements on the right side of the pivot
+    if (left < i - 1) quickSortAsc(items, left, i - 1)
+    if (i < right) quickSortAsc(items, i, right)
   }
   return items
 }
@@ -697,8 +697,8 @@ const quickSortDesc = (items, left, right) => {
         j--
       }
     }
-    if (left < i - 1) quickSortDesc(items, left, i - 1) //more elements on the left side of the pivot
-    if (i < right) quickSortDesc(items, i, right) //more elements on the right side of the pivot
+    if (left < i - 1) quickSortDesc(items, left, i - 1)
+    if (i < right) quickSortDesc(items, i, right)
   }
   return items
 }
