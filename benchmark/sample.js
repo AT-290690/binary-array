@@ -1,5 +1,5 @@
-import BinaryArray from "../src/BinaryArray.js"
-import Benchmark from "nanobench"
+import BinaryArray from '../src/BinaryArray.js'
+import Benchmark from 'nanobench'
 
 const N = 500_000
 

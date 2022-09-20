@@ -329,13 +329,13 @@ export default class BinaryArray {
    * arr.quickSort('des')
    * */
   quickSort(order) {
-    return order === "des"
+    return order === 'des'
       ? quickSortDesc(this, 0, this.length - 1)
       : quickSortAsc(this, 0, this.length - 1)
   }
 
-  join(separator = ",") {
-    let output = ""
+  join(separator = ',') {
+    let output = ''
     for (let i = 0; i < this.length - 1; i++) output += this.get(i) + separator
     output += this.get(this.length - 1)
     return output
@@ -597,9 +597,9 @@ export default class BinaryArray {
    * (current, index, arr) => !index || arr.at(index - 1) <= current
    * @returns boolean
    */
-  isSorted(order = true) {
+  isSorted(order = 'asc') {
     return this.every(
-      typeof order === "function"
+      typeof order === 'function'
         ? order
         : order
         ? (current, index, arr) => !index || arr.at(index - 1) <= current
@@ -620,7 +620,7 @@ export default class BinaryArray {
    * */
   search(target) {
     const by =
-      typeof target === "function"
+      typeof target === 'function'
         ? target
         : (item) => (item === target ? [true, false] : [false, item > target])
     return binarySearch(this, by, 0, this.length)

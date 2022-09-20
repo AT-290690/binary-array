@@ -1,10 +1,10 @@
-import BinaryArray from "../src/BinaryArray.js"
+import BinaryArray from '../src/BinaryArray.js'
 const isPrime = (num) => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
   return num > 1
 }
-describe("BinaryArray mimic Array", () => {
-  it(".get and .at should access the correct element", () => {
+describe('BinaryArray mimic Array', () => {
+  it('.get and .at should access the correct element', () => {
     const arr = Array.from([1, 2, 3])
     const binArr = BinaryArray.from(arr)
 
@@ -21,7 +21,7 @@ describe("BinaryArray mimic Array", () => {
     expect(arr.at(2)).toEqual(binArr.at(2))
   })
 
-  it(".push, .pop, .unshift, .shift, .set should modify the collection the same", () => {
+  it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
     const arr = Array.from([1, 2, 3])
     const binArr = BinaryArray.from(arr)
 
@@ -41,7 +41,7 @@ describe("BinaryArray mimic Array", () => {
     expect(arr.length).toEqual(binArr.length)
   })
 
-  it(".filter should work exactly like Array.prototype.filter", () => {
+  it('.filter should work exactly like Array.prototype.filter', () => {
     const array1 = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
     expect(array1.filter(isPrime)).toEqual(
@@ -59,7 +59,7 @@ describe("BinaryArray mimic Array", () => {
       {},
       { id: null },
       { id: NaN },
-      { id: "undefined" },
+      { id: 'undefined' },
     ]
     expect(
       array2.filter((item) => {
@@ -78,20 +78,20 @@ describe("BinaryArray mimic Array", () => {
     )
     expect(arrayInvalidEntries).toEqual(binaryArrayInvalidEntries)
 
-    const fruits = ["apple", "banana", "grapes", "mango", "orange"]
+    const fruits = ['apple', 'banana', 'grapes', 'mango', 'orange']
     const binaryFruits = BinaryArray.from(fruits)
 
     const filterItems = (arr, query) =>
       arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()))
-    expect(filterItems(fruits, "ap")).toEqual(
-      filterItems(binaryFruits, "ap").toArray()
+    expect(filterItems(fruits, 'ap')).toEqual(
+      filterItems(binaryFruits, 'ap').toArray()
     ) // ['apple', 'grapes']
-    expect(filterItems(fruits, "an")).toEqual(
-      filterItems(binaryFruits, "an").toArray()
+    expect(filterItems(fruits, 'an')).toEqual(
+      filterItems(binaryFruits, 'an').toArray()
     ) // ['banana', 'mango', 'orange']
   })
 
-  it("operations 1 .map, .filter, .mergeSort, .reverse, .slice, .reduce, .flat should modify the collection the same", () => {
+  it('operations 1 .map, .filter, .mergeSort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = BinaryArray.from(arr)
 
@@ -183,7 +183,7 @@ describe("BinaryArray mimic Array", () => {
     )
   })
 
-  it("operations 2 .map, .filter, .mergeSort, .reverse, .slice, .reduce, .flat should modify the collection the same", () => {
+  it('operations 2 .map, .filter, .mergeSort, .reverse, .slice, .reduce, .flat should modify the collection the same', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = BinaryArray.from(arr)
 
@@ -255,7 +255,7 @@ describe("BinaryArray mimic Array", () => {
     )
   })
 
-  it(".reverse should modify the collection the same", () => {
+  it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7]
     const binArr1 = BinaryArray.from(arr1)
     expect(binArr1.reverse().toArray()).toEqual(arr1.reverse())
@@ -273,7 +273,7 @@ describe("BinaryArray mimic Array", () => {
     expect(arr2.length).toEqual(binArr2.length)
   })
 
-  it(".slice should create a new collection from the same range", () => {
+  it('.slice should create a new collection from the same range', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = BinaryArray.from(arr)
     expect(arr.slice(1)).toEqual(binArr.slice(1).toArray())
@@ -283,16 +283,16 @@ describe("BinaryArray mimic Array", () => {
     expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray())
   })
 
-  it(".splice should modify the array in place", () => {
-    const months = ["Jan", "March", "April", "June"]
+  it('.splice should modify the array in place', () => {
+    const months = ['Jan', 'March', 'April', 'June']
     const binMonths = BinaryArray.from(months)
-    expect(months.splice(1, 0, "Feb")).toEqual([
-      ...binMonths.splice(1, 0, "Feb"),
+    expect(months.splice(1, 0, 'Feb')).toEqual([
+      ...binMonths.splice(1, 0, 'Feb'),
     ])
     expect(months).toEqual([...binMonths])
     expect(months.length).toEqual(binMonths.length)
-    expect(months.splice(4, 1, "May")).toEqual([
-      ...binMonths.splice(4, 1, "May"),
+    expect(months.splice(4, 1, 'May')).toEqual([
+      ...binMonths.splice(4, 1, 'May'),
     ])
     expect(months).toEqual([...binMonths])
     expect(months.length).toEqual(binMonths.length)
@@ -300,14 +300,14 @@ describe("BinaryArray mimic Array", () => {
     const arr = [1, 2, 3, 4, 5, 6]
     const binArr = BinaryArray.from(arr)
 
-    expect(arr.splice(2, 3, "a", "b", "c")).toEqual([
-      ...binArr.splice(2, 3, "a", "b", "c"),
+    expect(arr.splice(2, 3, 'a', 'b', 'c')).toEqual([
+      ...binArr.splice(2, 3, 'a', 'b', 'c'),
     ])
     expect(arr).toEqual([...binArr])
     expect(arr.length).toEqual(binArr.length)
   })
 
-  it(".addTo shoud update the size of the array if index is bigger than the current array size", () => {
+  it('.addTo shoud update the size of the array if index is bigger than the current array size', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = BinaryArray.from(arr)
     arr[20] = 10
@@ -317,42 +317,42 @@ describe("BinaryArray mimic Array", () => {
     expect(arr.length).toEqual(binArr.length)
   })
 
-  it(".join should return expected array", () => {
-    const string = "0101010101.01010101010101000.010101001.01.0101001.010.101"
+  it('.join should return expected array', () => {
+    const string = '0101010101.01010101010101000.010101001.01.0101001.010.101'
     expect(
       BinaryArray.from(string)
-        .filter((x) => x !== ".")
-        .join(".")
+        .filter((x) => x !== '.')
+        .join('.')
     ).toEqual(
       Array.from(string)
-        .filter((x) => x !== ".")
-        .join(".")
+        .filter((x) => x !== '.')
+        .join('.')
     )
   })
 
-  it(".includes should return expected array", () => {
-    const arr = ["apple", "orange", "peach", "lemon"]
+  it('.includes should return expected array', () => {
+    const arr = ['apple', 'orange', 'peach', 'lemon']
     const binArr = BinaryArray.from(arr)
-    expect(binArr.includes("orange")).toBe(arr.includes("orange"))
-    expect(binArr.includes("lemon")).toBe(arr.includes("lemon"))
-    expect(binArr.includes("pomegranate")).toBe(arr.includes("pomegranate"))
+    expect(binArr.includes('orange')).toBe(arr.includes('orange'))
+    expect(binArr.includes('lemon')).toBe(arr.includes('lemon'))
+    expect(binArr.includes('pomegranate')).toBe(arr.includes('pomegranate'))
   })
 
-  it(".find should return expected array", () => {
-    const arr = ["apple", "orange", "peach", "lemon"]
+  it('.find should return expected array', () => {
+    const arr = ['apple', 'orange', 'peach', 'lemon']
     const binArr = BinaryArray.from(arr)
-    expect(binArr.find((item) => item === "orange")).toBe(
-      arr.find((item) => item === "orange")
+    expect(binArr.find((item) => item === 'orange')).toBe(
+      arr.find((item) => item === 'orange')
     )
-    expect(binArr.find((item) => item === "lemon")).toBe(
-      arr.find((item) => item === "lemon")
+    expect(binArr.find((item) => item === 'lemon')).toBe(
+      arr.find((item) => item === 'lemon')
     )
-    expect(binArr.find((item) => item === "pomegranate")).toBe(
-      arr.find((item) => item === "pomegranate")
+    expect(binArr.find((item) => item === 'pomegranate')).toBe(
+      arr.find((item) => item === 'pomegranate')
     )
-    expect(binArr.indexOf("orange")).toBe(arr.indexOf("orange"))
-    expect(binArr.indexOf("lemon")).toBe(arr.indexOf("lemon"))
-    expect(binArr.indexOf("pomegranate")).toBe(arr.indexOf("pomegranate"))
+    expect(binArr.indexOf('orange')).toBe(arr.indexOf('orange'))
+    expect(binArr.indexOf('lemon')).toBe(arr.indexOf('lemon'))
+    expect(binArr.indexOf('pomegranate')).toBe(arr.indexOf('pomegranate'))
 
     const lastArr1 = [4, 6, 8, 12]
     const lastArr2 = [4, 5, 7, 8, 9, 11, 12]

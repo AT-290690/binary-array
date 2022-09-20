@@ -15,7 +15,8 @@
     "preset": "./jest.json"
   },
   "prettier": {
-    "semi": false
+    "semi": false,
+    "singleQuote": true
   },
   "devDependencies": {
     "@babel/preset-env": "^7.14.9"

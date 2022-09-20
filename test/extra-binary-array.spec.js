@@ -1,7 +1,7 @@
-import BinaryArray from "../src/BinaryArray.js"
+import BinaryArray from '../src/BinaryArray.js'
 
-describe("BinaryArray extra features", () => {
-  it(".rotate should work as expected", () => {
+describe('BinaryArray extra features', () => {
+  it('.rotate should work as expected', () => {
     const arr1 = [1, 2, 3]
     expect(BinaryArray.from(arr1).copy().rotate(0, 1).toArray()).toEqual([
       1, 2, 3,
@@ -59,22 +59,22 @@ describe("BinaryArray extra features", () => {
     ])
   })
 
-  it(".compact should work as expected", () => {
+  it('.compact should work as expected', () => {
     expect(
       new BinaryArray()
-        .with(1, 0, 0, 4, "", false, undefined, 3, 4)
+        .with(1, 0, 0, 4, '', false, undefined, 3, 4)
         .compact()
         .toArray()
     ).toEqual([1, 4, 3, 4])
   })
 
-  it(".unique should work as expected", () => {
+  it('.unique should work as expected', () => {
     expect(
       new BinaryArray().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).unique().toArray()
     ).toEqual([1, 2, 3])
   })
 
-  it(".duplicates should work as expected", () => {
+  it('.duplicates should work as expected', () => {
     expect(
       new BinaryArray()
         .with(1, 2, 2, 0, 2, 5, 2, 9, 3, 3, 3, 4, 8, 9)
@@ -84,7 +84,7 @@ describe("BinaryArray extra features", () => {
     ).toEqual([2, 2, 2, 2, 3, 3, 3, 9, 9])
   })
 
-  it(".partition should work as expected", () => {
+  it('.partition should work as expected', () => {
     expect(
       new BinaryArray()
         .with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3)
@@ -98,7 +98,7 @@ describe("BinaryArray extra features", () => {
     ])
   })
 
-  it("Set methods should work as expected", () => {
+  it('Set methods should work as expected', () => {
     const a1 = new BinaryArray().with(1, 2, 3, 4)
     const b1 = new BinaryArray().with(8, 9, 3, 2, 4)
     expect(a1.symetricdifference(b1).toArray()).toEqual([8, 9, 1])
@@ -126,7 +126,7 @@ describe("BinaryArray extra features", () => {
     ).toEqual([1, 5])
   })
 
-  it(".swap should work as expected", () => {
+  it('.swap should work as expected', () => {
     const arr = new BinaryArray().with(1, 2, 3)
     arr.swap(0, 2)
     expect([...arr]).toEqual([3, 2, 1])
@@ -134,7 +134,7 @@ describe("BinaryArray extra features", () => {
     expect([...arr]).toEqual([1, 2, 3])
   })
 
-  it(".scan should work as expected", () => {
+  it('.scan should work as expected', () => {
     const out = []
     new BinaryArray()
       .with(1, 2, 3)
@@ -144,7 +144,7 @@ describe("BinaryArray extra features", () => {
     expect(out).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9])
   })
 
-  it(".append, .prepend, .tail, .head should work as expected", () => {
+  it('.append, .prepend, .tail, .head should work as expected', () => {
     const arr = new BinaryArray().with(1, 2, 3)
     expect(
       arr.append(4).append(5).prepend(0).prepend(-1).prepend(-2).toArray()
@@ -158,7 +158,7 @@ describe("BinaryArray extra features", () => {
     expect(arr.chop()).toBe(2)
   })
 
-  it(".balance should work as expected", () => {
+  it('.balance should work as expected', () => {
     const arr = new BinaryArray().with(6, 6, 6)
 
     arr.push(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
@@ -184,7 +184,7 @@ describe("BinaryArray extra features", () => {
     expect(arr.right).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10])
   })
 
-  it(".removeFrom should work as expected", () => {
+  it('.removeFrom should work as expected', () => {
     expect(
       new BinaryArray()
         .with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5)
@@ -239,10 +239,10 @@ describe("BinaryArray extra features", () => {
     ).toEqual([])
   })
 
-  it(".group should work as expected", () => {
+  it('.group should work as expected', () => {
     const group = new BinaryArray()
       .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
-      .group((item) => (item % 2 == 0 ? "even" : "odd"))
+      .group((item) => (item % 2 == 0 ? 'even' : 'odd'))
       .map((item) => item.toArray())
     expect(group.items).toEqual({
       odd: [1, 3, 5, 9, 1],
@@ -250,63 +250,63 @@ describe("BinaryArray extra features", () => {
     })
   })
 
-  it(".isSorted should work as expected", () => {
+  it('.isSorted should work as expected', () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
     expect(BinaryArray.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
     expect(BinaryArray.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
-    expect(BinaryArray.from(["a", "b", "c"]).isSorted()).toBe(true)
-    expect(BinaryArray.from(["a", "c", "b"]).isSorted()).toBe(false)
-    expect(BinaryArray.from(["c", "b", "a"]).isSorted()).toBe(false)
-    expect(BinaryArray.from(["c", "b", "a"]).isSorted(false)).toBe(true)
+    expect(BinaryArray.from(['a', 'b', 'c']).isSorted()).toBe(true)
+    expect(BinaryArray.from(['a', 'c', 'b']).isSorted()).toBe(false)
+    expect(BinaryArray.from(['c', 'b', 'a']).isSorted()).toBe(false)
+    expect(BinaryArray.from(['c', 'b', 'a']).isSorted(false)).toBe(true)
     expect(
       BinaryArray.from([
-        { key: "a", value: 1 },
-        { key: "b", value: 2 },
-        { key: "c", value: 4 },
+        { key: 'a', value: 1 },
+        { key: 'b', value: 2 },
+        { key: 'c', value: 4 },
       ]).isSorted(
         (current, index, arr) => !index || arr.at(index - 1).key <= current.key
       )
     ).toBe(true)
     expect(
       BinaryArray.from([
-        { key: "b", value: 1 },
-        { key: "a", value: 8 },
-        { key: "c", value: 9 },
+        { key: 'b', value: 1 },
+        { key: 'a', value: 8 },
+        { key: 'c', value: 9 },
       ]).isSorted(
         (current, index, arr) => !index || arr.at(index - 1).key <= current.key
       )
     ).toBe(false)
   })
 
-  it(".quickSort should work as expected", () => {
+  it('.quickSort should work as expected', () => {
     expect(
-      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("asc").toArray()
+      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('asc').toArray()
     ).toEqual([1, 1, 2, 3, 4, 5, 8, 9])
     expect(
-      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort("des").toArray()
+      BinaryArray.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('des').toArray()
     ).toEqual([1, 1, 2, 3, 4, 5, 8, 9].reverse())
   })
 
-  it(".search should work as expected", () => {
+  it('.search should work as expected', () => {
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
     expect(BinaryArray.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
       undefined
     )
-    const searchKey = "d"
+    const searchKey = 'd'
     const objectTarget = { key: searchKey, value: 7 }
     expect(
       BinaryArray.from([
-        { key: "f", value: 14 },
-        { key: "g", value: 24 },
-        { key: "g", value: 14 },
-        { key: "b", value: 2 },
-        { key: "c", value: 43 },
+        { key: 'f', value: 14 },
+        { key: 'g', value: 24 },
+        { key: 'g', value: 14 },
+        { key: 'b', value: 2 },
+        { key: 'c', value: 43 },
         objectTarget,
-        { key: "e", value: 24 },
-        { key: "a", value: 1 },
-        { key: "m", value: 24 },
-        { key: "l", value: 43 },
+        { key: 'e', value: 24 },
+        { key: 'a', value: 1 },
+        { key: 'm', value: 24 },
+        { key: 'l', value: 43 },
       ])
         .mergeSort((a, b) => (a.key > b.key ? 1 : -1))
         .search((target) =>
@@ -317,7 +317,7 @@ describe("BinaryArray extra features", () => {
     ).toMatchObject(objectTarget)
   })
 
-  it(".without shout work as expected", () => {
+  it('.without shout work as expected', () => {
     const items = [2, 1, 2, 3]
     const binArr = BinaryArray.from(items)
     expect(binArr.without(1, 2).toArray()).toEqual([3])

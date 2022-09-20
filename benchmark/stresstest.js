@@ -1,5 +1,5 @@
-import BinaryArray from "../src/BinaryArray.js"
-import Benchmark from "nanobench"
+import BinaryArray from '../src/BinaryArray.js'
+import Benchmark from 'nanobench'
 
 const N = 1_000_000
 Benchmark(`binaryArray.get middle N = ${N}`, (bench) => {
@@ -100,7 +100,7 @@ Benchmark(`binaryArray.quickSort and binaryArray.search N = ${N}`, (bench) => {
   binaryArray.append(target)
   binaryArray.balance()
   bench.start()
-  binaryArray.quickSort("asc").search(target)
+  binaryArray.quickSort('asc').search(target)
   bench.end()
   binaryArray.clear()
 })
