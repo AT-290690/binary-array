@@ -471,6 +471,13 @@ export default class BinaryArray {
     return direction === 1 ? this.rotateRight(n) : this.rotateLeft(n)
   }
 
+  // Creates an array excluding all given values using SameValueZero for equality comparisons.
+  without(...excludes) {
+    return this.filter(
+      (item) => !excludes.some((exclude) => sameValueZero(item, exclude))
+    )
+  }
+
   compact() {
     return this.filter(Boolean)
   }
@@ -621,6 +628,17 @@ export default class BinaryArray {
 }
 
 /**  Helper functions */
+/** 
+  If Type(x) is different from Type(y), return false.
+  If Type(x) is Number, then
+  If x is NaN and y is NaN, return true.
+  If x is +0 and y is -0, return true.
+  If x is -0 and y is +0, return true.
+  If x is the same Number value as y, return true.
+  Return false.
+  Return SameValueNonNumber(x, y).
+*/
+const sameValueZero = (x, y) => x === y || (Number.isNaN(x) && Number.isNaN(y))
 
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {

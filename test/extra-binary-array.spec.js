@@ -316,4 +316,12 @@ describe("BinaryArray extra features", () => {
         )
     ).toMatchObject(objectTarget)
   })
+
+  it(".without shout work as expected", () => {
+    const items = [2, 1, 2, 3]
+    const binArr = BinaryArray.from(items)
+    expect(binArr.without(1, 2).toArray()).toEqual([3])
+    expect(binArr.without(1).toArray()).toEqual([2, 2, 3])
+    expect(binArr.without(3).toArray()).toEqual([2, 1, 2])
+  })
 })
