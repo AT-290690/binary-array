@@ -94,6 +94,26 @@ export default class BinaryArray {
     for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
     return this
   }
+  /**
+   * NnegativeZeroEmptyValue is the first left index
+   * It is never used.
+   * It stays there as an offset
+   * Indexing is calculated (offset + offset left)
+   * where positive results are indexing the right branch
+   * and negative are indexing the left branch
+   * index 2 is the third item of branch right
+   * index -2 is the third item of branch left
+   * When zero index is calculated to be 0 then
+   * the item is the first element of the right branch
+   * The left branch will have an unreachable value
+   * @example
+   * // Regular Array View
+   * [1, 2, 3, 4, 5, 6]
+   * // The above as Binary Array
+   * [-1, 3, 2, 1] // left
+   *   0  1  2  3  // indexes
+   * [ 4, 5. 6, 7] // right
+   */
   static negativeZeroEmptyValue = -1
   /**
    * Array methods
