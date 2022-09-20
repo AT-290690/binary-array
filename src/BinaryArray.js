@@ -612,11 +612,20 @@ export default class BinaryArray {
    * requires the array to be sorted first!
    * @param target
    * @param identity
+   * @param greather
    * @example
-   * (current) => current.key
+   * current => current.key // identity
+   * current => identity(current) > target // greather
    * */
-  search(target, identity = (current) => current) {
-    return binarySearch(this, target, identity, 0, this.length)
+  search(target, identity = (current) => current, greather) {
+    return binarySearch(
+      this,
+      target,
+      identity,
+      greather ?? ((current) => identity(current) > target),
+      0,
+      this.length
+    )
   }
 }
 
@@ -632,6 +641,7 @@ export default class BinaryArray {
   Return SameValueNonNumber(x, y).
 */
 const sameValueZero = (x, y) => x === y || (Number.isNaN(x) && Number.isNaN(y))
+const clamp = (num, min, max) => Math.min(Math.max(num, min), max)
 
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
@@ -723,19 +733,16 @@ const mergeSort = (array, callback) => {
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
 }
 
-const binarySearch = (arr, target, by, start, end) => {
-  const index = ((end - start) / 2 + start) | 0.5
-  const current = arr.at(index)
+const binarySearch = (arr, target, by, greather, start, end) => {
+  if (start > end) return undefined
+  const index = ((start + end) / 2) | 0.5
+  const current = arr.get(index)
   if (current === undefined) return undefined
   const identity = by(current)
-  const is = identity === target
-  if (is) return current
-  if (end < start && !is) return undefined
-  else {
-    if (identity > target)
-      return binarySearch(arr, target, by, start, index - 1)
-    else return binarySearch(arr, target, by, index + 1, end)
-  }
+  if (identity === target) return current
+  if (greather(current))
+    return binarySearch(arr, target, by, greather, start, index - 1)
+  else return binarySearch(arr, target, by, greather, index + 1, end)
 }
 
 class Group {

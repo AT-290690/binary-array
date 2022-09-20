@@ -311,9 +311,49 @@ describe('BinaryArray extra features', () => {
         .mergeSort((a, b) => (a.key > b.key ? 1 : -1))
         .search(searchKey, (current) => current.key)
     ).toMatchObject(objectTarget)
+
+    const input = [1, 2, 3, 2, 3, 7, 1, 2, 3, 2, 3, 7, 13]
+    expect(
+      new BinaryArray()
+        .with(...input)
+        .unique()
+        .map((x, i) => ({ key: x + '-' + i, x }))
+        .mergeSort((a, b) => (a.key.localeCompare(b.key) ? 1 : -1))
+        .search(
+          '3-2',
+          (current) => current.key,
+          (current) => current.key.localeCompare('3-2')
+        )
+    ).toEqual({ key: '3-2', x: 3 })
+    expect(
+      new BinaryArray()
+        .with(...input)
+        .unique()
+        .map((x, i) => ({ key: x + '-' + i, x }))
+        .mergeSort((a, b) => (a.key.localeCompare(b.key) ? -1 : 1))
+        .search(
+          '3-2',
+          (current) => current.key,
+          (current) => current.key.localeCompare('3-2')
+        )
+    ).toEqual({ key: '3-2', x: 3 })
+
+    const dateTarget = new Date('1970-01-01T00:00:00.002Z')
+    expect(
+      new BinaryArray()
+        .with(...input)
+        .unique()
+        .map((x, i) => ({ date: new Date(i), x }))
+        .mergeSort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1))
+        .search(
+          dateTarget.getTime(),
+          (current) => current.date.getTime(),
+          (current) => current.date.getTime() > dateTarget.getTime()
+        )
+    ).toEqual({ date: dateTarget, x: 3 })
   })
 
-  it('.without shout work as expected', () => {
+  it('.without should work as expected', () => {
     const items = [2, 1, 2, 3]
     const binArr = BinaryArray.from(items)
     expect(binArr.without(1, 2).toArray()).toEqual([3])
