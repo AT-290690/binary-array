@@ -608,6 +608,13 @@ export default class BinaryArray {
     return this
   }
 
+  isInBouds(index) {
+    return index >= 0 && index < this.length
+  }
+
+  getInBounds(index) {
+    return this.get(clamp(index, 0, this.length - 1))
+  }
   /**
    * @param order
    * check if the array is sorted

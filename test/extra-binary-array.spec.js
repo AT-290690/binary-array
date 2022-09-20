@@ -360,4 +360,15 @@ describe('BinaryArray extra features', () => {
     expect(binArr.without(1).toArray()).toEqual([2, 2, 3])
     expect(binArr.without(3).toArray()).toEqual([2, 1, 2])
   })
+
+  it('.isInBouds and .getInBounds should work as expected', () => {
+    const binArr = new BinaryArray().with(0, 1, 2, 3)
+    expect(binArr.isInBouds(4)).toBe(false)
+    expect(binArr.isInBouds(-1)).toBe(false)
+    expect(binArr.isInBouds(2)).toBe(true)
+    expect(binArr.getInBounds(2)).toBe(2)
+    expect(binArr.getInBounds(192)).toBe(3)
+    expect(binArr.getInBounds(0)).toBe(0)
+    expect(binArr.getInBounds(-100)).toBe(0)
+  })
 })
