@@ -329,7 +329,9 @@ export default class BinaryArray {
    * arr.quickSort('des')
    * */
   quickSort(order) {
-    return quickSort(this, 0, this.length - 1, order)
+    return order === "des"
+      ? quickSortDesc(this, 0, this.length - 1)
+      : quickSortAsc(this, 0, this.length - 1)
   }
 
   join(separator = ",") {
@@ -641,8 +643,8 @@ const toArrayDeep = (entity) => {
     : entity
 }
 
-const partition = {
-  asc: (items, left, right) => {
+const quickSortAsc = (items, left, right) => {
+  if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
       j = right
@@ -655,9 +657,13 @@ const partition = {
         j--
       }
     }
-    return i
-  },
-  des: (items, left, right) => {
+    if (left < i - 1) quickSortAsc(items, left, i - 1) //more elements on the left side of the pivot
+    if (i < right) quickSortAsc(items, i, right) //more elements on the right side of the pivot
+  }
+  return items
+}
+const quickSortDesc = (items, left, right) => {
+  if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
       j = right
@@ -670,17 +676,8 @@ const partition = {
         j--
       }
     }
-    return i
-  },
-}
-
-const quickSort = (items, left, right, order) => {
-  let index
-  const sortBy = partition[order] ?? partition["asc"]
-  if (items.length > 1) {
-    index = sortBy(items, left, right) //index returned from partition
-    if (left < index - 1) quickSort(items, left, index - 1, order) //more elements on the left side of the pivot
-    if (index < right) quickSort(items, index, right, order) //more elements on the right side of the pivot
+    if (left < i - 1) quickSortDesc(items, left, i - 1) //more elements on the left side of the pivot
+    if (i < right) quickSortDesc(items, i, right) //more elements on the right side of the pivot
   }
   return items
 }
