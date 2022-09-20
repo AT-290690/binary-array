@@ -95,7 +95,7 @@ export default class BinaryArray {
     return this
   }
   /**
-   * NnegativeZeroEmptyValue is the first left index
+   * NegativeZeroEmptyValue is the first left index
    * It is never used.
    * It stays there as an offset
    * Indexing is calculated (offset + offset left)
