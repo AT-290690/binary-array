@@ -9,7 +9,8 @@
     "test": "jest test test",
     "bench": "node benchmark/benchmark.js",
     "stress": "node benchmark/stresstest.js",
-    "sample": "node benchmark/sample.js"
+    "sample": "node benchmark/sample.js",
+    "algo": "node benchmark/algo.js"
   },
   "jest": {
     "preset": "./jest.json"

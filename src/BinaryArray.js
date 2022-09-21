@@ -134,9 +134,15 @@ export default class BinaryArray {
   }
 
   static from(iterable) {
-    return isIterable(iterable)
-      ? new BinaryArray().with(...iterable)
-      : new BinaryArray()
+    if (!isIterable(iterable))
+      throw new Error(
+        'TypeError: From input is not iterable (cannot read property '
+      )
+    const out = new BinaryArray()
+    const half = (iterable.length / 2) | 0.5
+    for (let i = half - 1; i >= 0; i--) out.addToLeft(iterable[i])
+    for (let i = half; i < iterable.length; i++) out.addToRight(iterable[i])
+    return out
   }
 
   at(index) {
@@ -376,13 +382,15 @@ export default class BinaryArray {
   flat(levels = 1) {
     const flat =
       levels === Infinity
-        ? (collection) => flatten(collection, levels, flat)
-        : (collection, levels) => {
+        ? tailCallOptimisedRecursion((collection) =>
+            flatten(collection, levels, flat)
+          )
+        : tailCallOptimisedRecursion((collection, levels) => {
             levels--
             return levels === -1
               ? collection
               : flatten(collection, levels, flat)
-          }
+          })
     return BinaryArray.from(flat(this, levels))
   }
 
@@ -720,14 +728,26 @@ const isIterable = (iter) =>
   iter === null || iter === undefined
     ? false
     : typeof iter[Symbol.iterator] === 'function'
-const flatten = (collection, levels, flat) =>
+
+const tailCallOptimisedRecursion =
+  (func) =>
+  (...args) => {
+    let result = func(...args)
+    while (typeof result === 'function') {
+      result = result()
+    }
+    return result
+  }
+
+const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
     else acc.push(current)
     return acc
   }, [])
+)
 
-const toArrayDeep = (entity) => {
+const toArrayDeep = tailCallOptimisedRecursion((entity) => {
   return BinaryArray.isBinaryArray(entity)
     ? entity
         .map((item) =>
@@ -739,9 +759,9 @@ const toArrayDeep = (entity) => {
         )
         .toArray()
     : entity
-}
+})
 
-const quickSortAsc = (items, left, right) => {
+const quickSortAsc = tailCallOptimisedRecursion((items, left, right) => {
   if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
@@ -759,8 +779,8 @@ const quickSortAsc = (items, left, right) => {
     if (i < right) quickSortAsc(items, i, right)
   }
   return items
-}
-const quickSortDesc = (items, left, right) => {
+})
+const quickSortDesc = tailCallOptimisedRecursion((items, left, right) => {
   if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
@@ -778,7 +798,7 @@ const quickSortDesc = (items, left, right) => {
     if (i < right) quickSortDesc(items, i, right)
   }
   return items
-}
+})
 
 const merge = (left, right, callback) => {
   const arr = []
@@ -801,26 +821,28 @@ const merge = (left, right, callback) => {
   return out
 }
 
-const mergeSort = (array, callback) => {
+const mergeSort = tailCallOptimisedRecursion((array, callback) => {
   const half = (array.length / 2) | 0.5
   if (array.length < 2) {
     return array
   }
   const left = array.splice(0, half)
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
-}
+})
 
-const binarySearch = (arr, target, by, greather, start, end) => {
-  if (start > end) return undefined
-  const index = ((start + end) / 2) | 0.5
-  const current = arr.get(index)
-  if (current === undefined) return undefined
-  const identity = by(current)
-  if (identity === target) return current
-  if (greather(current))
-    return binarySearch(arr, target, by, greather, start, index - 1)
-  else return binarySearch(arr, target, by, greather, index + 1, end)
-}
+const binarySearch = tailCallOptimisedRecursion(
+  (arr, target, by, greather, start, end) => {
+    if (start > end) return undefined
+    const index = ((start + end) / 2) | 0.5
+    const current = arr.get(index)
+    if (current === undefined) return undefined
+    const identity = by(current)
+    if (identity === target) return current
+    if (greather(current))
+      return binarySearch(arr, target, by, greather, start, index - 1)
+    else return binarySearch(arr, target, by, greather, index + 1, end)
+  }
+)
 
 class Group {
   constructor() {
