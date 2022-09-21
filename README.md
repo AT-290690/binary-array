@@ -14,14 +14,8 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 ```js
 // validate matching parens
 BinaryArray.from('((()))()()(())')
-  .to(
-    (acc, x) =>
-      x === '('
-        ? acc.prepend(x)
-        : acc.first === '('
-        ? acc.tail()
-        : acc.append(x),
-    new BinaryArray()
+  .to((acc, x) =>
+    x === '(' ? acc.prepend(x) : acc.first === '(' ? acc.tail() : acc.append(x)
   )
   .isEmpty()
 ```

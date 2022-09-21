@@ -354,14 +354,12 @@ describe('BinaryArray extra features', () => {
   it('.to should work as expected', () => {
     expect(
       BinaryArray.from('(())')
-        .to(
-          (acc, x) =>
-            x === '('
-              ? acc.prepend(x)
-              : acc.first === '('
-              ? acc.tail()
-              : acc.append(x),
-          new BinaryArray()
+        .to((acc, x) =>
+          x === '('
+            ? acc.prepend(x)
+            : acc.first === '('
+            ? acc.tail()
+            : acc.append(x)
         )
         .isEmpty()
     ).toBe(true)
