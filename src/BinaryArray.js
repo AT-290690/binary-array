@@ -1,6 +1,8 @@
 export default class BinaryArray {
-  left = [BinaryArray.negativeZeroEmptyValue]
-  right = []
+  constructor() {
+    this.left = [BinaryArray.negativeZeroEmptyValue]
+    this.right = []
+  }
 
   get offsetLeft() {
     return (this.left.length - 1) * -1
@@ -604,6 +606,10 @@ export default class BinaryArray {
   scan(callback) {
     for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
     return this
+  }
+
+  isEmpty() {
+    return this.left.length + this.right.length === 1
   }
 
   isInBouds(index) {

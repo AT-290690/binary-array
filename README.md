@@ -9,6 +9,23 @@ remove O(1)
 access O(1)  
 memory O(N)
 
+Elegant API (Entire algorithms can be expressed in few lines of code)
+
+```js
+// validate matching parens
+BinaryArray.from('(((())()((()))')
+  .reduce(
+    (acc, x) =>
+      x === '('
+        ? acc.prepend(x)
+        : acc.first === '('
+        ? acc.tail()
+        : acc.append(x),
+    new BinaryArray()
+  )
+  .isEmpty()
+```
+
 npm i --save-dev
 
 run tests:
