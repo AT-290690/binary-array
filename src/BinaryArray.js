@@ -84,7 +84,7 @@ export default class BinaryArray {
   }
 
   [Symbol.iterator] = function* () {
-    for (let i = 0; i < this.length; i++) yield this.get(i)
+    for (let i = 0, len = this.length; i < len; i++) yield this.get(i)
   }
 
   isBalanced() {
@@ -195,7 +195,8 @@ export default class BinaryArray {
   }
 
   indexOf(item) {
-    for (let i = 0; i < this.length; i++) if (this.get(i) === item) return i
+    for (let i = 0, len = this.length; i < len; i++)
+      if (this.get(i) === item) return i
     return -1
   }
 
@@ -205,13 +206,13 @@ export default class BinaryArray {
   }
 
   includes(val, fromIndex = 0) {
-    for (let i = fromIndex; i < this.length; i++)
+    for (let i = fromIndex, len = this.length; i < len; i++)
       if (sameValueZero(this.get(i), val)) return true
     return false
   }
 
   find(callback) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       if (callback(current, i, this)) return current
     }
@@ -225,19 +226,19 @@ export default class BinaryArray {
   }
 
   some(callback) {
-    for (let i = 0; i < this.length; i++)
+    for (let i = 0, len = this.length; i < len; i++)
       if (callback(this.get(i), i, this)) return true
     return false
   }
 
   every(callback) {
-    for (let i = 0; i < this.length; i++)
+    for (let i = 0, len = this.length; i < len; i++)
       if (!callback(this.get(i), i, this)) return false
     return true
   }
 
   findIndex(callback) {
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -257,23 +258,24 @@ export default class BinaryArray {
     const half = (this.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--)
       result.addToLeft(callback(this.get(i), i, this))
-    for (let i = half; i < this.length; i++)
+    for (let i = half, len = this.length; i < len; i++)
       result.addToRight(callback(this.get(i), i, this))
     return result
   }
 
   mapMut(callback) {
-    for (let i = 0; i < this.length; i++)
+    for (let i = 0, len = this.length; i < len; i++)
       this.set(i, callback(this.get(i), i, this))
     return this
   }
 
   forEach(callback) {
-    for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
+    for (let i = 0, len = this.length; i < len; i++)
+      callback(this.get(i), i, this)
   }
 
   reduce(callback, initial) {
-    for (let i = 0; i < this.length; i++)
+    for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
@@ -286,7 +288,7 @@ export default class BinaryArray {
 
   filter(callback) {
     const out = []
-    for (let i = 0; i < this.length; i++) {
+    for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       const predicat = callback(current, i, this)
       if (predicat) out.push(current)
@@ -361,7 +363,8 @@ export default class BinaryArray {
 
   join(separator = ',') {
     let output = ''
-    for (let i = 0; i < this.length - 1; i++) output += this.get(i) + separator
+    for (let i = 0, len = this.length; i < len - 1; i++)
+      output += this.get(i) + separator
     output += this.get(this.length - 1)
     return output
   }
@@ -502,7 +505,7 @@ export default class BinaryArray {
   }
 
   to(callback, initial = new BinaryArray()) {
-    for (let i = 0; i < this.length; i++)
+    for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
@@ -643,7 +646,8 @@ export default class BinaryArray {
   }
 
   scan(callback) {
-    for (let i = 0; i < this.length; i++) callback(this.get(i), i, this)
+    for (let i = 0, len = this.length; i < len; i++)
+      callback(this.get(i), i, this)
     return this
   }
 
