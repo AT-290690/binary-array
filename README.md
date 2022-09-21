@@ -13,8 +13,8 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 
 ```js
 // validate matching parens
-BinaryArray.from('(((())()((()))')
-  .reduce(
+BinaryArray.from('((()))()()(())')
+  .to(
     (acc, x) =>
       x === '('
         ? acc.prepend(x)
@@ -44,10 +44,10 @@ NANOBENCH version 2
 
 N = 200 000
 
-binaryArray.get middle
+binaryArray.get middle (once)
 ok ~118 μs (0 s + 118333 ns)
 
-regularArray.get middle
+regularArray.get middle (once)
 ok ~54 μs (0 s + 54292 ns)
 
 binaryArray.get random

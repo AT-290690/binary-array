@@ -45,7 +45,7 @@ describe('BinaryArray mimic Array', () => {
     const array1 = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
     expect(array1.filter(isPrime)).toEqual(
-      BinaryArray.from(array1).filter(isPrime).toArray()
+      BinaryArray.from(array1).filter(isPrime).items
     )
 
     let arrayInvalidEntries = 0
@@ -68,13 +68,11 @@ describe('BinaryArray mimic Array', () => {
         return false
       })
     ).toEqual(
-      BinaryArray.from(array2)
-        .filter((item) => {
-          if (Number.isFinite(item.id) && item.id !== 0) return true
-          binaryArrayInvalidEntries++
-          return false
-        })
-        .toArray()
+      BinaryArray.from(array2).filter((item) => {
+        if (Number.isFinite(item.id) && item.id !== 0) return true
+        binaryArrayInvalidEntries++
+        return false
+      }).items
     )
     expect(arrayInvalidEntries).toEqual(binaryArrayInvalidEntries)
 
@@ -84,10 +82,10 @@ describe('BinaryArray mimic Array', () => {
     const filterItems = (arr, query) =>
       arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()))
     expect(filterItems(fruits, 'ap')).toEqual(
-      filterItems(binaryFruits, 'ap').toArray()
+      filterItems(binaryFruits, 'ap').items
     ) // ['apple', 'grapes']
     expect(filterItems(fruits, 'an')).toEqual(
-      filterItems(binaryFruits, 'an').toArray()
+      filterItems(binaryFruits, 'an').items
     ) // ['banana', 'mango', 'orange']
   })
 
@@ -174,12 +172,12 @@ describe('BinaryArray mimic Array', () => {
       ]),
     ])
 
-    expect(infiniteBinNest.flat(Infinity).toArray()).toEqual(
+    expect(infiniteBinNest.flat(Infinity).items).toEqual(
       infiniteArrNest.flat(Infinity)
     )
     expect(infiniteArrNest.length).toEqual(infiniteBinNest.length)
     expect(infiniteArrNest.flat(Infinity).length).toEqual(
-      infiniteBinNest.flat(Infinity).toArray().length
+      infiniteBinNest.flat(Infinity).items.length
     )
   })
 
@@ -303,29 +301,25 @@ describe('BinaryArray mimic Array', () => {
   it('.reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7]
     const binArr1 = BinaryArray.from(arr1)
-    expect(binArr1.reverse().toArray()).toEqual(arr1.reverse())
-    expect(binArr1.reverse().reverse().toArray()).toEqual(
-      arr1.reverse().reverse()
-    )
+    expect(binArr1.reverse().items).toEqual(arr1.reverse())
+    expect(binArr1.reverse().reverse().items).toEqual(arr1.reverse().reverse())
     expect(arr1.length).toEqual(binArr1.length)
 
     const arr2 = [4, 1, 1, 2, 3, 8, 7, 8]
     const binArr2 = BinaryArray.from(arr2)
-    expect(binArr2.reverse().toArray()).toEqual(arr2.reverse())
-    expect(binArr2.reverse().reverse().toArray()).toEqual(
-      arr2.reverse().reverse()
-    )
+    expect(binArr2.reverse().items).toEqual(arr2.reverse())
+    expect(binArr2.reverse().reverse().items).toEqual(arr2.reverse().reverse())
     expect(arr2.length).toEqual(binArr2.length)
   })
 
   it('.slice should create a new collection from the same range', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = BinaryArray.from(arr)
-    expect(arr.slice(1)).toEqual(binArr.slice(1).toArray())
-    expect(arr.slice(1, 2)).toEqual(binArr.slice(1, 2).toArray())
-    expect(arr.slice(3)).toEqual(binArr.slice(3).toArray())
-    expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).toArray())
-    expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).toArray())
+    expect(arr.slice(1)).toEqual(binArr.slice(1).items)
+    expect(arr.slice(1, 2)).toEqual(binArr.slice(1, 2).items)
+    expect(arr.slice(3)).toEqual(binArr.slice(3).items)
+    expect(arr.slice(2, 5)).toEqual(binArr.slice(2, 5).items)
+    expect(arr.slice(4, 5)).toEqual(binArr.slice(4, 5).items)
   })
 
   it('.splice should modify the array in place', () => {
@@ -357,7 +351,7 @@ describe('BinaryArray mimic Array', () => {
     const binArr = BinaryArray.from(arr)
     arr[20] = 10
     binArr.addTo(20, 10)
-    expect(arr).toEqual(binArr.toArray())
+    expect(arr).toEqual(binArr.items)
     expect(arr[15]).toEqual(binArr.get(15))
     expect(arr.length).toEqual(binArr.length)
   })

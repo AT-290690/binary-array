@@ -28,6 +28,10 @@ export default class BinaryArray {
     return this.right[0]
   }
 
+  get items() {
+    return toArrayDeep(this)
+  }
+
   with(...initial) {
     if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
@@ -466,6 +470,41 @@ export default class BinaryArray {
     if (this.offsetLeft === 0) this.balance()
     this.removeFromLeft()
     return this
+  }
+  /**
+   * Creates a slice of array with n elements taken from the beginning.
+   * @params
+    array (Array): The array to query.
+    [n=1] (number): The number of elements to take.
+    @returns
+    (Array): Returns the slice of array.
+    @example 
+    [1, 2, 3].take() // => [1]
+    [1, 2, 3].take(2) // => [1, 2]
+    [1, 2, 3].take(5) // => [1, 2, 3]
+    [1, 2, 3].take(0); // => []
+   */
+  take(n = 1) {
+    const collection = []
+    const len = Math.min(n, this.length)
+    for (let i = 0; i < len; i++) collection.push(this.get(i))
+    return BinaryArray.from(collection)
+  }
+  /**
+   * Creates a slice of array with n elements taken from the end.
+   */
+  takeRight(n = 1) {
+    const collection = []
+    const length = this.length
+    const len = Math.min(n, length)
+    for (let i = 0; i < len; i++) collection.push(this.get(length - (len - i)))
+    return BinaryArray.from(collection)
+  }
+
+  to(callback, initial = new BinaryArray()) {
+    for (let i = 0; i < this.length; i++)
+      initial = callback(initial, this.get(i), i, this)
+    return initial
   }
 
   rotateLeft(n = 1) {
