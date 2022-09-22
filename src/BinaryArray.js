@@ -35,8 +35,8 @@ export default class BinaryArray {
   with(...initial) {
     if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i])
-    for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
+    for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
+    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -61,22 +61,22 @@ export default class BinaryArray {
     this.right = []
   }
 
-  addToLeft(item) {
+  #addToLeft(item) {
     this.left.push(item)
   }
 
-  addToRight(item) {
+  #addToRight(item) {
     this.right.push(item)
   }
 
-  removeFromLeft() {
+  #removeFromLeft() {
     if (this.length) {
       if (this.length === 1) this.clear()
       else if (this.left.length > 0) this.left.length--
     }
   }
 
-  removeFromRight() {
+  #removeFromRight() {
     if (this.length) {
       if (this.length === 1) this.clear()
       else if (this.right.length > 0) this.right.length--
@@ -96,8 +96,8 @@ export default class BinaryArray {
     const initial = [...this]
     this.clear()
     const half = (initial.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i--) this.addToLeft(initial[i])
-    for (let i = half; i < initial.length; i++) this.addToRight(initial[i])
+    for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
+    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -140,8 +140,8 @@ export default class BinaryArray {
       )
     const out = new BinaryArray()
     const half = (iterable.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i--) out.addToLeft(iterable[i])
-    for (let i = half; i < iterable.length; i++) out.addToRight(iterable[i])
+    for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
+    for (let i = half; i < iterable.length; i++) out.#addToRight(iterable[i])
     return out
   }
 
@@ -151,26 +151,26 @@ export default class BinaryArray {
   }
 
   push(...items) {
-    for (let i = 0; i < items.length; i++) this.addToRight(items[i])
+    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
     return this.length
   }
 
   unshift(...items) {
-    for (let i = items.length - 1; i >= 0; i--) this.addToLeft(items[i])
+    for (let i = items.length - 1; i >= 0; i--) this.#addToLeft(items[i])
     return this.length
   }
 
   pop() {
     if (this.offsetRight === 0) this.balance()
     const last = this.last
-    this.removeFromRight()
+    this.#removeFromRight()
     return last
   }
 
   shift() {
     if (this.offsetLeft === 0) this.balance()
     const first = this.first
-    this.removeFromLeft()
+    this.#removeFromLeft()
     return first
   }
 
@@ -264,9 +264,9 @@ export default class BinaryArray {
     const result = new BinaryArray()
     const half = (this.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--)
-      result.addToLeft(callback(this.get(i), i, this))
+      result.#addToLeft(callback(this.get(i), i, this))
     for (let i = half, len = this.length; i < len; i++)
-      result.addToRight(callback(this.get(i), i, this))
+      result.#addToRight(callback(this.get(i), i, this))
     return result
   }
 
@@ -408,7 +408,7 @@ export default class BinaryArray {
 
   addTo(index, value) {
     if (index >= this.length)
-      for (let i = this.length; i <= index; i++) this.addToRight(undefined)
+      for (let i = this.length; i <= index; i++) this.#addToRight(undefined)
     const offset = index + this.offsetLeft
     if (offset >= 0) this.right[offset] = value
     else this.left[offset * -1] = value
@@ -449,48 +449,48 @@ export default class BinaryArray {
   }
 
   append(item) {
-    this.addToRight(item)
+    this.#addToRight(item)
     return this
   }
 
   prepend(item) {
-    this.addToLeft(item)
+    this.#addToLeft(item)
     return this
   }
 
   cut() {
     if (this.offsetRight === 0) this.balance()
     const last = this.last
-    this.removeFromRight()
+    this.#removeFromRight()
     return last
   }
 
   chop() {
     if (this.offsetLeft === 0) this.balance()
     const first = this.first
-    this.removeFromLeft()
+    this.#removeFromLeft()
     return first
   }
 
   head() {
     if (this.offsetRight === 0) this.balance()
-    this.removeFromRight()
+    this.#removeFromRight()
     return this
   }
 
   tail() {
     if (this.offsetLeft === 0) this.balance()
-    this.removeFromLeft()
+    this.#removeFromLeft()
     return this
   }
 
   insertRight(...items) {
-    for (let i = 0; i < items.length; i++) this.addToRight(items[i])
+    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
     return this
   }
 
   insertLeft(...items) {
-    for (let i = items.length - 1; i >= 0; i--) this.addToLeft(items[i])
+    for (let i = items.length - 1; i >= 0; i--) this.#addToLeft(items[i])
     return this
   }
 
@@ -534,8 +534,8 @@ export default class BinaryArray {
     n = n % this.length
     for (let i = 0; i < n; i++) {
       if (this.offsetLeft === 0) this.balance()
-      this.addToRight(this.first)
-      this.removeFromLeft()
+      this.#addToRight(this.first)
+      this.#removeFromLeft()
     }
     return this
   }
@@ -544,8 +544,8 @@ export default class BinaryArray {
     n = n % this.length
     for (let i = 0; i < n; i++) {
       if (this.offsetRight === 0) this.balance()
-      this.addToLeft(this.last)
-      this.removeFromRight()
+      this.#addToLeft(this.last)
+      this.#removeFromRight()
     }
     return this
   }
@@ -828,8 +828,8 @@ const merge = (left, right, callback) => {
   }
   const out = new BinaryArray()
   const half = (arr.length / 2) | 0.5
-  for (let i = half - 1; i >= 0; i--) out.addToLeft(arr[i])
-  for (let i = half; i < arr.length; i++) out.addToRight(arr[i])
+  for (let i = half - 1; i >= 0; i--) out.prepend(arr[i])
+  for (let i = half; i < arr.length; i++) out.append(arr[i])
   return out
 }
 
