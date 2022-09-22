@@ -74,17 +74,17 @@ ok ~8.93 ms (0 s + 8927333 ns)
 regularArray.pop
 ok ~2.15 ms (0 s + 2145750 ns)
 
-binaryArray.shift
+binaryArray.shift ⚡
 ok ~72 ms (0 s + 72263500 ns)
 
-regularArray.shift
-ok ~4.97 s (4 s + 973667083 ns) 🐌
+regularArray.shift 🐌
+ok ~4.97 s (4 s + 973667083 ns) 
 
-binaryArray.unshift
+binaryArray.unshift ⚡
 ok ~5.53 ms (0 s + 5534333 ns)
 
-regularArray.unshift
-ok ~4.59 s (4 s + 588392875 ns) 🐌
+regularArray.unshift 🐌
+ok ~4.59 s (4 s + 588392875 ns) 
 
 all benchmarks completed
 ok ~9.68 s (9 s + 679287250 ns)
