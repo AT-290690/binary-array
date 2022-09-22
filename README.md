@@ -33,9 +33,9 @@ const amount = 3
 log(`|${
    Binar
   .from(code)
-  .rotateLeft(index)
-  .map((char, index, arr) => index > amount - 1 ? '.': char)
-  .rotateRight(index)
+  .rotateLeft(index) // shift X times to the left
+  .map((char, index, arr) => index > amount - 1 ? '.': char) // mask out a portion of the code
+  .rotateRight(index) // shift X times to the right
   .items
   .join('')
 }|`, `reveal mask subset of the code (index: ${index} amount: ${amount})`)
