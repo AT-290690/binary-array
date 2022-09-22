@@ -188,7 +188,7 @@ export default class BinaryArray {
       if (deleteCount > 0)
         for (let i = 0; i < deleteCount; i++) deleted.push(this.pop())
 
-      this.append(...items)
+      this.push(...items)
       for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(start)
@@ -418,7 +418,7 @@ export default class BinaryArray {
     if (this.offsetLeft + key > 0) {
       const len = this.length - key
       this.rotateRight(len)
-      this.append(...value)
+      this.push(...value)
       for (let i = 0; i < len; i++) this.append(this.shift())
     } else {
       this.rotateLeft(key)
@@ -482,6 +482,17 @@ export default class BinaryArray {
     this.removeFromLeft()
     return this
   }
+
+  insertRight(...items) {
+    for (let i = 0; i < items.length; i++) this.addToRight(items[i])
+    return this
+  }
+
+  insertLeft(...items) {
+    for (let i = items.length - 1; i >= 0; i--) this.addToLeft(items[i])
+    return this
+  }
+
   /**
    * Creates a slice of array with n elements taken from the beginning.
    * @params

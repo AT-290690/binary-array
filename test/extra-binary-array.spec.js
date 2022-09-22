@@ -59,10 +59,7 @@ describe('BinaryArray extra features', () => {
 
   it('.partition should work as expected', () => {
     expect(
-      new BinaryArray()
-        .with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3)
-        .partition(3)
-        .toArray(true)
+      new BinaryArray().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).partition(3).items
     ).toEqual([
       [1, 1, 1],
       [1, 2, 2],
@@ -117,7 +114,7 @@ describe('BinaryArray extra features', () => {
     expect(out).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9])
   })
 
-  it('.append, .prepend, .tail, .head should work as expected', () => {
+  it('.append, .prepend, .tail, .head, .insertLeft, .insertRight should work as expected', () => {
     const arr = new BinaryArray().with(1, 2, 3)
     expect(
       arr.append(4).append(5).prepend(0).prepend(-1).prepend(-2).items
@@ -129,6 +126,9 @@ describe('BinaryArray extra features', () => {
     expect(arr.items).toEqual([1, 2])
     expect(arr.chop()).toBe(1)
     expect(arr.chop()).toBe(2)
+    expect(
+      new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4).items
+    ).toEqual([-2, -1, 0, 1, 2, 3, 4])
   })
 
   it('.balance should work as expected', () => {

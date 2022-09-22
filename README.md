@@ -27,12 +27,17 @@ run benchmarks:
 npm run bench
 
 ```js
-new BinaryArray.with(-2, -1, 0, 1, 2, 3, 4, 5)
-// structure 
-{ "left":[-1,1,0,-1,-2],"right":[2,3,4,5] }
-// array view
+const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
+// structure
+{
+  left: [ -1, -1, -2 ],
+  right: [ 0, 1, 2, 3, 4 ]
+}
+array.items // array view
 [-2, -1, 0, 1, 2, 3, 4, 5]
 ```
+
+Get each index
 
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
 

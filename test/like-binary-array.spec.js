@@ -244,7 +244,7 @@ describe('BinaryArray mimic Array', () => {
         .flat(2)
     )
 
-    expect(flatBinArr.toArray(true)).toEqual(flatArr)
+    expect(flatBinArr.items).toEqual(flatArr)
     expect(flatArr.length).toEqual(flatBinArr.length)
 
     const flatMapArray = [[1, 2, 3, 4], [1, 2, 3, 4].reverse()]
@@ -253,27 +253,22 @@ describe('BinaryArray mimic Array', () => {
       BinaryArray.from([1, 2, 3, 4]).reverse(),
     ])
 
-    expect(flatMapBinaryArray.flatten((x) => x * 10 + 4).toArray(true)).toEqual(
+    expect(flatMapBinaryArray.flatten((x) => x * 10 + 4).items).toEqual(
       flatMapArray.flatMap((item) => item.map((x) => x * 10 + 4))
     )
     expect([1, 2, [3, 4]].flat()).toEqual(
-      new BinaryArray()
-        .with(1, 2, new BinaryArray().with(3, 4))
-        .flat()
-        .toArray(true)
+      new BinaryArray().with(1, 2, new BinaryArray().with(3, 4)).flat().items
     )
 
     expect([1, 2, [3, 4, [5, 6]]].flat()).toEqual(
       new BinaryArray()
         .with(1, 2, new BinaryArray().with(3, 4, new BinaryArray().with(5, 6)))
-        .flat()
-        .toArray(true)
+        .flat().items
     )
     expect([1, 2, [3, 4, [5, 6]]].flat(2)).toEqual(
       new BinaryArray()
         .with(1, 2, new BinaryArray().with(3, 4, new BinaryArray().with(5, 6)))
-        .flat(2)
-        .toArray(true)
+        .flat(2).items
     )
     expect([1, 2, [3, 4, [5, 6, [7, 8, [9, 10]]]]].flat(Infinity)).toEqual(
       new BinaryArray()
@@ -290,12 +285,11 @@ describe('BinaryArray mimic Array', () => {
             )
           )
         )
-        .flat(Infinity)
-        .toArray(true)
+        .flat(Infinity).items
     )
     // ignore this case for now
     // expect([1, 2, , 4, 5].flat()).toEqual(
-    //   BinaryArray.from([1, 2, , 4, 5]).flat().toArray(true)
+    //   BinaryArray.from([1, 2, , 4, 5]).flat().items
     // )
   })
   it('.reverse should modify the collection the same', () => {
