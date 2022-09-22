@@ -1,5 +1,5 @@
 # binary-array
-Making the JavaScript array fast for large inputs.
+##Making the JavaScript array fast for large inputs.
 
 
 npm i --save-dev
