@@ -1,13 +1,12 @@
 # binary-array
-## Making the JavaScript array fast for large inputs.
 
+## Making the JavaScript array fast for large inputs.
 
 npm i --save-dev
 
 npm run test
 
 npm run bench
-
 
 insert O(1)  
 remove O(1)  
@@ -24,7 +23,9 @@ BinaryArray.from('((()))()()(())')
   )
   .isEmpty()
 ```
+
 Structure
+
 ```js
 const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
 {
@@ -39,6 +40,7 @@ Get each index
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
 
 Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
+
 ```
 $ node benchmark/benchmark.js
 NANOBENCH version 2
@@ -75,13 +77,13 @@ binaryArray.shift 🚀
 ok ~72 ms (0 s + 72263500 ns)
 
 regularArray.shift 🐌
-ok ~4.97 s (4 s + 973667083 ns) 
+ok ~4.97 s (4 s + 973667083 ns)
 
 binaryArray.unshift 🚀
 ok ~5.53 ms (0 s + 5534333 ns)
 
 regularArray.unshift 🐌
-ok ~4.59 s (4 s + 588392875 ns) 
+ok ~4.59 s (4 s + 588392875 ns)
 
 all benchmarks completed
 ok ~9.68 s (9 s + 679287250 ns)

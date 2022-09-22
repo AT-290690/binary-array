@@ -143,6 +143,10 @@ export default class BinaryArray {
     return out
   }
 
+  static matrix(...dimensions) {
+    return toMatrix(...dimensions)
+  }
+
   at(index) {
     if (index < 0) return this.get(this.length + index)
     else return this.get(index)
@@ -858,6 +862,15 @@ const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
   }, [])
 )
 
+const toMatrix = tailCallOptimisedRecursion((...args) => {
+  if (args.length === 0) return
+  const dimensions = new BinaryArray().with(...args)
+  const dim = dimensions.chop()
+  const arr = new BinaryArray()
+  for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
+  return arr
+})
+
 const toArrayDeep = tailCallOptimisedRecursion((entity) => {
   return BinaryArray.isBinaryArray(entity)
     ? entity
@@ -891,6 +904,7 @@ const quickSortAsc = tailCallOptimisedRecursion((items, left, right) => {
   }
   return items
 })
+
 const quickSortDesc = tailCallOptimisedRecursion((items, left, right) => {
   if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
