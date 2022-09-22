@@ -1,5 +1,9 @@
 # binary-array
 
+npm i --save-dev
+npm run test
+npm run bench
+
 Making the JavaScript array fast for large inputs.
 
 insert O(1)  
@@ -18,13 +22,6 @@ BinaryArray.from('((()))()()(())')
   .isEmpty()
 ```
 
-npm i --save-dev
-
-run tests:
-npm run test
-
-run benchmarks:
-npm run bench
 
 ```js
 const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
