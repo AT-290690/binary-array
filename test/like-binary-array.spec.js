@@ -457,5 +457,13 @@ describe('BinaryArray mimic Array', () => {
     const ba7 = BinaryArray.from(arr7)
     expect(ba7.splice(-2, 1).items).toEqual(arr7.splice(-2, 1))
     expect(arr7).toEqual(ba7.items)
+
+    const arr8 = ['angel', 'clown', 'drum', 'sturgeon']
+    const ba8 = BinaryArray.from(arr8)
+
+    expect(arr8.splice(2, 1, 'trumpet')).toEqual(
+      ba8.splice(2, 1, 'trumpet').items
+    )
+    expect(arr8).toEqual(ba8.items)
   })
 })
