@@ -179,24 +179,24 @@ export default class BinaryArray {
     for (let i = start; i < end; i++) collection.push(this.get(i))
     return BinaryArray.from(collection)
   }
-  // TODO support negative index
-  splice(start, deleteCount, ...items) {
+
+  splice(dir, deleteCount, ...items) {
+    const start = Math.abs(dir)
     deleteCount = deleteCount ?? this.length - start
     const deleted = new BinaryArray()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i++) deleted.push(this.pop())
-
-      this.push(...items)
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.cut())
+      dir < 0 ? this.unshift(...items) : this.push(...items)
       for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(start)
       if (deleteCount > 0)
         for (let i = 0; i < deleteCount; i++) deleted.push(this.chop())
-      this.unshift(...items)
-      for (let i = 0; i < start; i++) this.prepend(this.pop())
+      dir < 0 ? this.push(...items) : this.unshift(...items)
+      for (let i = 0; i < start; i++) this.prepend(this.cut())
     }
     return deleted
   }

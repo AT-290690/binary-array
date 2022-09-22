@@ -453,10 +453,9 @@ describe('BinaryArray mimic Array', () => {
     expect(ba6.splice(2).items).toEqual(arr6.splice(2))
     expect(arr6).toEqual(ba6.items)
 
-    // TODO support negative index
-    // expect(
-    //   BinaryArray.from(['angel', 'clown', 'mandarin', 'sturgeon']).splice(-2, 1)
-    //     .items
-    // ).toEqual(['angel', 'clown', 'mandarin', 'sturgeon'].splice(-2, 1))
+    const arr7 = ['angel', 'clown', 'mandarin', 'sturgeon']
+    const ba7 = BinaryArray.from(arr7)
+    expect(ba7.splice(-2, 1).items).toEqual(arr7.splice(-2, 1))
+    expect(arr7).toEqual(ba7.items)
   })
 })
