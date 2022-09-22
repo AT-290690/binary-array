@@ -42,8 +42,7 @@ Get each index
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
 
 Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
-
-yarn run v1.22.15
+```
 $ node benchmark/benchmark.js
 NANOBENCH version 2
 
@@ -89,5 +88,4 @@ ok ~4.59 s (4 s + 588392875 ns) >>> bottle neck
 
 all benchmarks completed
 ok ~9.68 s (9 s + 679287250 ns)
-
-✨ Done in 10.22s.
+```
