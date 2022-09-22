@@ -173,13 +173,31 @@ export default class BinaryArray {
     this.#removeFromLeft()
     return first
   }
-
+  /**
+   * Returns a copy of a section of an array. For both start and end,
+   * a negative index can be used to indicate an offset from the end of the array. For example,
+   * -2 refers to the second to last element of the array.
+   * @param start
+   * The beginning index of the specified portion of the array.
+   * If start is undefined, then the slice begins at index 0.
+   * @param end
+   * The end index of the specified portion of the array.
+   * This is exclusive of the element at the index 'end'.
+   * If end is undefined, then the slice extends to the end of the array.
+   */
   slice(start, end = this.length) {
     const collection = []
     for (let i = start; i < end; i++) collection.push(this.get(i))
     return BinaryArray.from(collection)
   }
-
+  /**
+   * Removes elements from an array and,
+   * if necessary, inserts new elements in their place,
+   * returning the deleted elements.
+   * @param start — The zero-based location in the array from which to start removing elements.
+   * @param deleteCount — The number of elements to remove.
+   * @returns — An array containing the elements that were deleted.
+   */
   splice(dir, deleteCount, ...items) {
     const start = Math.abs(dir)
     deleteCount = deleteCount ?? this.length - start
@@ -200,13 +218,25 @@ export default class BinaryArray {
     }
     return deleted
   }
-
+  /**
+   * Returns the index of the first occurrence of a value in an array,
+   * or -1 if it is not present.
+   * @param searchElement — The value to locate in the array.
+   * @param fromIndex — The array index at which to begin the search.
+   * If fromIndex is omitted, the search starts at index 0.
+   */
   indexOf(item) {
     for (let i = 0, len = this.length; i < len; i++)
       if (this.get(i) === item) return i
     return -1
   }
-
+  /**
+   * Returns the index of the last occurrence of a specified value in an array,
+   * or -1 if it is not present.
+   * @param searchElement — The value to locate in the array.
+   * @param fromIndex — The array index at which to begin searching backward.
+   * If fromIndex is omitted, the search starts at the last index in the array.
+   */
   lastIndexOf(item) {
     for (let i = this.length - 1; i >= 0; i--)
       if (this.get(i) === item) return i
@@ -217,7 +247,13 @@ export default class BinaryArray {
       if (sameValueZero(this.get(i), val)) return true
     return false
   }
-
+  /**
+   * Returns the value of the first element in the array where predicate is true, and undefined otherwise.
+   * @param predicate
+   * find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined.
+   * @param thisArg
+   * If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead.
+   */
   find(callback) {
     for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
@@ -231,13 +267,29 @@ export default class BinaryArray {
       if (callback(current, i, this)) return current
     }
   }
-
+  /**
+   * Determines whether the specified callback function returns true for any element of an array.
+   * @param predicate
+   * A function that accepts up to three arguments.
+   * The some method calls the predicate function for each element in the array
+   * until the predicate returns a value which is coercible to the Boolean value true,
+   * or until the end of the array.
+   * @param thisArg
+   * An object to which the this keyword can refer in the predicate function.
+   * If thisArg is omitted, undefined is used as the this value.
+   */
   some(callback) {
     for (let i = 0, len = this.length; i < len; i++)
       if (callback(this.get(i), i, this)) return true
     return false
   }
-
+  /**
+   * Determines whether all the members of an array satisfy the specified test.
+   * @param predicate
+   * A function that accepts up to three arguments. The every method calls the predicate function for each element in the array until the predicate returns a value which is coercible to the Boolean value false, or until the end of the array.
+   * @param thisArg
+   * An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
+   */
   every(callback) {
     for (let i = 0, len = this.length; i < len; i++)
       if (!callback(this.get(i), i, this)) return false
@@ -259,7 +311,14 @@ export default class BinaryArray {
     }
     return -1
   }
-
+  /**
+   * Calls a defined callback function on each element of an array,
+   * and returns an array that contains the results.
+   * @param callbackfn — A function that accepts up to three arguments.
+   * The map method calls the callbackfn function one time for each element in the array.
+   * @param thisArg — An object to which the this keyword can refer in the callbackfn function.
+   * If thisArg is omitted, undefined is used as the this value.
+   */
   map(callback) {
     const result = new BinaryArray()
     const half = (this.length / 2) | 0.5
@@ -280,7 +339,17 @@ export default class BinaryArray {
     for (let i = 0, len = this.length; i < len; i++)
       callback(this.get(i), i, this)
   }
-
+  /**
+   * Calls the specified callback function for all the elements in an array.
+   * The return value of the callback function is the accumulated result,
+   * and is provided as an argument in the next call to the callback function.
+   * @param callbackfn — A function that accepts up to four arguments.
+   * The reduce method calls the callbackfn function one time for each element in the array.
+   * @param initialValue — If initialValue is specified,
+   * it is used as the initial value to start the accumulation.
+   * The first call to the callbackfn function provides this value as an argument
+   * instead of an array value.
+   */
   reduce(callback, initial) {
     for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
@@ -292,7 +361,13 @@ export default class BinaryArray {
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
-
+  /**
+   * Returns the elements of an array that meet the condition specified in a callback function.
+   * @param predicate — A function that accepts up to three arguments.
+   * The filter method calls the predicate function one time for each element in the array.
+   * @param thisArg — An object to which the this keyword can refer in the predicate function.
+   * If thisArg is omitted, undefined is used as the this value.
+   */
   filter(callback) {
     const out = []
     for (let i = 0, len = this.length; i < len; i++) {
@@ -302,7 +377,10 @@ export default class BinaryArray {
     }
     return BinaryArray.from(out)
   }
-
+  /**
+   * Reverses the elements in an array in place.
+   * This method mutates the array and returns a reference to the same array.
+   */
   reverse() {
     if (this.length <= 2) {
       if (this.length === 1) return this
@@ -379,7 +457,11 @@ export default class BinaryArray {
   concat(second) {
     return BinaryArray.from([...this, ...second])
   }
-
+  /**
+   * Returns a new array with all sub-array elements concatenated
+   * into it recursively up to the specified depth.
+   * @param depth — The maximum recursion depth
+   */
   flat(levels = 1) {
     const flat =
       levels === Infinity
