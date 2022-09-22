@@ -1,19 +1,17 @@
 export default class BinaryArray {
-  constructor() {
-    this.left = [BinaryArray.negativeZeroEmptyValue]
-    this.right = []
-  }
+  #left = [BinaryArray.negativeZeroEmptyValue]
+  #right = []
 
   get offsetLeft() {
-    return (this.left.length - 1) * -1
+    return (this.#left.length - 1) * -1
   }
 
   get offsetRight() {
-    return this.right.length
+    return this.#right.length
   }
 
   get length() {
-    return this.left.length + this.right.length - 1
+    return this.#left.length + this.#right.length - 1
   }
 
   get first() {
@@ -25,7 +23,7 @@ export default class BinaryArray {
   }
 
   get pivot() {
-    return this.right[0]
+    return this.#right[0]
   }
 
   get items() {
@@ -47,39 +45,39 @@ export default class BinaryArray {
   get(offset) {
     const offsetIndex = offset + this.offsetLeft
     const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex
-    return offsetIndex >= 0 ? this.right[index] : this.left[index]
+    return offsetIndex >= 0 ? this.#right[index] : this.#left[index]
   }
 
   set(index, value) {
     const offset = index + this.offsetLeft
-    if (offset >= 0) this.right[offset] = value
-    else this.left[offset * -1] = value
+    if (offset >= 0) this.#right[offset] = value
+    else this.#left[offset * -1] = value
   }
 
   clear() {
-    this.left = [BinaryArray.negativeZeroEmptyValue]
-    this.right = []
+    this.#left = [BinaryArray.negativeZeroEmptyValue]
+    this.#right = []
   }
 
   #addToLeft(item) {
-    this.left.push(item)
+    this.#left.push(item)
   }
 
   #addToRight(item) {
-    this.right.push(item)
+    this.#right.push(item)
   }
 
   #removeFromLeft() {
     if (this.length) {
       if (this.length === 1) this.clear()
-      else if (this.left.length > 0) this.left.length--
+      else if (this.#left.length > 0) this.#left.length--
     }
   }
 
   #removeFromRight() {
     if (this.length) {
       if (this.length === 1) this.clear()
-      else if (this.right.length > 0) this.right.length--
+      else if (this.#right.length > 0) this.#right.length--
     }
   }
 
@@ -390,11 +388,11 @@ export default class BinaryArray {
       return this
     }
 
-    const left = this.left
-    const right = this.right
+    const left = this.#left
+    const right = this.#right
     right.unshift(left.shift())
-    this.left = right
-    this.right = left
+    this.#left = right
+    this.#right = left
     return this
   }
 
@@ -492,8 +490,8 @@ export default class BinaryArray {
     if (index >= this.length)
       for (let i = this.length; i <= index; i++) this.#addToRight(undefined)
     const offset = index + this.offsetLeft
-    if (offset >= 0) this.right[offset] = value
-    else this.left[offset * -1] = value
+    if (offset >= 0) this.#right[offset] = value
+    else this.#left[offset * -1] = value
     return this
   }
 
@@ -773,7 +771,7 @@ export default class BinaryArray {
   }
 
   isEmpty() {
-    return this.left.length + this.right.length === 1
+    return this.#left.length + this.#right.length === 1
   }
 
   isInBouds(index) {

@@ -133,28 +133,12 @@ describe('BinaryArray extra features', () => {
 
   it('.balance should work as expected', () => {
     const arr = new BinaryArray().with(6, 6, 6)
-
     arr.push(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     arr.unshift(-3, -4)
-
-    expect(arr.left).toEqual([BinaryArray.negativeZeroEmptyValue, 6, -4, -3])
-    expect(arr.right).toEqual([6, 6, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    expect(arr.length).toBe(18)
     arr.balance()
     expect(arr.offsetLeft * -1).toEqual(arr.offsetRight)
-    expect(arr.left.length - 1).toEqual(arr.right.length)
-    expect(arr.left).toEqual([
-      BinaryArray.negativeZeroEmptyValue,
-      1,
-      0,
-      -1,
-      -2,
-      6,
-      6,
-      6,
-      -4,
-      -3,
-    ])
-    expect(arr.right).toEqual([2, 3, 4, 5, 6, 7, 8, 9, 10])
+    expect(arr.length).toBe(18)
   })
 
   it('.removeFrom should work as expected', () => {
