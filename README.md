@@ -26,6 +26,14 @@ npm run test
 run benchmarks:
 npm run bench
 
+```js
+new BinaryArray.with(-2, -1, 0, 1, 2, 3, 4, 5)
+// structure 
+{ "left":[-1,1,0,-1,-2],"right":[2,3,4,5] }
+// array view
+[-2, -1, 0, 1, 2, 3, 4, 5]
+```
+
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
 
 Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
