@@ -23,7 +23,25 @@ Binar.from('((()))()()(())')
   )
   .isEmpty()
 ```
-[playground](https://at-290690.github.io/YavaScript/?g=AT-290690/9021bc9afd9420cb44d4db652cbff59c/raw/8a305d1dc3f56e424ed339e857b549ee7dd38595/BinaryArray.js)
+Unoptimal array solutions are as efficient as optimal ones
+```js
+const code = '49380518301380480923802840'
+// change these numbers to reveal subset of the code
+const index = 4
+const amount = 3
+   
+log(`|${
+   Binar
+  .from(code)
+  .rotateLeft(index)
+  .map((char, index, arr) => index > amount - 1 ? '.': char)
+  .rotateRight(index)
+  .items
+  .join('')
+}|`, `reveal mask subset of the code (index: ${index} amount: ${amount})`)
+
+```
+Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/9021bc9afd9420cb44d4db652cbff59c/raw/8a305d1dc3f56e424ed339e857b549ee7dd38595/BinaryArray.js)
 
 Structure
 
