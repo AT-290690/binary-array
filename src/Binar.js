@@ -771,7 +771,7 @@ export default class Binar {
     return this.#left.length + this.#right.length === 1
   }
 
-  isInBouds(index) {
+  isInBounds(index) {
     return index >= 0 && index < this.length
   }
 
