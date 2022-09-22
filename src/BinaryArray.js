@@ -1,5 +1,5 @@
 export default class BinaryArray {
-  #left = [BinaryArray.negativeZeroEmptyValue]
+  #left = [BinaryArray.#negativeZeroEmptyValue]
   #right = []
 
   get offsetLeft() {
@@ -20,10 +20,6 @@ export default class BinaryArray {
 
   get last() {
     return this.get(this.length - 1)
-  }
-
-  get pivot() {
-    return this.#right[0]
   }
 
   get items() {
@@ -55,7 +51,7 @@ export default class BinaryArray {
   }
 
   clear() {
-    this.#left = [BinaryArray.negativeZeroEmptyValue]
+    this.#left = [BinaryArray.#negativeZeroEmptyValue]
     this.#right = []
   }
 
@@ -118,10 +114,7 @@ export default class BinaryArray {
    *   0  1  2  3  // indexes
    * [ 4, 5. 6, 7] // right
    */
-  static negativeZeroEmptyValue = -1
-  /**
-   * Array methods
-   */
+  static #negativeZeroEmptyValue = -1
 
   static of(...items) {
     return BinaryArray.from(items)
