@@ -1,4 +1,4 @@
-# binary-array
+# binar
 
 ## Making the JavaScript array fast for large inputs.
 
@@ -17,7 +17,7 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 
 ```js
 // validate matching parens
-BinaryArray.from('((()))()()(())')
+Binar.from('((()))()()(())')
   .to((acc, x) =>
     x === '(' ? acc.prepend(x) : acc.first === '(' ? acc.tail() : acc.append(x)
   )
@@ -27,7 +27,7 @@ BinaryArray.from('((()))()()(())')
 Structure
 
 ```js
-const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
+const array = new Binar().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
 {
   left: [ -1, -1, -2 ],
   right: [ 0, 1, 2, 3, 4 ]
@@ -49,37 +49,37 @@ NANOBENCH version 2
 
 N = 200 000
 
-binaryArray.get middle (once)
+binArray.get middle (once)
 ok ~118 μs (0 s + 118333 ns)
 
 regularArray.get middle (once)
 ok ~54 μs (0 s + 54292 ns)
 
-binaryArray.get random
+binArray.get random
 ok ~7.49 ms (0 s + 7489583 ns)
 
 regularArray.get random
 ok ~7.45 ms (0 s + 7449834 ns)
 
-binaryArray.push
+binArray.push
 ok ~7.96 ms (0 s + 7960417 ns)
 
 regularArray.push
 ok ~5.28 ms (0 s + 5283917 ns)
 
-binaryArray.pop
+binArray.pop
 ok ~8.93 ms (0 s + 8927333 ns)
 
 regularArray.pop
 ok ~2.15 ms (0 s + 2145750 ns)
 
-binaryArray.shift 🚀
+binArray.shift 🚀
 ok ~72 ms (0 s + 72263500 ns)
 
 regularArray.shift 🐌
 ok ~4.97 s (4 s + 973667083 ns)
 
-binaryArray.unshift 🚀
+binArray.unshift 🚀
 ok ~5.53 ms (0 s + 5534333 ns)
 
 regularArray.unshift 🐌

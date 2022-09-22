@@ -1,17 +1,17 @@
-import BinaryArray from '../src/BinaryArray.js'
+import Binar from '../src/Binar.js'
 import Benchmark from 'nanobench'
 
 const N = 200_000
 
-Benchmark(`binaryArray.get middle N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
+Benchmark(`binArray.get middle N = ${N}`, (bench) => {
+  const binArray = new Binar()
   const mid = N / 2
-  for (let i = 0; i < N; i++) binaryArray.push(i)
-  binaryArray.balance()
+  for (let i = 0; i < N; i++) binArray.push(i)
+  binArray.balance()
   bench.start()
-  binaryArray.get(mid)
+  binArray.get(mid)
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.get middle N = ${N}`, (bench) => {
@@ -24,14 +24,14 @@ Benchmark(`regularArray.get middle N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.get random N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
-  for (let i = 0; i < N; i++) binaryArray.push(i)
-  binaryArray.balance()
+Benchmark(`binArray.get random N = ${N}`, (bench) => {
+  const binArray = new Binar()
+  for (let i = 0; i < N; i++) binArray.push(i)
+  binArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binaryArray.get(Math.floor(Math.random() * N))
+  for (let i = 0; i < N; i++) binArray.get(Math.floor(Math.random() * N))
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.get random N = ${N}`, (bench) => {
@@ -43,12 +43,12 @@ Benchmark(`regularArray.get random N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.push N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
+Benchmark(`binArray.push N = ${N}`, (bench) => {
+  const binArray = new Binar()
   bench.start()
-  for (let i = 0; i < N; i++) binaryArray.push(1)
+  for (let i = 0; i < N; i++) binArray.push(1)
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.push N = ${N}`, (bench) => {
@@ -59,14 +59,14 @@ Benchmark(`regularArray.push N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.pop N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
-  for (let i = 0; i < N; i++) binaryArray.push(i)
-  binaryArray.balance()
+Benchmark(`binArray.pop N = ${N}`, (bench) => {
+  const binArray = new Binar()
+  for (let i = 0; i < N; i++) binArray.push(i)
+  binArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binaryArray.pop()
+  for (let i = 0; i < N; i++) binArray.pop()
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.pop N = ${N}`, (bench) => {
@@ -78,14 +78,14 @@ Benchmark(`regularArray.pop N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.shift N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
-  for (let i = 0; i < N; i++) binaryArray.push(i)
-  binaryArray.balance()
+Benchmark(`binArray.shift N = ${N}`, (bench) => {
+  const binArray = new Binar()
+  for (let i = 0; i < N; i++) binArray.push(i)
+  binArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binaryArray.shift()
+  for (let i = 0; i < N; i++) binArray.shift()
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.shift N = ${N}`, (bench) => {
@@ -97,12 +97,12 @@ Benchmark(`regularArray.shift N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.unshift N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
+Benchmark(`binArray.unshift N = ${N}`, (bench) => {
+  const binArray = new Binar()
   bench.start()
-  for (let i = 0; i < N; i++) binaryArray.unshift(1)
+  for (let i = 0; i < N; i++) binArray.unshift(1)
   bench.end()
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
@@ -113,17 +113,17 @@ Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binaryArray.quickSort N = ${N}`, (bench) => {
-  const binaryArray = new BinaryArray()
+Benchmark(`binArray.quickSort N = ${N}`, (bench) => {
+  const binArray = new Binar()
   for (let i = 0; i < N; i++) {
-    binaryArray.append(Math.random() * 1000)
+    binArray.append(Math.random() * 1000)
   }
 
   bench.start()
-  binaryArray.quickSort()
+  binArray.quickSort()
   bench.end()
 
-  binaryArray.clear()
+  binArray.clear()
 })
 
 Benchmark(`regularArray.sort N = ${N}`, (bench) => {

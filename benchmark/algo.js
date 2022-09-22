@@ -1,4 +1,4 @@
-import BinaryArray from '../src/BinaryArray.js'
+import Binar from '../src/Binar.js'
 import Benchmark from 'nanobench'
 
 const N = 200_000
@@ -8,9 +8,9 @@ const N = 200_000
   for (let i = 0; i < N; i++) {
     input += Math.random() > 0.25 ? '(' : ')'
   }
-  Benchmark(`binaryArray matching parens N = ${N}`, (bench) => {
+  Benchmark(`binArray matching parens N = ${N}`, (bench) => {
     bench.start()
-    BinaryArray.from(input)
+    Binar.from(input)
       .to((acc, x) =>
         x === '('
           ? acc.prepend(x)
@@ -40,9 +40,9 @@ const N = 200_000
       gen[((Math.random() * 3) | 0.5) % 3][((Math.random() * 2) | 0.5) % 2]
   }
 
-  Benchmark(`binaryArray matching all parens N = ${N}`, (bench) => {
+  Benchmark(`binArray matching all parens N = ${N}`, (bench) => {
     bench.start()
-    BinaryArray.from(input).to((acc, x) =>
+    Binar.from(input).to((acc, x) =>
       x in tokens
         ? acc.prepend(x)
         : tokens[acc.first] === x

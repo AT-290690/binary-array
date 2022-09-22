@@ -1,5 +1,5 @@
-export default class BinaryArray {
-  #left = [BinaryArray.#negativeZeroEmptyValue]
+export default class Binar {
+  #left = [Binar.#negativeZeroEmptyValue]
   #right = []
 
   get offsetLeft() {
@@ -51,7 +51,7 @@ export default class BinaryArray {
   }
 
   clear() {
-    this.#left = [BinaryArray.#negativeZeroEmptyValue]
+    this.#left = [Binar.#negativeZeroEmptyValue]
     this.#right = []
   }
 
@@ -117,11 +117,11 @@ export default class BinaryArray {
   static #negativeZeroEmptyValue = -1
 
   static of(...items) {
-    return BinaryArray.from(items)
+    return Binar.from(items)
   }
 
   static isBinaryArray(entity) {
-    return entity instanceof BinaryArray
+    return entity instanceof Binar
   }
 
   static from(iterable) {
@@ -129,7 +129,7 @@ export default class BinaryArray {
       throw new Error(
         'TypeError: From input is not iterable (cannot read property '
       )
-    const out = new BinaryArray()
+    const out = new Binar()
     const half = (iterable.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
     for (let i = half; i < iterable.length; i++) out.#addToRight(iterable[i])
@@ -183,7 +183,7 @@ export default class BinaryArray {
   slice(start, end = this.length) {
     const collection = []
     for (let i = start; i < end; i++) collection.push(this.get(i))
-    return BinaryArray.from(collection)
+    return Binar.from(collection)
   }
   /**
    * Removes elements from an array and,
@@ -196,7 +196,7 @@ export default class BinaryArray {
   splice(dir, deleteCount, ...items) {
     const start = Math.abs(dir)
     deleteCount = deleteCount ?? this.length - start
-    const deleted = new BinaryArray()
+    const deleted = new Binar()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
@@ -315,7 +315,7 @@ export default class BinaryArray {
    * If thisArg is omitted, undefined is used as the this value.
    */
   map(callback) {
-    const result = new BinaryArray()
+    const result = new Binar()
     const half = (this.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--)
       result.#addToLeft(callback(this.get(i), i, this))
@@ -370,7 +370,7 @@ export default class BinaryArray {
       const predicat = callback(current, i, this)
       if (predicat) out.push(current)
     }
-    return BinaryArray.from(out)
+    return Binar.from(out)
   }
   /**
    * Reverses the elements in an array in place.
@@ -402,7 +402,7 @@ export default class BinaryArray {
    * @param callback - (item, index, arr )
    * @returns Object
    * @example
-   * BinaryArray.with(1,2,3,4).group((item) => (item % 2 == 0 ? "even" : "odd")
+   * Binar.with(1,2,3,4).group((item) => (item % 2 == 0 ? "even" : "odd")
    * // retunrs (this is array view)
    * {"odd":[1,3],"even":[2,4]}
    */
@@ -410,7 +410,7 @@ export default class BinaryArray {
     const out = this.reduce((acc, item, index, arr) => {
       const key = callback(item, index, arr)
       if (acc.has(key)) acc.get(key).append(item)
-      else acc.set(key, new BinaryArray(key).with(item))
+      else acc.set(key, new Binar(key).with(item))
       return acc
     }, new Group())
     out.forEach((item) => item.balance())
@@ -450,7 +450,7 @@ export default class BinaryArray {
   }
 
   concat(second) {
-    return BinaryArray.from([...this, ...second])
+    return Binar.from([...this, ...second])
   }
   /**
    * Returns a new array with all sub-array elements concatenated
@@ -469,13 +469,13 @@ export default class BinaryArray {
               ? collection
               : flatten(collection, levels, flat)
           })
-    return BinaryArray.from(flat(this, levels))
+    return Binar.from(flat(this, levels))
   }
 
   flatten(callback) {
-    return BinaryArray.from(
+    return Binar.from(
       this.reduce((acc, current, index, self) => {
-        if (BinaryArray.isBinaryArray(current))
+        if (Binar.isBinaryArray(current))
           current.forEach((item) => acc.push(callback(item)))
         else acc.push(callback(current, index, self))
         return acc
@@ -594,7 +594,7 @@ export default class BinaryArray {
     const collection = []
     const len = Math.min(n, this.length)
     for (let i = 0; i < len; i++) collection.push(this.get(i))
-    return BinaryArray.from(collection)
+    return Binar.from(collection)
   }
   /**
    * Creates a slice of array with n elements taken from the end.
@@ -604,10 +604,10 @@ export default class BinaryArray {
     const length = this.length
     const len = Math.min(n, length)
     for (let i = 0; i < len; i++) collection.push(this.get(length - (len - i)))
-    return BinaryArray.from(collection)
+    return Binar.from(collection)
   }
 
-  to(callback, initial = new BinaryArray()) {
+  to(callback, initial = new Binar()) {
     for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
@@ -650,7 +650,7 @@ export default class BinaryArray {
 
   union(b) {
     const a = this
-    const out = new BinaryArray()
+    const out = new Binar()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     A.forEach((item) => out.append(item))
@@ -661,7 +661,7 @@ export default class BinaryArray {
 
   symetricdifference(b) {
     const a = this
-    const out = new BinaryArray()
+    const out = new Binar()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     B.forEach((item) => !A.has(item) && out.append(item))
@@ -672,7 +672,7 @@ export default class BinaryArray {
 
   intersection(b) {
     const a = this
-    const out = new BinaryArray()
+    const out = new Binar()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     B.forEach((item) => A.has(item) && out.append(item))
@@ -682,7 +682,7 @@ export default class BinaryArray {
 
   difference(b) {
     const a = this
-    const out = new BinaryArray()
+    const out = new Binar()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     A.forEach((item) => !B.has(item) && out.append(item))
@@ -693,7 +693,7 @@ export default class BinaryArray {
   partition(groups = 1) {
     const res = this.reduce((acc, _, index, arr) => {
       if (index % groups === 0) {
-        const part = new BinaryArray()
+        const part = new Binar()
         for (let i = 0; i < groups; i++) {
           const current = arr.get(index + i)
           if (current !== undefined) part.append(current)
@@ -702,14 +702,14 @@ export default class BinaryArray {
         acc.append(part)
       }
       return acc
-    }, new BinaryArray())
+    }, new Binar())
     res.balance()
     return res
   }
 
   unique() {
     const set = new Set()
-    return BinaryArray.from(
+    return Binar.from(
       this.reduce((acc, item) => {
         if (!set.has(item)) {
           set.add(item)
@@ -734,7 +734,7 @@ export default class BinaryArray {
         extra.push(item)
       }
     })
-    return BinaryArray.from(out.concat(extra))
+    return Binar.from(out.concat(extra))
   }
 
   swap(i1, i2) {
@@ -755,7 +755,7 @@ export default class BinaryArray {
   }
 
   copy() {
-    return BinaryArray.from([...this])
+    return Binar.from([...this])
   }
 
   scan(callback, dir = 1) {
@@ -849,7 +849,7 @@ const tailCallOptimisedRecursion =
 
 const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
   collection.reduce((acc, current) => {
-    if (BinaryArray.isBinaryArray(current)) acc.push(...flat(current, levels))
+    if (Binar.isBinaryArray(current)) acc.push(...flat(current, levels))
     else acc.push(current)
     return acc
   }, [])
@@ -857,19 +857,19 @@ const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
 
 const toMatrix = tailCallOptimisedRecursion((...args) => {
   if (args.length === 0) return
-  const dimensions = new BinaryArray().with(...args)
+  const dimensions = new Binar().with(...args)
   const dim = dimensions.chop()
-  const arr = new BinaryArray()
+  const arr = new Binar()
   for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
   return arr
 })
 
 const toArrayDeep = tailCallOptimisedRecursion((entity) => {
-  return BinaryArray.isBinaryArray(entity)
+  return Binar.isBinaryArray(entity)
     ? entity
         .map((item) =>
-          BinaryArray.isBinaryArray(item)
-            ? item.some(BinaryArray.isBinaryArray)
+          Binar.isBinaryArray(item)
+            ? item.some(Binar.isBinaryArray)
               ? toArrayDeep(item)
               : item.toArray()
             : item
@@ -932,7 +932,7 @@ const merge = (left, right, callback) => {
   for (let i = 0; i < right.length; i++) {
     arr.push(right.get(i))
   }
-  const out = new BinaryArray()
+  const out = new Binar()
   const half = (arr.length / 2) | 0.5
   for (let i = half - 1; i >= 0; i--) out.prepend(arr[i])
   for (let i = half; i < arr.length; i++) out.append(arr[i])
