@@ -34,7 +34,7 @@ const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
   right: [ 0, 1, 2, 3, 4 ]
 }
 array.items // array view
-[-2, -1, 0, 1, 2, 3, 4, 5]
+[-2, -1, 0, 1, 2, 3, 4]
 ```
 
 Get each index
