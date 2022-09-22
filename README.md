@@ -2,8 +2,6 @@
 
 Making the JavaScript array fast for large inputs.
 
-![1_zVaXjvuxUmALcBbQW6Ttlg](https://user-images.githubusercontent.com/88512646/189848446-db97cd75-58ac-483f-82ab-4e8924308f79.png)
-
 insert O(1)  
 remove O(1)  
 access O(1)  
