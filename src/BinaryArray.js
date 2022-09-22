@@ -539,14 +539,20 @@ export default class BinaryArray {
     this.#addToLeft(item)
     return this
   }
-
+  /**
+   * Remove the last element
+   * @returns the removed element
+   */
   cut() {
     if (this.offsetRight === 0) this.balance()
     const last = this.last
     this.#removeFromRight()
     return last
   }
-
+  /**
+   * Remove the first element
+   * @returns the removed element
+   */
   chop() {
     if (this.offsetLeft === 0) this.balance()
     const first = this.first
@@ -743,13 +749,26 @@ export default class BinaryArray {
     return this
   }
 
+  swapRemoveRight(index) {
+    this.set(index, this.cut())
+    return this
+  }
+
+  swapRemoveLeft(index) {
+    this.set(index, this.chop())
+    return this
+  }
+
   copy() {
     return BinaryArray.from([...this])
   }
 
-  scan(callback) {
-    for (let i = 0, len = this.length; i < len; i++)
-      callback(this.get(i), i, this)
+  scan(callback, dir = 1) {
+    if (dir === -1)
+      for (let i = this.length; i >= 0; i--) callback(this.get(i), i, this)
+    else
+      for (let i = 0, len = this.length; i < len; i++)
+        callback(this.get(i), i, this)
     return this
   }
 

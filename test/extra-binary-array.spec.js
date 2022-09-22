@@ -350,7 +350,13 @@ describe('BinaryArray extra features', () => {
     expect(BinaryArray.from([1, 2, 3]).takeRight(5).items).toEqual([1, 2, 3])
     expect(BinaryArray.from([]).takeRight(0).items).toEqual([])
   })
-
+  it('.swapRemove should work as expected', () => {
+    const arr = new BinaryArray().with(1, 2, 3, 4, 5)
+    expect(arr.swapRemoveLeft(2))
+    expect(arr.items).toEqual([2, 3, 1, 5])
+    expect(arr.swapRemoveRight(2))
+    expect(arr.items).toEqual([2, 3, 5])
+  })
   it('.to should work as expected', () => {
     expect(
       BinaryArray.from('(())')
