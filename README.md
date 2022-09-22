@@ -54,7 +54,7 @@ const array = new Binar().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
 array.items => [-2, -1, 0, 1, 2, 3, 4]
 ```
 
-Get each index
+Indexing is guaranteed without the need of reordering thanks to simple arithmetics:
 
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
 
