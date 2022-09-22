@@ -21,7 +21,7 @@ BinaryArray.from('((()))()()(())')
   )
   .isEmpty()
 ```
-
+How does it keep track of the index:
 
 ```js
 const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
