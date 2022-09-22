@@ -29,7 +29,6 @@ run benchmarks:
 npm run bench
 
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
-![1_3sZTCd-Ca1ua3I0i5SG3xw](https://user-images.githubusercontent.com/88512646/189848250-d4ae2333-93c4-411c-94e7-66dbf6e9794d.png)
 
 Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
 
