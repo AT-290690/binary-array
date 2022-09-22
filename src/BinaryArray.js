@@ -179,8 +179,9 @@ export default class BinaryArray {
     for (let i = start; i < end; i++) collection.push(this.get(i))
     return BinaryArray.from(collection)
   }
-
-  splice(start, deleteCount = 0, ...items) {
+  // TODO support negative index
+  splice(start, deleteCount, ...items) {
+    deleteCount = deleteCount ?? this.length - start
     const deleted = new BinaryArray()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount

@@ -418,4 +418,45 @@ describe('BinaryArray mimic Array', () => {
       BinaryArray.from(lastArr2).reverse().find(isPrime)
     ) // 11
   })
+
+  it('.splice should return expected array', () => {
+    const arr1 = ['angel', 'clown', 'mandarin', 'sturgeon']
+    const ba1 = BinaryArray.from(arr1)
+    expect(arr1.splice(2, 0, 'drum')).toEqual(ba1.splice(2, 0, 'drum').items)
+    expect(arr1).toEqual(ba1.items)
+
+    const arr2 = ['angel', 'clown', 'mandarin', 'sturgeon']
+    const ba2 = BinaryArray.from(arr2)
+    expect(ba2.splice(2, 0, 'drum', 'guitar').items).toEqual(
+      arr2.splice(2, 0, 'drum', 'guitar')
+    )
+    expect(arr2).toEqual(ba2.items)
+    const arr3 = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon']
+    const ba3 = BinaryArray.from(arr3)
+    expect(ba3.splice(3, 1).items).toEqual(arr3.splice(3, 1))
+    expect(arr3).toEqual(ba3.items)
+
+    const arr4 = ['angel', 'clown', 'trumpet', 'sturgeon']
+    const ba4 = BinaryArray.from(arr4)
+    expect(ba4.splice(0, 2, 'parrot', 'anemone', 'blue').items).toEqual(
+      arr4.splice(0, 2, 'parrot', 'anemone', 'blue')
+    )
+    expect(arr4).toEqual(ba4.items)
+
+    const arr5 = ['parrot', 'anemone', 'blue', 'trumpet', 'sturgeon']
+    const ba5 = BinaryArray.from(arr5)
+    expect(ba5.splice(2, 2).items).toEqual(arr5.splice(2, 2))
+    expect(arr5).toEqual(ba5.items)
+
+    const arr6 = ['angel', 'clown', 'mandarin', 'sturgeon']
+    const ba6 = BinaryArray.from(arr6)
+    expect(ba6.splice(2).items).toEqual(arr6.splice(2))
+    expect(arr6).toEqual(ba6.items)
+
+    // TODO support negative index
+    // expect(
+    //   BinaryArray.from(['angel', 'clown', 'mandarin', 'sturgeon']).splice(-2, 1)
+    //     .items
+    // ).toEqual(['angel', 'clown', 'mandarin', 'sturgeon'].splice(-2, 1))
+  })
 })
