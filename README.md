@@ -1,6 +1,6 @@
 # binar
 
-## Making the JavaScript array fast for large inputs.
+## fast array operations in both ends
 
 npm i --save-dev
 
