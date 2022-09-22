@@ -1,6 +1,6 @@
 # binar
 
-## fast array operations in both ends
+## instant array operations  
 
 npm i --save-dev
 
