@@ -42,15 +42,13 @@ const N = 200_000
 
   Benchmark(`binaryArray matching all parens N = ${N}`, (bench) => {
     bench.start()
-    BinaryArray.from(input)
-      .to((acc, x) =>
-        x in tokens
-          ? acc.prepend(x)
-          : tokens[acc.first] === x
-          ? acc.tail()
-          : acc.append(null)
-      )
-      .isEmpty()
+    BinaryArray.from(input).to((acc, x) =>
+      x in tokens
+        ? acc.prepend(x)
+        : tokens[acc.first] === x
+        ? acc.tail()
+        : acc.append(x)
+    )
     bench.end()
   })
 
@@ -61,9 +59,9 @@ const N = 200_000
         ? acc.unshift(x)
         : tokens[acc[0]] === x
         ? acc.shift()
-        : acc.push(null)
+        : acc.push(x)
       return acc
-    }, []).length === 0
+    }, [])
     bench.end()
   })
 }
