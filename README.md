@@ -21,17 +21,14 @@ BinaryArray.from('((()))()()(())')
   )
   .isEmpty()
 ```
-How does it keep track of the index:
-
+Structure
 ```js
 const array = new BinaryArray().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4);
-// structure
 {
   left: [ -1, -1, -2 ],
   right: [ 0, 1, 2, 3, 4 ]
 }
-array.items // array view
-[-2, -1, 0, 1, 2, 3, 4]
+array.items => [-2, -1, 0, 1, 2, 3, 4]
 ```
 
 Get each index
