@@ -1,4 +1,6 @@
 # binary-array
+Making the JavaScript array fast for large inputs.
+
 
 npm i --save-dev
 
@@ -6,7 +8,6 @@ npm run test
 
 npm run bench
 
-Making the JavaScript array fast for large inputs.
 
 insert O(1)  
 remove O(1)  
