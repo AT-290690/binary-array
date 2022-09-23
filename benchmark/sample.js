@@ -3,7 +3,7 @@ import Benchmark from 'nanobench'
 
 const N = 500_000
 
-Benchmark(`binArray.shift N = ${N}`, (bench) => {
+Benchmark(`binArray.shift N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.push(i)
   binArray.balance()
@@ -13,7 +13,7 @@ Benchmark(`binArray.shift N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.shift N = ${N}`, (bench) => {
+Benchmark(`regularArray.shift N = ${N}`, bench => {
   const regularArray = []
   for (let i = 0; i < N; i++) regularArray.push(i)
   bench.start()
@@ -22,7 +22,7 @@ Benchmark(`regularArray.shift N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.unshift N = ${N}`, (bench) => {
+Benchmark(`binArray.unshift N = ${N}`, bench => {
   const binArray = new Binar()
   bench.start()
   for (let i = 0; i < N; i++) binArray.unshift(1)
@@ -30,7 +30,7 @@ Benchmark(`binArray.unshift N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
+Benchmark(`regularArray.unshift N = ${N}`, bench => {
   const regularArray = []
   bench.start()
   for (let i = 0; i < N; i++) regularArray.unshift(1)

@@ -8,7 +8,7 @@ const N = 200_000
   for (let i = 0; i < N; i++) {
     input += Math.random() > 0.25 ? '(' : ')'
   }
-  Benchmark(`binArray matching parens N = ${N}`, (bench) => {
+  Benchmark(`binArray matching parens N = ${N}`, bench => {
     bench.start()
     Binar.from(input)
       .to((acc, x) =>
@@ -22,7 +22,7 @@ const N = 200_000
     bench.end()
   })
 
-  Benchmark(`regularArray matching parens N = ${N}`, (bench) => {
+  Benchmark(`regularArray matching parens N = ${N}`, bench => {
     bench.start()
     Array.from(input).reduce((acc, x) => {
       x === '(' ? acc.unshift(x) : acc[0] === '(' ? acc.shift() : acc.push(x)
@@ -40,7 +40,7 @@ const N = 200_000
       gen[((Math.random() * 3) | 0.5) % 3][((Math.random() * 2) | 0.5) % 2]
   }
 
-  Benchmark(`binArray matching all parens N = ${N}`, (bench) => {
+  Benchmark(`binArray matching all parens N = ${N}`, bench => {
     bench.start()
     Binar.from(input).to((acc, x) =>
       x in tokens
@@ -52,7 +52,7 @@ const N = 200_000
     bench.end()
   })
 
-  Benchmark(`regularArray matching all parens N = ${N}`, (bench) => {
+  Benchmark(`regularArray matching all parens N = ${N}`, bench => {
     bench.start()
     Array.from(input).reduce((acc, x) => {
       x in tokens

@@ -97,9 +97,9 @@ describe('Binar extra features', () => {
     const out = []
     new Binar()
       .with(1, 2, 3)
-      .scan((x) => out.push(x))
-      .scan((x) => out.push(x * 2))
-      .scan((x) => out.push(x * 3))
+      .scan(x => out.push(x))
+      .scan(x => out.push(x * 2))
+      .scan(x => out.push(x * 3))
     expect(out).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9])
   })
 
@@ -170,8 +170,8 @@ describe('Binar extra features', () => {
   it('.group should work as expected', () => {
     const group = new Binar()
       .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
-      .group((item) => (item % 2 == 0 ? 'even' : 'odd'))
-      .map((item) => item.items)
+      .group(item => (item % 2 == 0 ? 'even' : 'odd'))
+      .map(item => item.items)
     expect(group.items).toEqual({
       odd: [1, 3, 5, 9, 1],
       even: [2, 4, 4, 8, 2, 32, 222, 2],
@@ -237,7 +237,7 @@ describe('Binar extra features', () => {
         { key: 'l', value: 43 },
       ])
         .mergeSort((a, b) => (a.key > b.key ? 1 : -1))
-        .search(searchKey, (current) => current.key)
+        .search(searchKey, current => current.key)
     ).toMatchObject(objectTarget)
 
     const input = [1, 2, 3, 2, 3, 7, 1, 2, 3, 2, 3, 7, 13]
@@ -249,8 +249,8 @@ describe('Binar extra features', () => {
         .mergeSort((a, b) => (a.key.localeCompare(b.key) ? 1 : -1))
         .search(
           '3-2',
-          (current) => current.key,
-          (current) => current.key.localeCompare('3-2')
+          current => current.key,
+          current => current.key.localeCompare('3-2')
         )
     ).toEqual({ key: '3-2', x: 3 })
     expect(
@@ -261,8 +261,8 @@ describe('Binar extra features', () => {
         .mergeSort((a, b) => (a.key.localeCompare(b.key) ? -1 : 1))
         .search(
           '3-2',
-          (current) => current.key,
-          (current) => current.key.localeCompare('3-2')
+          current => current.key,
+          current => current.key.localeCompare('3-2')
         )
     ).toEqual({ key: '3-2', x: 3 })
 
@@ -275,8 +275,8 @@ describe('Binar extra features', () => {
         .mergeSort((a, b) => (a.date.getTime() > b.date.getTime() ? -1 : 1))
         .search(
           dateTarget.getTime(),
-          (current) => current.date.getTime(),
-          (current) => current.date.getTime() > dateTarget.getTime()
+          current => current.date.getTime(),
+          current => current.date.getTime() > dateTarget.getTime()
         )
     ).toEqual({ date: dateTarget, x: 3 })
   })
@@ -291,9 +291,9 @@ describe('Binar extra features', () => {
 
   it('.isInBouds and .getInBounds should work as expected', () => {
     const binArr = new Binar().with(0, 1, 2, 3)
-    expect(binArr.isInBouds(4)).toBe(false)
-    expect(binArr.isInBouds(-1)).toBe(false)
-    expect(binArr.isInBouds(2)).toBe(true)
+    expect(binArr.isInBounds(4)).toBe(false)
+    expect(binArr.isInBounds(-1)).toBe(false)
+    expect(binArr.isInBounds(2)).toBe(true)
     expect(binArr.getInBounds(2)).toBe(2)
     expect(binArr.getInBounds(192)).toBe(3)
     expect(binArr.getInBounds(0)).toBe(0)

@@ -3,7 +3,7 @@ import Benchmark from 'nanobench'
 
 const N = 200_000
 
-Benchmark(`binArray.get middle N = ${N}`, (bench) => {
+Benchmark(`binArray.get middle N = ${N}`, bench => {
   const binArray = new Binar()
   const mid = N / 2
   for (let i = 0; i < N; i++) binArray.push(i)
@@ -14,7 +14,7 @@ Benchmark(`binArray.get middle N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.get middle N = ${N}`, (bench) => {
+Benchmark(`regularArray.get middle N = ${N}`, bench => {
   const regularArray = []
   const mid = N / 2
   for (let i = 0; i < N; i++) regularArray.push(i)
@@ -24,7 +24,7 @@ Benchmark(`regularArray.get middle N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.get random N = ${N}`, (bench) => {
+Benchmark(`binArray.get random N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.push(i)
   binArray.balance()
@@ -34,7 +34,7 @@ Benchmark(`binArray.get random N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.get random N = ${N}`, (bench) => {
+Benchmark(`regularArray.get random N = ${N}`, bench => {
   const regularArray = []
   for (let i = 0; i < N; i++) regularArray.push(i)
   bench.start()
@@ -43,7 +43,7 @@ Benchmark(`regularArray.get random N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.push N = ${N}`, (bench) => {
+Benchmark(`binArray.push N = ${N}`, bench => {
   const binArray = new Binar()
   bench.start()
   for (let i = 0; i < N; i++) binArray.push(1)
@@ -51,7 +51,7 @@ Benchmark(`binArray.push N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.push N = ${N}`, (bench) => {
+Benchmark(`regularArray.push N = ${N}`, bench => {
   const regularArray = []
   bench.start()
   for (let i = 0; i < N; i++) regularArray.push(1)
@@ -59,7 +59,7 @@ Benchmark(`regularArray.push N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.pop N = ${N}`, (bench) => {
+Benchmark(`binArray.pop N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.push(i)
   binArray.balance()
@@ -69,7 +69,7 @@ Benchmark(`binArray.pop N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.pop N = ${N}`, (bench) => {
+Benchmark(`regularArray.pop N = ${N}`, bench => {
   const regularArray = []
   for (let i = 0; i < N; i++) regularArray.push(i)
   bench.start()
@@ -78,7 +78,7 @@ Benchmark(`regularArray.pop N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.shift N = ${N}`, (bench) => {
+Benchmark(`binArray.shift N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.push(i)
   binArray.balance()
@@ -88,7 +88,7 @@ Benchmark(`binArray.shift N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.shift N = ${N}`, (bench) => {
+Benchmark(`regularArray.shift N = ${N}`, bench => {
   const regularArray = []
   for (let i = 0; i < N; i++) regularArray.push(i)
   bench.start()
@@ -97,7 +97,7 @@ Benchmark(`regularArray.shift N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.unshift N = ${N}`, (bench) => {
+Benchmark(`binArray.unshift N = ${N}`, bench => {
   const binArray = new Binar()
   bench.start()
   for (let i = 0; i < N; i++) binArray.unshift(1)
@@ -105,7 +105,7 @@ Benchmark(`binArray.unshift N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
+Benchmark(`regularArray.unshift N = ${N}`, bench => {
   const regularArray = []
   bench.start()
   for (let i = 0; i < N; i++) regularArray.unshift(1)
@@ -113,7 +113,7 @@ Benchmark(`regularArray.unshift N = ${N}`, (bench) => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.quickSort N = ${N}`, (bench) => {
+Benchmark(`binArray.quickSort N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) {
     binArray.append(Math.random() * 1000)
@@ -126,7 +126,7 @@ Benchmark(`binArray.quickSort N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`regularArray.sort N = ${N}`, (bench) => {
+Benchmark(`regularArray.sort N = ${N}`, bench => {
   const regularArray = []
   for (let i = 0; i < N; i++) {
     regularArray.push(Math.random() * 1000)

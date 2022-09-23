@@ -16,6 +16,7 @@
     "preset": "./jest.json"
   },
   "prettier": {
+    "arrowParens": "avoid",
     "semi": false,
     "singleQuote": true
   },

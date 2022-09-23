@@ -2,7 +2,7 @@ import Binar from '../src/Binar.js'
 import Benchmark from 'nanobench'
 
 const N = 1_000_000
-Benchmark(`binArray.get middle N = ${N}`, (bench) => {
+Benchmark(`binArray.get middle N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -12,7 +12,7 @@ Benchmark(`binArray.get middle N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.get random N = ${N}`, (bench) => {
+Benchmark(`binArray.get random N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -22,7 +22,7 @@ Benchmark(`binArray.get random N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.append N = ${N}`, (bench) => {
+Benchmark(`binArray.append N = ${N}`, bench => {
   const binArray = new Binar()
   binArray.balance()
   bench.start()
@@ -31,7 +31,7 @@ Benchmark(`binArray.append N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.head N = ${N}`, (bench) => {
+Benchmark(`binArray.head N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -41,7 +41,7 @@ Benchmark(`binArray.head N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.tail N = ${N}`, (bench) => {
+Benchmark(`binArray.tail N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -51,7 +51,7 @@ Benchmark(`binArray.tail N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.prepend N = ${N}`, (bench) => {
+Benchmark(`binArray.prepend N = ${N}`, bench => {
   const binArray = new Binar()
   binArray.balance()
   bench.start()
@@ -60,7 +60,7 @@ Benchmark(`binArray.prepend N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.rotateRight N = ${N}`, (bench) => {
+Benchmark(`binArray.rotateRight N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -70,7 +70,7 @@ Benchmark(`binArray.rotateRight N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.rotateLeft N = ${N}`, (bench) => {
+Benchmark(`binArray.rotateLeft N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   binArray.balance()
@@ -80,7 +80,7 @@ Benchmark(`binArray.rotateLeft N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.search N = ${N}`, (bench) => {
+Benchmark(`binArray.search N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N; i++) binArray.append(i)
   const target = (N / 3) | 0.5
@@ -93,7 +93,7 @@ Benchmark(`binArray.search N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.quickSort and binArray.search N = ${N}`, (bench) => {
+Benchmark(`binArray.quickSort and binArray.search N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N / 10; i++) binArray.append(Math.random() * 1000)
   const target = -1
@@ -105,7 +105,7 @@ Benchmark(`binArray.quickSort and binArray.search N = ${N}`, (bench) => {
   binArray.clear()
 })
 
-Benchmark(`binArray.quickSort and binArray.search N = ${N}`, (bench) => {
+Benchmark(`binArray.quickSort and binArray.search N = ${N}`, bench => {
   const binArray = new Binar()
   for (let i = 0; i < N / 10; i++) binArray.append(Math.random() * 1000)
   const target = -1

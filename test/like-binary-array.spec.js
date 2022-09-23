@@ -1,5 +1,5 @@
 import Binar from '../src/Binar.js'
-const isPrime = (num) => {
+const isPrime = num => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
   return num > 1
 }
@@ -62,13 +62,13 @@ describe('Binar mimic Array', () => {
       { id: 'undefined' },
     ]
     expect(
-      array2.filter((item) => {
+      array2.filter(item => {
         if (Number.isFinite(item.id) && item.id !== 0) return true
         arrayInvalidEntries++
         return false
       })
     ).toEqual(
-      Binar.from(array2).filter((item) => {
+      Binar.from(array2).filter(item => {
         if (Number.isFinite(item.id) && item.id !== 0) return true
         binaryArrayInvalidEntries++
         return false
@@ -80,7 +80,7 @@ describe('Binar mimic Array', () => {
     const binaryFruits = Binar.from(fruits)
 
     const filterItems = (arr, query) =>
-      arr.filter((el) => el.toLowerCase().includes(query.toLowerCase()))
+      arr.filter(el => el.toLowerCase().includes(query.toLowerCase()))
     expect(filterItems(fruits, 'ap')).toEqual(
       filterItems(binaryFruits, 'ap').items
     ) // ['apple', 'grapes']
@@ -94,15 +94,15 @@ describe('Binar mimic Array', () => {
     const binArr = Binar.from(arr)
 
     const rasultBinaryArray = binArr
-      .map((i) => i * i)
-      .filter((i) => i > 3)
+      .map(i => i * i)
+      .filter(i => i > 3)
       .mergeSort((a, b) => a - b)
       .reverse()
       .slice(1)
 
     const resultArray = arr
-      .map((i) => i * i)
-      .filter((i) => i > 3)
+      .map(i => i * i)
+      .filter(i => i > 3)
       .sort((a, b) => a - b)
       .reverse()
       .slice(1)
@@ -173,13 +173,13 @@ describe('Binar mimic Array', () => {
     const binArr = Binar.from(arr)
 
     const rasultBinaryArray = binArr
-      .map((i) => i ** i)
+      .map(i => i ** i)
       .reverse()
       .mergeSort((a, b) => a + b)
       .slice(2)
 
     const resultArray = arr
-      .map((i) => i ** i)
+      .map(i => i ** i)
       .reverse()
       .sort((a, b) => a + b)
       .slice(2)
@@ -190,8 +190,8 @@ describe('Binar mimic Array', () => {
   it('.flat, flatten should work the same way', () => {
     const arr = [4, 1, 1, 2, 3, 8, 7]
     const binArr = Binar.from(arr)
-    const rasultBinaryArray = binArr.map((i) => i ** i + 10 - 2)
-    const resultArray = arr.map((i) => i ** i + 10 - 2)
+    const rasultBinaryArray = binArr.map(i => i ** i + 10 - 2)
+    const resultArray = arr.map(i => i ** i + 10 - 2)
     const flatBinArr = rasultBinaryArray.concat(
       Binar.from([
         51,
@@ -240,8 +240,8 @@ describe('Binar mimic Array', () => {
       Binar.from([1, 2, 3, 4]).reverse(),
     ])
 
-    expect(flatMapBinaryArray.flatten((x) => x * 10 + 4).items).toEqual(
-      flatMapArray.flatMap((item) => item.map((x) => x * 10 + 4))
+    expect(flatMapBinaryArray.flatten(x => x * 10 + 4).items).toEqual(
+      flatMapArray.flatMap(item => item.map(x => x * 10 + 4))
     )
     expect([1, 2, [3, 4]].flat()).toEqual(
       new Binar().with(1, 2, new Binar().with(3, 4)).flat().items
@@ -341,11 +341,11 @@ describe('Binar mimic Array', () => {
     const string = '0101010101.01010101010101000.010101001.01.0101001.010.101'
     expect(
       Binar.from(string)
-        .filter((x) => x !== '.')
+        .filter(x => x !== '.')
         .join('.')
     ).toEqual(
       Array.from(string)
-        .filter((x) => x !== '.')
+        .filter(x => x !== '.')
         .join('.')
     )
   })
@@ -374,14 +374,14 @@ describe('Binar mimic Array', () => {
   it('.find should return expected array', () => {
     const arr = ['apple', 'orange', 'peach', 'lemon']
     const binArr = Binar.from(arr)
-    expect(binArr.find((item) => item === 'orange')).toBe(
-      arr.find((item) => item === 'orange')
+    expect(binArr.find(item => item === 'orange')).toBe(
+      arr.find(item => item === 'orange')
     )
-    expect(binArr.find((item) => item === 'lemon')).toBe(
-      arr.find((item) => item === 'lemon')
+    expect(binArr.find(item => item === 'lemon')).toBe(
+      arr.find(item => item === 'lemon')
     )
-    expect(binArr.find((item) => item === 'pomegranate')).toBe(
-      arr.find((item) => item === 'pomegranate')
+    expect(binArr.find(item => item === 'pomegranate')).toBe(
+      arr.find(item => item === 'pomegranate')
     )
     expect(binArr.indexOf('orange')).toBe(arr.indexOf('orange'))
     expect(binArr.indexOf('lemon')).toBe(arr.indexOf('lemon'))
@@ -389,18 +389,20 @@ describe('Binar mimic Array', () => {
 
     const lastArr1 = [4, 6, 8, 12]
     const lastArr2 = [4, 5, 7, 8, 9, 11, 12]
+    const lastBin1 = Binar.from(lastArr1)
+    const lastBin2 = Binar.from(lastArr2)
     // Todo use Array.prototype.findLast once it is available in node
     expect([...lastArr1].reverse().find(isPrime)).toEqual(
-      Binar.from(lastArr1).findLast(isPrime)
+      lastBin1.findLast(isPrime)
     ) // undefined, not found
     expect([...lastArr2].reverse().find(isPrime)).toEqual(
-      Binar.from(lastArr2).findLast(isPrime)
+      lastBin2.findLast(isPrime)
     ) // 11
     expect([...lastArr1].reverse().find(isPrime)).toEqual(
-      Binar.from(lastArr1).reverse().find(isPrime)
+      lastBin1.reverse().find(isPrime)
     ) // undefined, not found
     expect([...lastArr2].reverse().find(isPrime)).toEqual(
-      Binar.from(lastArr2).reverse().find(isPrime)
+      lastBin2.reverse().find(isPrime)
     ) // 11
   })
 
@@ -450,5 +452,105 @@ describe('Binar mimic Array', () => {
       ba8.splice(2, 1, 'trumpet').items
     )
     expect(arr8).toEqual(ba8.items)
+  })
+
+  it('.every should work like array.every', () => {
+    const isBigEnough = element => element >= 10
+    expect(Binar.from([12, 5, 8, 130, 44]).every(isBigEnough)).toBe(
+      [12, 5, 8, 130, 44].every(isBigEnough)
+    )
+    expect(Binar.from([12, 54, 18, 130, 44]).every(isBigEnough)).toBe(
+      [12, 54, 18, 130, 44].every(isBigEnough)
+    )
+
+    const isSubset = (array1, array2) =>
+      array2.every(element => array1.includes(element))
+
+    expect(
+      isSubset(Binar.from([1, 2, 3, 4, 5, 6, 7]), Binar.from([5, 7, 6]))
+    ).toBe(isSubset([1, 2, 3, 4, 5, 6, 7], [5, 7, 6])) // true
+    expect(
+      isSubset(Binar.from([1, 2, 3, 4, 5, 6, 7]), Binar.from([5, 8, 7]))
+    ).toBe(isSubset([1, 2, 3, 4, 5, 6, 7], [5, 8, 7])) // false
+
+    expect(Binar.from([1, undefined, 3]).every(x => x !== undefined)).toBe(
+      [1, undefined, 3].every(x => x !== undefined)
+    ) // true
+    expect(Binar.from([2, undefined, 3]).every(x => x === 2)).toBe(
+      [2, undefined, 2].every(x => x === 2)
+    ) // true
+    // ---------------
+    // Modifying items
+    // ---------------
+    const arr = [1, 2, 3, 4]
+    let out1 = ''
+    arr.every((elem, index, arr) => {
+      arr[index + 1]--
+      out1 += `[${arr}][${index}] -> ${elem}`
+      return elem < 2
+    })
+    const binar = Binar.from([1, 2, 3, 4])
+    let out2 = ''
+    binar.every((elem, index, arr) => {
+      arr.set(index + 1, arr.get(index + 1) - 1)
+      out2 += `[${arr.items}][${index}] -> ${elem}`
+      return elem < 2
+    })
+    expect(out1).toBe(out2)
+    // Loop runs for 3 iterations, but would
+    // have run 2 iterations without any modification
+    //
+    // 1st iteration: [1,1,3,4][0] -> 1
+    // 2nd iteration: [1,1,2,4][1] -> 1
+    // 3rd iteration: [1,1,2,3][2] -> 2
+    // ---------------
+    // Appending items
+    // ---------------
+    const arr2 = [1, 2, 3]
+    let out3 = ''
+    arr2.every((elem, index, arr) => {
+      arr.push('new')
+      out3 += `[${arr}][${index}] -> ${elem}`
+      return elem < 4
+    })
+    const binar2 = Binar.from([1, 2, 3])
+    let out4 = ''
+    binar2.every((elem, index, arr) => {
+      arr.push('new')
+      out4 += `[${arr.items}][${index}] -> ${elem}`
+      return elem < 4
+    })
+    expect(out3).toBe(out4)
+    // Loop runs for 3 iterations, even after appending new items
+    //
+    // 1st iteration: [1, 2, 3, new][0] -> 1
+    // 2nd iteration: [1, 2, 3, new, new][1] -> 2
+    // 3rd iteration: [1, 2, 3, new, new, new][2] -> 3
+    // ---------------
+    // Deleting items
+    // ---------------
+    // const arr3 = [1, 2, 3, 4]
+    // let out5 = ''
+    // arr3.every((elem, index, arr) => {
+    //   arr.pop()
+    //   out5 += `[${arr}][${index}] -> ${elem}`
+    //   return elem < 4
+    // })
+
+    // const binar3 = Binar.from([1, 2, 3, 4])
+    // let out6 = ''
+    // binar3.every((elem, index, arr) => {
+    //   arr.pop()
+    //   out6 += `[${arr.items}][${index}] -> ${elem}`
+    //   return elem < 4
+    // })
+
+    // expect(out5).toBe(out6)
+
+    // Loop runs for 2 iterations only, as the remaining
+    // items are `pop()`ed off
+    //
+    // 1st iteration: [1,2,3][0] -> 1
+    // 2nd iteration: [1,2][1] -> 2
   })
 })
