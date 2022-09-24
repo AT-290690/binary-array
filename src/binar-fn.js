@@ -59,7 +59,6 @@ export const copy = entity => {
 export const isBinaryArray = entity =>
   typeof entity === 'object' &&
   'left' in entity &&
-  Array.isArray(entity.left) &&
   entity.left[0] === NegativeZeroSymbol
 export const isBalanced = entity =>
   offsetRight(entity) + offsetLeft(entity) === 0
