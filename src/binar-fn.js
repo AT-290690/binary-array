@@ -146,13 +146,13 @@ export const findLast = (entity, callback) => {
 export const scan = (entity, callback, dir = 1) => {
   const len = length(entity)
   if (dir === -1)
-    for (let i = len; i >= 0; i -= 1) callback(this.get(i), i, entity)
-  else for (let i = 0; i < len; i += 1) callback(this.get(i), i, entity)
+    for (let i = len; i >= 0; i -= 1) callback(get(entity, i), i, entity)
+  else for (let i = 0; i < len; i += 1) callback(get(entity, i), i, entity)
   return entity
 }
 export const each = (entity, callback) => {
   const len = length(entity)
-  for (let i = 0; i < len; i += 1) callback(this.get(i))
+  for (let i = 0; i < len; i += 1) callback(get(entity, i))
   return entity
 }
 export const reverse = entity => {
