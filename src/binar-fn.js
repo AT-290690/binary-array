@@ -11,9 +11,7 @@ const tailCallOptimisedRecursion =
   func =>
   (...args) => {
     let result = func(...args)
-    while (typeof result === 'function') {
-      result = result()
-    }
+    while (typeof result === 'function') result = result()
     return result
   }
 const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
@@ -235,7 +233,6 @@ export const rotateRight = (entity, n = 1) => {
 }
 export const rotate = (entity, n = 1, direction = 1) =>
   direction === 1 ? rotateRight(entity, n) : rotateLeft(entity, n)
-
 export const flat = (entity, levels = 1) => {
   const flat =
     levels === Infinity
@@ -248,7 +245,106 @@ export const flat = (entity, levels = 1) => {
         })
   return fill(make(), ...flat(entity, levels))
 }
-
+export const swap = (entity, i1, i2) => {
+  const temp = get(entity, i1)
+  set(entity, i1, get(entity, i2))
+  set(entity, i2, temp)
+  return entity
+}
+export const swapRemoveRight = (entity, index) => {
+  set(entity, index, cut(entity))
+  return entity
+}
+export const swapRemoveLeft = (entity, index) => {
+  set(entity, index, chop(entity))
+  return entity
+}
+export const compact = entity => filter(entity, Boolean)
+export const union = (entity, b) => {
+  const a = entity
+  const out = make()
+  const A = new Set(toArray(a))
+  const B = new Set(toArray(b))
+  A.forEach(item => append(out, item))
+  B.forEach(item => append(out, item))
+  return balance(out)
+}
+export const symetricdifference = (entity, b) => {
+  const a = entity
+  const out = make()
+  const A = new Set(toArray(a))
+  const B = new Set(toArray(b))
+  B.forEach(item => !A.has(item) && append(out, item))
+  A.forEach(item => !B.has(item) && append(out, item))
+  return balance(out)
+}
+export const intersection = (entity, b) => {
+  const a = entity
+  const out = make()
+  const A = new Set(toArray(a))
+  const B = new Set(toArray(b))
+  B.forEach(item => A.has(item) && append(out, item))
+  return balance(out)
+}
+export const difference = (entity, b) => {
+  const a = entity
+  const out = make()
+  const A = new Set(toArray(a))
+  const B = new Set(toArray(b))
+  A.forEach(item => !B.has(item) && append(out, item))
+  return balance(out)
+}
+export const partition = (entity, groups = 1) =>
+  balance(
+    to(entity, (acc, _, index, arr) => {
+      if (index % groups === 0) {
+        const part = make()
+        for (let i = 0; i < groups; i += 1) {
+          const current = get(arr, index + i)
+          if (current !== undefined) append(part, current)
+        }
+        balance(part)
+        append(acc, part)
+      }
+      return acc
+    })
+  )
+export const unique = entity => {
+  const set = new Set()
+  return fill(
+    make(),
+    ...to(
+      entity,
+      (acc, item) => {
+        if (!set.has(item)) {
+          set.add(item)
+          acc.push(item)
+        }
+        return acc
+      },
+      []
+    )
+  )
+}
+export const duplicates = entity => {
+  const set = new Set()
+  const extra = []
+  const out = to(
+    entity,
+    (acc, item) => {
+      set.has(item) ? acc.push(item) : set.add(item)
+      return acc
+    },
+    []
+  )
+  out.forEach(item => {
+    if (set.has(item)) {
+      set.delete(item)
+      extra.push(item)
+    }
+  })
+  return fill(make(), ...out.concat(extra))
+}
 export const pipe =
   (...fns) =>
   x =>

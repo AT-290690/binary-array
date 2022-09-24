@@ -29,8 +29,8 @@ export default class Binar {
   with(...initial) {
     if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i -= 1) this.#addToLeft(initial[i])
-    for (let i = half; i < initial.length; i += 1) this.#addToRight(initial[i])
+    for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
+    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -66,19 +66,19 @@ export default class Binar {
   #removeFromLeft() {
     if (this.length) {
       if (this.length === 1) this.clear()
-      else if (this.#left.length > 0) this.#left.length -= 1
+      else if (this.#left.length > 0) this.#left.length--
     }
   }
 
   #removeFromRight() {
     if (this.length) {
       if (this.length === 1) this.clear()
-      else if (this.#right.length > 0) this.#right.length -= 1
+      else if (this.#right.length > 0) this.#right.length--
     }
   }
 
   [Symbol.iterator] = function* () {
-    for (let i = 0, len = this.length; i < len; i += 1) yield this.get(i)
+    for (let i = 0, len = this.length; i < len; i++) yield this.get(i)
   }
 
   isBalanced() {
@@ -90,8 +90,8 @@ export default class Binar {
     const initial = [...this]
     this.clear()
     const half = (initial.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i -= 1) this.#addToLeft(initial[i])
-    for (let i = half; i < initial.length; i += 1) this.#addToRight(initial[i])
+    for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
+    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -131,8 +131,8 @@ export default class Binar {
       )
     const out = new Binar()
     const half = (iterable.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i -= 1) out.#addToLeft(iterable[i])
-    for (let i = half; i < iterable.length; i += 1) out.#addToRight(iterable[i])
+    for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
+    for (let i = half; i < iterable.length; i++) out.#addToRight(iterable[i])
     return out
   }
 
@@ -146,12 +146,12 @@ export default class Binar {
   }
 
   push(...items) {
-    for (let i = 0; i < items.length; i += 1) this.#addToRight(items[i])
+    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
     return this.length
   }
 
   unshift(...items) {
-    for (let i = items.length - 1; i >= 0; i -= 1) this.#addToLeft(items[i])
+    for (let i = items.length - 1; i >= 0; i--) this.#addToLeft(items[i])
     return this.length
   }
 
@@ -182,7 +182,7 @@ export default class Binar {
    */
   slice(start, end = this.length) {
     const collection = []
-    for (let i = start; i < end; i += 1) collection.push(this.get(i))
+    for (let i = start; i < end; i++) collection.push(this.get(i))
     return Binar.from(collection)
   }
   /**
@@ -201,15 +201,15 @@ export default class Binar {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i += 1) deleted.push(this.cut())
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.cut())
       dir < 0 ? this.unshift(...items) : this.push(...items)
-      for (let i = 0; i < len; i += 1) this.append(this.chop())
+      for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(start)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i += 1) deleted.push(this.chop())
+        for (let i = 0; i < deleteCount; i++) deleted.push(this.chop())
       dir < 0 ? this.push(...items) : this.unshift(...items)
-      for (let i = 0; i < start; i += 1) this.prepend(this.cut())
+      for (let i = 0; i < start; i++) this.prepend(this.cut())
     }
     return deleted
   }
@@ -221,7 +221,7 @@ export default class Binar {
    * If fromIndex is omitted, the search starts at index 0.
    */
   indexOf(item) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       if (this.get(i) === item) return i
     return -1
   }
@@ -233,12 +233,12 @@ export default class Binar {
    * If fromIndex is omitted, the search starts at the last index in the array.
    */
   lastIndexOf(item) {
-    for (let i = this.length - 1; i >= 0; i -= 1)
+    for (let i = this.length - 1; i >= 0; i--)
       if (this.get(i) === item) return i
   }
 
   includes(val, fromIndex = 0) {
-    for (let i = fromIndex, len = this.length; i < len; i += 1)
+    for (let i = fromIndex, len = this.length; i < len; i++)
       if (sameValueZero(this.get(i), val)) return true
     return false
   }
@@ -250,7 +250,7 @@ export default class Binar {
    * If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead.
    */
   find(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1) {
+    for (let i = 0, len = this.length; i < len; i++) {
       if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return current
@@ -258,7 +258,7 @@ export default class Binar {
   }
 
   findLast(callback) {
-    for (let i = this.length - 1; i >= 0; i -= 1) {
+    for (let i = this.length - 1; i >= 0; i--) {
       if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return current
@@ -276,7 +276,7 @@ export default class Binar {
    * If thisArg is omitted, undefined is used as the this value.
    */
   some(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       if (callback(this.get(i), i, this)) return true
     return false
   }
@@ -288,13 +288,13 @@ export default class Binar {
    * An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
    */
   every(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       if (i >= this.length || !callback(this.get(i), i, this)) return false
     return true
   }
 
   findIndex(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1) {
+    for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -302,7 +302,7 @@ export default class Binar {
   }
 
   findLastIndex(callback) {
-    for (let i = this.length - 1; i >= 0; i -= 1) {
+    for (let i = this.length - 1; i >= 0; i--) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -319,21 +319,21 @@ export default class Binar {
   map(callback) {
     const result = new Binar()
     const half = (this.length / 2) | 0.5
-    for (let i = half - 1; i >= 0; i -= 1)
+    for (let i = half - 1; i >= 0; i--)
       result.#addToLeft(callback(this.get(i), i, this))
-    for (let i = half, len = this.length; i < len; i += 1)
+    for (let i = half, len = this.length; i < len; i++)
       result.#addToRight(callback(this.get(i), i, this))
     return result
   }
 
   mapMut(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       this.set(i, callback(this.get(i), i, this))
     return this
   }
 
   forEach(callback) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       callback(this.get(i), i, this)
   }
   /**
@@ -348,13 +348,13 @@ export default class Binar {
    * instead of an array value.
    */
   reduce(callback, initial) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
 
   reduceRight(callback, initial) {
-    for (let i = this.length - 1; i >= 0; i -= 1)
+    for (let i = this.length - 1; i >= 0; i--)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
@@ -367,7 +367,7 @@ export default class Binar {
    */
   filter(callback) {
     const out = []
-    for (let i = 0, len = this.length; i < len; i += 1) {
+    for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       const predicat = callback(current, i, this)
       if (predicat) out.push(current)
@@ -445,7 +445,7 @@ export default class Binar {
 
   join(separator = ',') {
     let output = ''
-    for (let i = 0, len = this.length; i < len - 1; i += 1)
+    for (let i = 0, len = this.length; i < len - 1; i++)
       output += this.get(i) + separator
     output += this.get(this.length - 1)
     return output
@@ -466,7 +466,7 @@ export default class Binar {
             flatten(collection, levels, flat)
           )
         : tailCallOptimisedRecursion((collection, levels) => {
-            levels -= 1
+            levels--
             return levels === -1
               ? collection
               : flatten(collection, levels, flat)
@@ -487,7 +487,7 @@ export default class Binar {
 
   addTo(index, value) {
     if (index >= this.length)
-      for (let i = this.length; i <= index; i += 1) this.#addToRight(undefined)
+      for (let i = this.length; i <= index; i++) this.#addToRight(undefined)
     const offset = index + this.offsetLeft
     if (offset >= 0) this.#right[offset] = value
     else this.#left[offset * -1] = value
@@ -499,11 +499,11 @@ export default class Binar {
       const len = this.length - key
       this.rotateRight(len)
       this.push(...value)
-      for (let i = 0; i < len; i += 1) this.append(this.shift())
+      for (let i = 0; i < len; i++) this.append(this.shift())
     } else {
       this.rotateLeft(key)
       this.unshift(...value)
-      for (let i = 0; i < key; i += 1) this.prepend(this.pop())
+      for (let i = 0; i < key; i++) this.prepend(this.pop())
     }
     return this
   }
@@ -513,12 +513,12 @@ export default class Binar {
     amount = len < amount ? len : amount
     if (this.offsetLeft + key > 0) {
       this.rotateRight(len)
-      for (let i = 0; i < amount; i += 1) this.cut()
-      for (let i = 0; i < len; i += 1) this.append(this.chop())
+      for (let i = 0; i < amount; i++) this.cut()
+      for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
       this.rotateLeft(key)
-      for (let i = 0; i < amount; i += 1) this.chop()
-      for (let i = 0; i < key; i += 1) this.prepend(this.cut())
+      for (let i = 0; i < amount; i++) this.chop()
+      for (let i = 0; i < key; i++) this.prepend(this.cut())
     }
     return this
   }
@@ -570,12 +570,12 @@ export default class Binar {
   }
 
   insertRight(...items) {
-    for (let i = 0; i < items.length; i += 1) this.#addToRight(items[i])
+    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
     return this
   }
 
   insertLeft(...items) {
-    for (let i = items.length - 1; i >= 0; i -= 1) this.#addToLeft(items[i])
+    for (let i = items.length - 1; i >= 0; i--) this.#addToLeft(items[i])
     return this
   }
 
@@ -595,7 +595,7 @@ export default class Binar {
   take(n = 1) {
     const collection = []
     const len = Math.min(n, this.length)
-    for (let i = 0; i < len; i += 1) collection.push(this.get(i))
+    for (let i = 0; i < len; i++) collection.push(this.get(i))
     return Binar.from(collection)
   }
   /**
@@ -605,20 +605,19 @@ export default class Binar {
     const collection = []
     const length = this.length
     const len = Math.min(n, length)
-    for (let i = 0; i < len; i += 1)
-      collection.push(this.get(length - (len - i)))
+    for (let i = 0; i < len; i++) collection.push(this.get(length - (len - i)))
     return Binar.from(collection)
   }
 
   to(callback, initial = new Binar()) {
-    for (let i = 0, len = this.length; i < len; i += 1)
+    for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
 
   rotateLeft(n = 1) {
     n = n % this.length
-    for (let i = 0; i < n; i += 1) {
+    for (let i = 0; i < n; i++) {
       if (this.offsetLeft === 0) this.balance()
       this.#addToRight(this.first)
       this.#removeFromLeft()
@@ -628,7 +627,7 @@ export default class Binar {
 
   rotateRight(n = 1) {
     n = n % this.length
-    for (let i = 0; i < n; i += 1) {
+    for (let i = 0; i < n; i++) {
       if (this.offsetRight === 0) this.balance()
       this.#addToLeft(this.last)
       this.#removeFromRight()
@@ -697,7 +696,7 @@ export default class Binar {
     const res = this.reduce((acc, _, index, arr) => {
       if (index % groups === 0) {
         const part = new Binar()
-        for (let i = 0; i < groups; i += 1) {
+        for (let i = 0; i < groups; i++) {
           const current = arr.get(index + i)
           if (current !== undefined) part.append(current)
         }
@@ -763,9 +762,9 @@ export default class Binar {
 
   scan(callback, dir = 1) {
     if (dir === -1)
-      for (let i = this.length; i >= 0; i -= 1) callback(this.get(i), i, this)
+      for (let i = this.length; i >= 0; i--) callback(this.get(i), i, this)
     else
-      for (let i = 0, len = this.length; i < len; i += 1)
+      for (let i = 0, len = this.length; i < len; i++)
         callback(this.get(i), i, this)
     return this
   }
@@ -844,9 +843,7 @@ const tailCallOptimisedRecursion =
   func =>
   (...args) => {
     let result = func(...args)
-    while (typeof result === 'function') {
-      result = result()
-    }
+    while (typeof result === 'function') result = result()
     return result
   }
 
@@ -863,7 +860,7 @@ const toMatrix = tailCallOptimisedRecursion((...args) => {
   const dimensions = new Binar().with(...args)
   const dim = dimensions.chop()
   const arr = new Binar()
-  for (let i = 0; i < dim; i += 1) arr.set(i, toMatrix(...dimensions))
+  for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
   return arr
 })
 
@@ -887,12 +884,12 @@ const quickSortAsc = tailCallOptimisedRecursion((items, left, right) => {
       i = left,
       j = right
     while (i <= j) {
-      while (items.get(i) < pivot) i += 1
-      while (items.get(j) > pivot) j -= 1
+      while (items.get(i) < pivot) i++
+      while (items.get(j) > pivot) j--
       if (i <= j) {
         items.swap(i, j)
-        i += 1
-        j -= 1
+        i++
+        j--
       }
     }
     if (left < i - 1) quickSortAsc(items, left, i - 1)
@@ -907,12 +904,12 @@ const quickSortDesc = tailCallOptimisedRecursion((items, left, right) => {
       i = left,
       j = right
     while (i <= j) {
-      while (items.get(i) > pivot) i += 1
-      while (items.get(j) < pivot) j -= 1
+      while (items.get(i) > pivot) i++
+      while (items.get(j) < pivot) j--
       if (i <= j) {
         items.swap(i, j)
-        i += 1
-        j -= 1
+        i++
+        j--
       }
     }
     if (left < i - 1) quickSortDesc(items, left, i - 1)
@@ -929,16 +926,16 @@ const merge = (left, right, callback) => {
       : arr.push(right.chop())
   }
 
-  for (let i = 0; i < left.length; i += 1) {
+  for (let i = 0; i < left.length; i++) {
     arr.push(left.get(i))
   }
-  for (let i = 0; i < right.length; i += 1) {
+  for (let i = 0; i < right.length; i++) {
     arr.push(right.get(i))
   }
   const out = new Binar()
   const half = (arr.length / 2) | 0.5
-  for (let i = half - 1; i >= 0; i -= 1) out.prepend(arr[i])
-  for (let i = half; i < arr.length; i += 1) out.append(arr[i])
+  for (let i = half - 1; i >= 0; i--) out.prepend(arr[i])
+  for (let i = half; i < arr.length; i++) out.append(arr[i])
   return out
 }
 
