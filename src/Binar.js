@@ -51,8 +51,8 @@ export default class Binar {
   }
 
   clear() {
-    this.#left = [Binar.#negativeZeroSymbol]
-    this.#right = []
+    this.#left.length = 1
+    this.#right.length = 0
   }
 
   #addToLeft(item) {

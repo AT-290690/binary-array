@@ -4,8 +4,8 @@ const NegativeZeroSymbol = Symbol('-0')
 export const make = () => ({ left: [NegativeZeroSymbol], right: [] })
 export const length = entity => entity.left.length + entity.right.length - 1
 export const clear = entity => {
-  entity.left = [NegativeZeroSymbol]
-  entity.right = []
+  entity.left.length = 1
+  entity.right.length = 0
   return entity
 }
 const tailCallOptimisedRecursion =
