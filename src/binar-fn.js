@@ -1,9 +1,10 @@
 const offsetLeft = entity => (entity.left.length - 1) * -1
 const offsetRight = entity => entity.right.length
-export const make = () => ({ left: [-1], right: [] })
+const NegativeZeroSymbol = Symbol('-0')
+export const make = () => ({ left: [NegativeZeroSymbol], right: [] })
 export const length = entity => entity.left.length + entity.right.length - 1
 export const clear = entity => {
-  entity.left = [-1]
+  entity.left = [NegativeZeroSymbol]
   entity.right = []
   return entity
 }
@@ -59,9 +60,7 @@ export const isBinaryArray = entity =>
   typeof entity === 'object' &&
   'left' in entity &&
   Array.isArray(entity.left) &&
-  entity.left[0] === -1 &&
-  'right' in entity &&
-  Array.isArray(entity.right)
+  entity.left[0] === NegativeZeroSymbol
 export const isBalanced = entity =>
   offsetRight(entity) + offsetLeft(entity) === 0
 export const balance = entity => {

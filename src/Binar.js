@@ -1,5 +1,5 @@
 export default class Binar {
-  #left = [Binar.#negativeZeroEmptyValue]
+  #left = [Binar.#negativeZeroSymbol]
   #right = []
 
   get offsetLeft() {
@@ -51,7 +51,7 @@ export default class Binar {
   }
 
   clear() {
-    this.#left = [Binar.#negativeZeroEmptyValue]
+    this.#left = [Binar.#negativeZeroSymbol]
     this.#right = []
   }
 
@@ -110,11 +110,11 @@ export default class Binar {
    * // Regular Array View
    * [1, 2, 3, 4, 5, 6]
    * // The above as Binary Array
-   * [-1, 3, 2, 1] // left
+   * [-0, 3, 2, 1] // left
    *   0  1  2  3  // indexes
    * [ 4, 5. 6, 7] // right
    */
-  static #negativeZeroEmptyValue = -1
+  static #negativeZeroSymbol = Symbol('-0')
 
   static of(...items) {
     return Binar.from(items)
