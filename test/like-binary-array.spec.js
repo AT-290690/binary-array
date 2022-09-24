@@ -529,23 +529,23 @@ describe('Binar mimic Array', () => {
     // ---------------
     // Deleting items
     // ---------------
-    // const arr3 = [1, 2, 3, 4]
-    // let out5 = ''
-    // arr3.every((elem, index, arr) => {
-    //   arr.pop()
-    //   out5 += `[${arr}][${index}] -> ${elem}`
-    //   return elem < 4
-    // })
+    const arr3 = [1, 2, 3, 4]
+    let out5 = ''
+    arr3.every((elem, index, arr) => {
+      arr.pop()
+      out5 += `[${arr}][${index}] -> ${elem}`
+      return elem < 4
+    })
 
-    // const binar3 = Binar.from([1, 2, 3, 4])
-    // let out6 = ''
-    // binar3.every((elem, index, arr) => {
-    //   arr.pop()
-    //   out6 += `[${arr.items}][${index}] -> ${elem}`
-    //   return elem < 4
-    // })
+    const binar3 = Binar.from([1, 2, 3, 4])
+    let out6 = ''
+    binar3.every((elem, index, arr) => {
+      arr.pop()
+      out6 += `[${arr.items}][${index}] -> ${elem}`
+      return elem < 4
+    })
 
-    // expect(out5).toBe(out6)
+    expect(out5).toBe(out6)
 
     // Loop runs for 2 iterations only, as the remaining
     // items are `pop()`ed off

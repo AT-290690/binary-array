@@ -275,7 +275,7 @@ export default class Binar {
    */
   some(callback) {
     for (let i = 0, len = this.length; i < len; i += 1)
-      if (callback(this.get(i), i, this)) return true
+      if (i >= this.length || callback(this.get(i), i, this)) return true
     return false
   }
   /**
@@ -287,7 +287,7 @@ export default class Binar {
    */
   every(callback) {
     for (let i = 0, len = this.length; i < len; i += 1)
-      if (!callback(this.get(i), i, this)) return false
+      if (i >= this.length || !callback(this.get(i), i, this)) return false
     return true
   }
 
