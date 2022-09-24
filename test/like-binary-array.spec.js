@@ -1,8 +1,5 @@
 import Binar from '../src/Binar.js'
-const isPrime = num => {
-  for (let i = 2; num > i; i++) if (num % i === 0) return false
-  return num > 1
-}
+
 describe('Binar mimic Array', () => {
   it('.get and .at should access the correct element', () => {
     const arr = Array.from([1, 2, 3])
@@ -42,6 +39,10 @@ describe('Binar mimic Array', () => {
   })
 
   it('.filter should work exactly like Array.prototype.filter', () => {
+    const isPrime = num => {
+      for (let i = 2; num > i; i++) if (num % i === 0) return false
+      return num > 1
+    }
     const array1 = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
     expect(array1.filter(isPrime)).toEqual(
@@ -372,6 +373,10 @@ describe('Binar mimic Array', () => {
   })
 
   it('.find should return expected array', () => {
+    const isPrime = num => {
+      for (let i = 2; num > i; i++) if (num % i === 0) return false
+      return num > 1
+    }
     const arr = ['apple', 'orange', 'peach', 'lemon']
     const binArr = Binar.from(arr)
     expect(binArr.find(item => item === 'orange')).toBe(
@@ -553,4 +558,20 @@ describe('Binar mimic Array', () => {
     // 1st iteration: [1,2,3][0] -> 1
     // 2nd iteration: [1,2][1] -> 2
   })
+
+  function isBiggerThan10(element, index, array) {
+    return element > 10
+  }
+  expect([2, 5, 8, 1, 4].some(isBiggerThan10)).toBe(
+    Binar.from([2, 5, 8, 1, 4]).some(isBiggerThan10)
+  ) // false
+  expect([12, 5, 8, 1, 4].some(isBiggerThan10)).toBe(
+    Binar.from([12, 5, 8, 1, 4]).some(isBiggerThan10)
+  ) // true
+  expect([2, 5, 8, 1, 4].some(x => x > 10)).toBe(
+    Binar.from([2, 5, 8, 1, 4]).some(x => x > 10)
+  ) // false
+  expect([12, 5, 8, 1, 4].some(x => x > 10)).toBe(
+    Binar.from([12, 5, 8, 1, 4]).some(x => x > 10)
+  ) // true
 })
