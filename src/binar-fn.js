@@ -51,8 +51,8 @@ export const copy = entity => {
   const lem = length(entity)
   const out = make()
   const half = (lem / 2) | 0.5
-  for (let i = half - 1; i >= 0; i--) addToLeft(out, entity.get(i))
-  for (let i = half; i < lem; i++) addToRight(out, entity.get(i))
+  for (let i = half - 1; i >= 0; i--) addToLeft(out, get(entity, i))
+  for (let i = half; i < lem; i++) addToRight(out, get(entity, i))
   return out
 }
 export const isBinaryArray = entity =>
