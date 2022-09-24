@@ -17,6 +17,7 @@ import {
   rotate,
   every,
   some,
+  flat,
 } from '../src/binar-fn.js'
 const isPrime = num => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
@@ -202,5 +203,39 @@ describe('Binar mimic Array', () => {
     expect(some(makeWith(...[12, 54, 18, 130, 44]), x => x > 131)).toBe(
       [12, 54, 18, 130, 44].some(x => x > 131)
     )
+  })
+
+  it('flat', () => {
+    const infiniteArrNest = [
+      [
+        [[1, 2, 3, 4], [1, 2, 3, 4], 3, 4],
+        [1, [1, 2, [1, 2, 3, 4], 4], 3, 4],
+      ],
+      [
+        [1, 2, 3, 4],
+        [1, 2, 3, 4],
+      ],
+    ]
+
+    const infiniteBinNest = makeWith(
+      ...[
+        makeWith(
+          ...[
+            makeWith(
+              ...[makeWith(...[1, 2, 3, 4]), makeWith(...[1, 2, 3, 4]), 3, 4]
+            ),
+            makeWith(
+              ...[1, makeWith(...[1, 2, makeWith(...[1, 2, 3, 4]), 4]), 3, 4]
+            ),
+          ]
+        ),
+        makeWith(...[makeWith(...[1, 2, 3, 4]), makeWith(...[1, 2, 3, 4])]),
+      ]
+    )
+
+    expect(toArray(flat(infiniteBinNest, Infinity))).toEqual(
+      infiniteArrNest.flat(Infinity)
+    )
+    expect(infiniteArrNest.length).toEqual(length(infiniteBinNest))
   })
 })

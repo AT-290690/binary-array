@@ -7,6 +7,26 @@ export const clear = entity => {
   entity.right = []
   return entity
 }
+const tailCallOptimisedRecursion =
+  func =>
+  (...args) => {
+    let result = func(...args)
+    while (typeof result === 'function') {
+      result = result()
+    }
+    return result
+  }
+const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
+  to(
+    collection,
+    (acc, current) => {
+      if (isBinaryArray(current)) acc.push(...flat(current, levels))
+      else acc.push(current)
+      return acc
+    },
+    []
+  )
+)
 export const get = (entity, offset) => {
   const offsetIndex = offset + offsetLeft(entity)
   const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex
@@ -38,10 +58,11 @@ export const copy = entity => {
   return out
 }
 export const isBinaryArray = entity =>
-  left in entity &&
+  typeof entity === 'object' &&
+  'left' in entity &&
   Array.isArray(entity.left) &&
   entity.left[0] === -1 &&
-  right in entity &&
+  'right' in entity &&
   Array.isArray(entity.right)
 export const isBalanced = entity =>
   offsetRight(entity) + offsetLeft(entity) === 0
@@ -214,6 +235,20 @@ export const rotateRight = (entity, n = 1) => {
 }
 export const rotate = (entity, n = 1, direction = 1) =>
   direction === 1 ? rotateRight(entity, n) : rotateLeft(entity, n)
+
+export const flat = (entity, levels = 1) => {
+  const flat =
+    levels === Infinity
+      ? tailCallOptimisedRecursion(collection =>
+          flatten(collection, levels, flat)
+        )
+      : tailCallOptimisedRecursion((collection, levels) => {
+          levels -= 1
+          return levels === -1 ? collection : flatten(collection, levels, flat)
+        })
+  return fill(make(), ...flat(entity, levels))
+}
+
 export const pipe =
   (...fns) =>
   x =>
