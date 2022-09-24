@@ -100,7 +100,7 @@ export const filter = (entity, callback) => {
 export const some = (entity, callback) => {
   const len = length(entity)
   for (let i = 0; i < len; i += 1)
-    if (i >= length(entity) || callback(get(entity, i), i, entity)) return true
+    if (callback(get(entity, i), i, entity)) return true
   return false
 }
 export const every = (entity, callback) => {
@@ -113,7 +113,6 @@ export const every = (entity, callback) => {
 export const findFirst = (entity, callback) => {
   const len = length(entity)
   for (let i = 0; i < len; i += 1) {
-    if (i >= length(entity)) return
     const current = get(entity, i)
     if (callback(current, i, entity)) return current
   }
@@ -121,7 +120,6 @@ export const findFirst = (entity, callback) => {
 export const findLast = (entity, callback) => {
   const len = length(entity)
   for (let i = len - 1; i >= 0; i -= 1) {
-    if (i >= length(entity)) return
     const current = get(entity, i)
     if (callback(current, i, entity)) return current
   }

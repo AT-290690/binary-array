@@ -277,7 +277,7 @@ export default class Binar {
    */
   some(callback) {
     for (let i = 0, len = this.length; i < len; i += 1)
-      if (i >= this.length || callback(this.get(i), i, this)) return true
+      if (callback(this.get(i), i, this)) return true
     return false
   }
   /**
@@ -295,7 +295,6 @@ export default class Binar {
 
   findIndex(callback) {
     for (let i = 0, len = this.length; i < len; i += 1) {
-      if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -304,7 +303,6 @@ export default class Binar {
 
   findLastIndex(callback) {
     for (let i = this.length - 1; i >= 0; i -= 1) {
-      if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
