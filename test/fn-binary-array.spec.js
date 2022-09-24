@@ -15,13 +15,15 @@ import {
   findFirst,
   findLast,
   rotate,
+  every,
+  some,
 } from '../src/binar-fn.js'
 const isPrime = num => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
   return num > 1
 }
 describe('Binar mimic Array', () => {
-  it('.get and .at should access the correct element', () => {
+  it('get and at should access the correct element', () => {
     const arr = Array.from([1, 2, 3])
     const binArr = makeWith(...arr)
     expect(arr[0]).toEqual(get(binArr, 0))
@@ -35,7 +37,7 @@ describe('Binar mimic Array', () => {
     expect(arr.at(2)).toEqual(at(binArr, 2))
   })
 
-  it('.push, .pop, .unshift, .shift, .set should modify the collection the same', () => {
+  it('set get cut chop append prepend should modify the collection the same', () => {
     const arr = Array.from([1, 2, 3])
     const binArr = makeWith(...arr)
 
@@ -60,7 +62,7 @@ describe('Binar mimic Array', () => {
     expect(length(binArr)).toEqual(arr.length)
   })
 
-  it('.filter should work exactly like Array.prototype.filter', () => {
+  it('filter should work exactly like Array.prototype.filter', () => {
     const array1 = [-3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
     expect(array1.filter(isPrime)).toEqual(
@@ -110,7 +112,7 @@ describe('Binar mimic Array', () => {
       toArray(filterItemsBaFn(binaryFruits, 'an'))
     ) // ['banana', 'mango', 'orange']
   })
-  it('.reverse should modify the collection the same', () => {
+  it('reverse should modify the collection the same', () => {
     const arr1 = [4, 1, 1, 2, 3, 8, 7]
     const binArr1 = makeWith(...arr1)
     expect(pipe(reverse, toArray)(binArr1)).toEqual(arr1.reverse())
@@ -128,7 +130,7 @@ describe('Binar mimic Array', () => {
     expect(arr2.length).toEqual(length(binArr2))
   })
 
-  it('.find should return expected array', () => {
+  it('find should return expected array', () => {
     const arr = ['apple', 'orange', 'peach', 'lemon']
     const binArr = makeWith(...arr)
     expect(findFirst(binArr, item => item === 'orange')).toBe(
@@ -160,7 +162,7 @@ describe('Binar mimic Array', () => {
     ) // 11
   })
 
-  it('.rotate should work as expected', () => {
+  it('rotate should work as expected', () => {
     const arr1 = [1, 2, 3]
 
     expect(toArray(rotate(makeWith(...arr1), 0, 1))).toEqual([1, 2, 3])
@@ -183,5 +185,22 @@ describe('Binar mimic Array', () => {
     expect(toArray(rotate(makeWith(...arr2), 2, 1))).toEqual([3, 4, 1, 2])
     expect(toArray(rotate(makeWith(...arr2), 3, 1))).toEqual([2, 3, 4, 1])
     expect(toArray(rotate(makeWith(...arr2), 4, 1))).toEqual([1, 2, 3, 4])
+  })
+
+  it('every and some should work as expected', () => {
+    const isBigEnough = element => element >= 10
+
+    expect(every(makeWith(...[12, 5, 8, 130, 44]), isBigEnough)).toBe(
+      [12, 5, 8, 130, 44].every(isBigEnough)
+    )
+    expect(every(makeWith(...[12, 54, 18, 130, 44]), isBigEnough)).toBe(
+      [12, 54, 18, 130, 44].every(isBigEnough)
+    )
+    expect(some(makeWith(...[12, 5, 8, 130, 44]), isBigEnough)).toBe(
+      [12, 5, 8, 130, 44].some(isBigEnough)
+    )
+    expect(some(makeWith(...[12, 54, 18, 130, 44]), x => x > 131)).toBe(
+      [12, 54, 18, 130, 44].some(x => x > 131)
+    )
   })
 })
