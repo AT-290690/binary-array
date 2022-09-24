@@ -379,14 +379,6 @@ export default class Binar {
    * This method mutates the array and returns a reference to the same array.
    */
   reverse() {
-    if (this.length <= 2) {
-      if (this.length === 1) return this
-      const temp = this.get(0)
-      this.set(0, this.get(1))
-      this.set(1, temp)
-      return this
-    }
-
     const left = this.#left
     const right = this.#right
     right.unshift(left.shift())

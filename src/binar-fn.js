@@ -154,15 +154,6 @@ export const each = (entity, callback) => {
   return entity
 }
 export const reverse = entity => {
-  const len = length(entity)
-  if (len <= 2) {
-    if (len === 1) return entity
-    const temp = get(entity, 0)
-    set(entity, 0, get(entity, 1))
-    set(entity, 1, temp)
-    return entity
-  }
-
   const left = entity.left
   const right = entity.right
   right.unshift(left.shift())
