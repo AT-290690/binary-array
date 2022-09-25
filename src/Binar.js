@@ -454,15 +454,13 @@ export default class Binar {
   flat(levels = 1) {
     const flat =
       levels === Infinity
-        ? tailCallOptimisedRecursion(collection =>
-            flatten(collection, levels, flat)
-          )
-        : tailCallOptimisedRecursion((collection, levels) => {
+        ? collection => flatten(collection, levels, flat)
+        : (collection, levels) => {
             levels--
             return levels === -1
               ? collection
               : flatten(collection, levels, flat)
-          })
+          }
     return Binar.from(flat(this, levels))
   }
 
@@ -839,22 +837,21 @@ const tailCallOptimisedRecursion =
     return result
   }
 
-const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
+const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
     if (Binar.isBinaryArray(current)) acc.push(...flat(current, levels))
     else acc.push(current)
     return acc
   }, [])
-)
 
-const toMatrix = tailCallOptimisedRecursion((...args) => {
+const toMatrix = (...args) => {
   if (args.length === 0) return
   const dimensions = new Binar().with(...args)
   const dim = dimensions.chop()
   const arr = new Binar()
   for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
   return arr
-})
+}
 
 const toArrayDeep = tailCallOptimisedRecursion(entity => {
   return Binar.isBinaryArray(entity)
@@ -870,7 +867,7 @@ const toArrayDeep = tailCallOptimisedRecursion(entity => {
     : entity
 })
 
-const quickSortAsc = tailCallOptimisedRecursion((items, left, right) => {
+const quickSortAsc = (items, left, right) => {
   if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
@@ -888,9 +885,9 @@ const quickSortAsc = tailCallOptimisedRecursion((items, left, right) => {
     if (i < right) quickSortAsc(items, i, right)
   }
   return items
-})
+}
 
-const quickSortDesc = tailCallOptimisedRecursion((items, left, right) => {
+const quickSortDesc = (items, left, right) => {
   if (items.length > 1) {
     let pivot = items.get(((right + left) / 2) | 0.5),
       i = left,
@@ -908,7 +905,7 @@ const quickSortDesc = tailCallOptimisedRecursion((items, left, right) => {
     if (i < right) quickSortDesc(items, i, right)
   }
   return items
-})
+}
 
 const merge = (left, right, callback) => {
   const arr = []
@@ -931,14 +928,14 @@ const merge = (left, right, callback) => {
   return out
 }
 
-const mergeSort = tailCallOptimisedRecursion((array, callback) => {
+const mergeSort = (array, callback) => {
   const half = (array.length / 2) | 0.5
   if (array.length < 2) {
     return array
   }
   const left = array.splice(0, half)
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
-})
+}
 
 const binarySearch = tailCallOptimisedRecursion(
   (arr, target, by, greather, start, end) => {

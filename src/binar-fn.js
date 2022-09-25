@@ -15,7 +15,7 @@ const tailCallOptimisedRecursion =
     while (typeof result === 'function') result = result()
     return result
   }
-const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
+const flatten = (collection, levels, flat) =>
   to(
     collection,
     (acc, current) => {
@@ -25,7 +25,6 @@ const flatten = tailCallOptimisedRecursion((collection, levels, flat) =>
     },
     []
   )
-)
 export const get = (entity, offset) => {
   const offsetIndex = offset + offsetLeft(entity)
   const index = offsetIndex < 0 ? offsetIndex * -1 : offsetIndex
@@ -225,13 +224,11 @@ export const rotate = (entity, n = 1, direction = 1) =>
 export const flat = (entity, levels = 1) => {
   const flat =
     levels === Infinity
-      ? tailCallOptimisedRecursion(collection =>
-          flatten(collection, levels, flat)
-        )
-      : tailCallOptimisedRecursion((collection, levels) => {
+      ? collection => flatten(collection, levels, flat)
+      : (collection, levels) => {
           levels -= 1
           return levels === -1 ? collection : flatten(collection, levels, flat)
-        })
+        }
   return fill(make(), ...flat(entity, levels))
 }
 export const swap = (entity, i1, i2) => {
