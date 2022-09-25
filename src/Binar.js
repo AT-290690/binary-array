@@ -512,9 +512,13 @@ export default class Binar {
     }
     return this
   }
-
-  toArray(deep) {
-    return !deep ? [...this] : toArrayDeep(this)
+  /**
+   * Convert to JavaScript Array
+   * by default only converts on the first level
+   * @param deep — convert nested structures to JavaScript Array
+   */
+  toArray(deep = false) {
+    return deep ? toArrayDeep(this) : [...this]
   }
 
   append(item) {
@@ -853,7 +857,7 @@ const toMatrix = (...args) => {
   return arr
 }
 
-const toArrayDeep = tailCallOptimisedRecursion(entity => {
+const toArrayDeep = entity => {
   return Binar.isBinaryArray(entity)
     ? entity
         .map(item =>
@@ -865,7 +869,7 @@ const toArrayDeep = tailCallOptimisedRecursion(entity => {
         )
         .toArray()
     : entity
-})
+}
 
 const quickSortAsc = (items, left, right) => {
   if (items.length > 1) {
