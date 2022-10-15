@@ -1,7 +1,7 @@
 import Binar from '../src/Binar.js'
 
 describe('Binar extra features', () => {
-  it('.rotate should work as expected', () => {
+  it('.rotate should work', () => {
     const arr1 = [1, 2, 3]
     expect(Binar.from(arr1).copy().rotate(0, 1).items).toEqual([1, 2, 3])
     expect(Binar.from(arr1).copy().rotate(1, 1).items).toEqual([3, 1, 2])
@@ -25,19 +25,19 @@ describe('Binar extra features', () => {
     expect(Binar.from(arr2).copy().rotate(4, 1).items).toEqual([1, 2, 3, 4])
   })
 
-  it('.compact should work as expected', () => {
+  it('.compact should work', () => {
     expect(
       new Binar().with(1, 0, 0, 4, '', false, undefined, 3, 4).compact().items
     ).toEqual([1, 4, 3, 4])
   })
 
-  it('.unique should work as expected', () => {
+  it('.unique should work', () => {
     expect(
       new Binar().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).unique().items
     ).toEqual([1, 2, 3])
   })
 
-  it('.duplicates should work as expected', () => {
+  it('.duplicates should work', () => {
     expect(
       new Binar()
         .with(1, 2, 2, 0, 2, 5, 2, 9, 3, 3, 3, 4, 8, 9)
@@ -46,7 +46,7 @@ describe('Binar extra features', () => {
     ).toEqual([2, 2, 2, 2, 3, 3, 3, 9, 9])
   })
 
-  it('.partition should work as expected', () => {
+  it('.partition should work', () => {
     expect(
       new Binar().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).partition(3).items
     ).toEqual([
@@ -57,7 +57,7 @@ describe('Binar extra features', () => {
     ])
   })
 
-  it('Set methods should work as expected', () => {
+  it('Set methods should work', () => {
     const a1 = new Binar().with(1, 2, 3, 4)
     const b1 = new Binar().with(8, 9, 3, 2, 4)
     expect(a1.symetricdifference(b1).items).toEqual([8, 9, 1])
@@ -85,7 +85,7 @@ describe('Binar extra features', () => {
     )
   })
 
-  it('.swap should work as expected', () => {
+  it('.swap should work', () => {
     const arr = new Binar().with(1, 2, 3)
     arr.swap(0, 2)
     expect([...arr]).toEqual([3, 2, 1])
@@ -93,7 +93,7 @@ describe('Binar extra features', () => {
     expect([...arr]).toEqual([1, 2, 3])
   })
 
-  it('.scan should work as expected', () => {
+  it('.scan should work', () => {
     const out = []
     new Binar()
       .with(1, 2, 3)
@@ -103,7 +103,7 @@ describe('Binar extra features', () => {
     expect(out).toEqual([1, 2, 3, 2, 4, 6, 3, 6, 9])
   })
 
-  it('.append, .prepend, .tail, .head, .insertLeft, .insertRight should work as expected', () => {
+  it('.append, .prepend, .tail, .head, .insertLeft, .insertRight should work', () => {
     const arr = new Binar().with(1, 2, 3)
     expect(
       arr.append(4).append(5).prepend(0).prepend(-1).prepend(-2).items
@@ -120,7 +120,7 @@ describe('Binar extra features', () => {
     ).toEqual([-2, -1, 0, 1, 2, 3, 4])
   })
 
-  it('.balance should work as expected', () => {
+  it('.balance should work', () => {
     const arr = new Binar().with(6, 6, 6)
     arr.push(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     arr.unshift(-3, -4)
@@ -130,7 +130,7 @@ describe('Binar extra features', () => {
     expect(arr.length).toBe(18)
   })
 
-  it('.removeFrom should work as expected', () => {
+  it('.removeFrom should work', () => {
     expect(
       new Binar().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 0)
         .items
@@ -167,7 +167,7 @@ describe('Binar extra features', () => {
     expect(Binar.from(arr).copy().removeFrom(0, arr.length).items).toEqual([])
   })
 
-  it('.group should work as expected', () => {
+  it('.group should work', () => {
     const group = new Binar()
       .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
       .group(item => (item % 2 == 0 ? 'even' : 'odd'))
@@ -178,7 +178,7 @@ describe('Binar extra features', () => {
     })
   })
 
-  it('.isSorted should work as expected', () => {
+  it('.isSorted should work', () => {
     expect(Binar.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
     expect(Binar.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
     expect(Binar.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
@@ -206,7 +206,7 @@ describe('Binar extra features', () => {
     ).toBe(false)
   })
 
-  it('.quickSort should work as expected', () => {
+  it('.quickSort should work', () => {
     expect(Binar.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('asc').items).toEqual(
       [1, 1, 2, 3, 4, 5, 8, 9]
     )
@@ -215,7 +215,7 @@ describe('Binar extra features', () => {
     )
   })
 
-  it('.search should work as expected', () => {
+  it('.search should work', () => {
     expect(Binar.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
     expect(Binar.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
     expect(Binar.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
@@ -281,7 +281,7 @@ describe('Binar extra features', () => {
     ).toEqual({ date: dateTarget, x: 3 })
   })
 
-  it('.without should work as expected', () => {
+  it('.without should work', () => {
     const items = [2, 1, 2, 3]
     const binArr = Binar.from(items)
     expect(binArr.without(1, 2).items).toEqual([3])
@@ -289,7 +289,7 @@ describe('Binar extra features', () => {
     expect(binArr.without(3).items).toEqual([2, 1, 2])
   })
 
-  it('.isInBouds and .getInBounds should work as expected', () => {
+  it('.isInBouds and .getInBounds should work', () => {
     const binArr = new Binar().with(0, 1, 2, 3)
     expect(binArr.isInBounds(4)).toBe(false)
     expect(binArr.isInBounds(-1)).toBe(false)
@@ -300,7 +300,7 @@ describe('Binar extra features', () => {
     expect(binArr.getInBounds(-100)).toBe(0)
   })
 
-  it('.take and .takeRight should work as expected', () => {
+  it('.take and .takeRight should work', () => {
     expect(Binar.from([1, 2, 3]).take().items).toEqual([1])
     expect(Binar.from([1, 2, 3]).take(2).items).toEqual([1, 2])
     expect(Binar.from([1, 2, 3]).take(5).items).toEqual([1, 2, 3])
@@ -311,14 +311,14 @@ describe('Binar extra features', () => {
     expect(Binar.from([1, 2, 3]).takeRight(5).items).toEqual([1, 2, 3])
     expect(Binar.from([]).takeRight(0).items).toEqual([])
   })
-  it('.swapRemove should work as expected', () => {
+  it('.swapRemove should work', () => {
     const arr = new Binar().with(1, 2, 3, 4, 5)
     expect(arr.swapRemoveLeft(2))
     expect(arr.items).toEqual([2, 3, 1, 5])
     expect(arr.swapRemoveRight(2))
     expect(arr.items).toEqual([2, 3, 5])
   })
-  it('.to should work as expected', () => {
+  it('.to should work', () => {
     expect(
       Binar.from('(())')
         .to((acc, x) =>
@@ -336,5 +336,9 @@ describe('Binar extra features', () => {
         .map(Number)
         .to((acc, item) => (acc += item), 0)
     ).toBe(11)
+  })
+  it('.zeroes and .ones should work', () => {
+    expect(Binar.zeroes(4).items).toEqual([0, 0, 0, 0])
+    expect(Binar.ones(8).items).toEqual([1, 1, 1, 1, 1, 1, 1, 1])
   })
 })

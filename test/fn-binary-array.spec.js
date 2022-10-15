@@ -18,12 +18,13 @@ import {
   every,
   some,
   flat,
+  map,
 } from '../src/binar-fn.js'
 const isPrime = num => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
   return num > 1
 }
-describe('Binar mimic Array', () => {
+describe('binar fns', () => {
   it('get and at should access the correct element', () => {
     const arr = Array.from([1, 2, 3])
     const binArr = makeWith(...arr)
@@ -163,7 +164,7 @@ describe('Binar mimic Array', () => {
     ) // 11
   })
 
-  it('rotate should work as expected', () => {
+  it('rotate should work', () => {
     const arr1 = [1, 2, 3]
 
     expect(toArray(rotate(makeWith(...arr1), 0, 1))).toEqual([1, 2, 3])
@@ -187,17 +188,19 @@ describe('Binar mimic Array', () => {
     expect(toArray(rotate(makeWith(...arr2), 3, 1))).toEqual([2, 3, 4, 1])
     expect(toArray(rotate(makeWith(...arr2), 4, 1))).toEqual([1, 2, 3, 4])
   })
-
-  it('every and some should work as expected', () => {
+  it('map should work', () => {
+    expect(toArray(map(makeWith(0, 1, 2, 3), x => x * 2))).toEqual([0, 2, 4, 6])
+  })
+  it('every and some should work', () => {
     const isBigEnough = element => element >= 10
 
-    expect(every(makeWith(...[12, 5, 8, 130, 44]), isBigEnough)).toBe(
+    expect(every(makeWith(12, 5, 8, 130, 44), isBigEnough)).toBe(
       [12, 5, 8, 130, 44].every(isBigEnough)
     )
-    expect(every(makeWith(...[12, 54, 18, 130, 44]), isBigEnough)).toBe(
+    expect(every(makeWith(12, 54, 18, 130, 44), isBigEnough)).toBe(
       [12, 54, 18, 130, 44].every(isBigEnough)
     )
-    expect(some(makeWith(...[12, 5, 8, 130, 44]), isBigEnough)).toBe(
+    expect(some(makeWith(12, 5, 8, 130, 44), isBigEnough)).toBe(
       [12, 5, 8, 130, 44].some(isBigEnough)
     )
     expect(some(makeWith(...[12, 54, 18, 130, 44]), x => x > 131)).toBe(

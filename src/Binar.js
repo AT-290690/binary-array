@@ -140,6 +140,14 @@ export default class Binar {
     return toMatrix(...dimensions)
   }
 
+  static zeroes(size) {
+    return Binar.from(new Array(size).fill(0))
+  }
+
+  static ones(size) {
+    return Binar.from(new Array(size).fill(1))
+  }
+
   at(index) {
     if (index < 0) return this.get(this.length + index)
     else return this.get(index)

@@ -98,9 +98,9 @@ export const map = (entity, callback) => {
   const len = length(entity)
   const half = (len / 2) | 0.5
   for (let i = half - 1; i >= 0; i--)
-    addToLeft(entity, callback(get(entity, i), i, entity))
+    addToLeft(result, callback(get(entity, i), i, entity))
   for (let i = half; i < len; i++)
-    addToLeft(entity, callback(get(entity, i), i, entity))
+    addToRight(result, callback(get(entity, i), i, entity))
   return result
 }
 export const filter = (entity, callback) => {
