@@ -95,7 +95,7 @@ export default class Binar {
     return this
   }
   /**
-   * NegativeZeroEmptyValue is the first left index
+   * negativeZeroSymbol is the first left index
    * It is never used.
    * It stays there as an offset
    * Indexing is calculated (offset + offset left)
@@ -126,9 +126,7 @@ export default class Binar {
 
   static from(iterable) {
     if (!isIterable(iterable))
-      throw new Error(
-        'TypeError: From input is not iterable (cannot read property '
-      )
+      throw new Error('TypeError: From input is not iterable')
     const out = new Binar()
     const half = (iterable.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
@@ -254,8 +252,6 @@ export default class Binar {
    * Returns the value of the first element in the array where predicate is true, and undefined otherwise.
    * @param predicate
    * find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined.
-   * @param thisArg
-   * If provided, it will be used as the this value for each invocation of predicate. If it is not provided, undefined is used instead.
    */
   find(callback) {
     for (let i = 0, len = this.length; i < len; i++) {
@@ -279,9 +275,6 @@ export default class Binar {
    * The some method calls the predicate function for each element in the array
    * until the predicate returns a value which is coercible to the Boolean value true,
    * or until the end of the array.
-   * @param thisArg
-   * An object to which the this keyword can refer in the predicate function.
-   * If thisArg is omitted, undefined is used as the this value.
    */
   some(callback) {
     for (let i = 0, len = this.length; i < len; i++)
@@ -292,8 +285,6 @@ export default class Binar {
    * Determines whether all the members of an array satisfy the specified test.
    * @param predicate
    * A function that accepts up to three arguments. The every method calls the predicate function for each element in the array until the predicate returns a value which is coercible to the Boolean value false, or until the end of the array.
-   * @param thisArg
-   * An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.
    */
   every(callback) {
     for (let i = 0, len = this.length; i < len; i++)
@@ -321,8 +312,6 @@ export default class Binar {
    * and returns an array that contains the results.
    * @param callbackfn — A function that accepts up to three arguments.
    * The map method calls the callbackfn function one time for each element in the array.
-   * @param thisArg — An object to which the this keyword can refer in the callbackfn function.
-   * If thisArg is omitted, undefined is used as the this value.
    */
   map(callback) {
     const result = new Binar()
@@ -370,8 +359,6 @@ export default class Binar {
    * Returns the elements of an array that meet the condition specified in a callback function.
    * @param predicate — A function that accepts up to three arguments.
    * The filter method calls the predicate function one time for each element in the array.
-   * @param thisArg — An object to which the this keyword can refer in the predicate function.
-   * If thisArg is omitted, undefined is used as the this value.
    */
   filter(callback) {
     const out = []
