@@ -47,6 +47,19 @@ export const toArray = entity => {
   for (let i = 0; i < len; i++) out.push(get(entity, i))
   return out
 }
+export const toArrayDeep = entity => {
+  return isBinaryArray(entity)
+    ? toArray(
+        map(entity, item =>
+          isBinaryArray(item)
+            ? some(item, isBinaryArray)
+              ? toArrayDeep(item)
+              : toArray(item)
+            : item
+        )
+      )
+    : entity
+}
 export const copy = entity => {
   const lem = length(entity)
   const out = make()

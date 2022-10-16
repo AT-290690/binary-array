@@ -19,6 +19,7 @@ import {
   some,
   flat,
   map,
+  toArrayDeep,
 } from '../src/binar-fn.js'
 const isPrime = num => {
   for (let i = 2; num > i; i++) if (num % i === 0) return false
@@ -240,5 +241,6 @@ describe('binar fns', () => {
       infiniteArrNest.flat(Infinity)
     )
     expect(infiniteArrNest.length).toEqual(length(infiniteBinNest))
+    expect(toArrayDeep(infiniteBinNest)).toEqual(infiniteArrNest)
   })
 })
