@@ -26,6 +26,15 @@ export default class Binar {
     return toArrayDeep(this)
   }
 
+  /**
+   * Returns the number of dimensions
+   * and their length
+   * @example [[[2], [[3], [2], [1]], [6]], [3]]
+   */
+  get shape() {
+    return toShapeDeep(this)
+  }
+
   with(...initial) {
     if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
@@ -650,7 +659,7 @@ export default class Binar {
     return out
   }
 
-  symetricdifference(b) {
+  symetricDifference(b) {
     const a = this
     const out = new Binar()
     const A = new Set(a.toArray())
@@ -864,6 +873,17 @@ const toArrayDeep = entity => {
         )
         .toArray()
     : entity
+}
+
+const toShapeDeep = (entity, out = []) => {
+  if (Binar.isBinaryArray(entity.get(0))) {
+    entity.forEach(item => {
+      out.push(toShapeDeep(item))
+    })
+  } else {
+    out = [entity.length]
+  }
+  return out
 }
 
 const quickSortAsc = (items, left, right) => {

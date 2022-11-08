@@ -268,7 +268,7 @@ export const union = (entity, b) => {
   B.forEach(item => append(out, item))
   return balance(out)
 }
-export const symetricdifference = (entity, b) => {
+export const symetricDifference = (entity, b) => {
   const a = entity
   const out = make()
   const A = new Set(toArray(a))

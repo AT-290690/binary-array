@@ -60,7 +60,7 @@ describe('Binar extra features', () => {
   it('Set methods should work', () => {
     const a1 = new Binar().with(1, 2, 3, 4)
     const b1 = new Binar().with(8, 9, 3, 2, 4)
-    expect(a1.symetricdifference(b1).items).toEqual([8, 9, 1])
+    expect(a1.symetricDifference(b1).items).toEqual([8, 9, 1])
 
     const a2 = new Binar().with(1, 2, 3, 4)
     const b2 = new Binar().with(8, 9, 3, 2, 4)
@@ -80,7 +80,7 @@ describe('Binar extra features', () => {
 
     const a6 = new Binar().with(1, 2, 3, 4, 5, 8)
     const b6 = new Binar().with(8, 9, 3, 2, 4)
-    expect(a6.unique().union(b6.unique()).symetricdifference(b6).items).toEqual(
+    expect(a6.unique().union(b6.unique()).symetricDifference(b6).items).toEqual(
       [1, 5]
     )
   })
@@ -340,5 +340,22 @@ describe('Binar extra features', () => {
   it('.zeroes and .ones should work', () => {
     expect(Binar.zeroes(4).items).toEqual([0, 0, 0, 0])
     expect(Binar.ones(8).items).toEqual([1, 1, 1, 1, 1, 1, 1, 1])
+  })
+  it('.shape should work', () => {
+    expect(Binar.of(1, 1, 1, 1).shape).toEqual([4])
+    expect(Binar.of(Binar.of(1, 1, 1), Binar.of(1, 1, 1)).shape).toEqual([
+      [3],
+      [3],
+    ])
+    expect(
+      Binar.of(
+        Binar.of(
+          Binar.of(1, 1),
+          Binar.of(Binar.of(1, 1, 1), Binar.of(1, 1), Binar.of(1)),
+          Binar.of(1, 1, 1, 1, 1, 1)
+        ),
+        Binar.of(1, 1, 1)
+      ).shape
+    ).toEqual([[[2], [[3], [2], [1]], [6]], [3]])
   })
 })

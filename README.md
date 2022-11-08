@@ -1,6 +1,6 @@
 # binar
 
-## instant array operations  
+## instant array operations
 
 npm i --save-dev
 
@@ -23,24 +23,25 @@ Binar.from('((()))()()(())')
   )
   .isEmpty()
 ```
+
 Unoptimal array solutions are as efficient as optimal ones
+
 ```js
 const code = '49380518301380480923802840'
 // change these numbers to reveal subset of the code
 const index = 4
 const amount = 3
-   
-log(`|${
-   Binar
-  .from(code)
-  .rotateLeft(index) // shift X times to the left
-  .map((char, index, arr) => index > amount - 1 ? '.': char) // mask out a portion of the code
-  .rotateRight(index) // shift X times to the right
-  .items
-  .join('')
-}|`, `reveal mask subset of the code (index: ${index} amount: ${amount})`)
 
+log(
+  `|${Binar.from(code)
+    .rotateLeft(index) // shift X times to the left
+    .map((char, index, arr) => (index > amount - 1 ? '.' : char)) // mask out a portion of the code
+    .rotateRight(index) // shift X times to the right
+    .items.join('')}|`,
+  `reveal mask subset of the code (index: ${index} amount: ${amount})`
+)
 ```
+
 Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/9021bc9afd9420cb44d4db652cbff59c/raw/3d06b922ce44bfd77f952623c8a93112c03239ea/BinaryArray.js)
 
 Structure
