@@ -1,6 +1,7 @@
 # Bitz
-![Group 7 (3)](https://user-images.githubusercontent.com/88512646/200684693-ff06ff9d-12a1-404c-9d4e-7fbb541dba23.png)
-
+<p align="center">
+<img  width="100" alt="Thunder Logo" src="https://user-images.githubusercontent.com/88512646/200684693-ff06ff9d-12a1-404c-9d4e-7fbb541dba23.png" />
+</p>
 ## instant array operations
 
 npm i --save-dev
