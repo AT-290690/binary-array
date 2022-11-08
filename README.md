@@ -42,7 +42,7 @@ log(
 )
 ```
 
-Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/9021bc9afd9420cb44d4db652cbff59c/raw/3d06b922ce44bfd77f952623c8a93112c03239ea/BitzyArray.js)
+Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/675b2c3d986aca3fd04bf64daa66b631/raw/7e55badeaa1e970c4f8e7922799e4e1b88ab796b/BitzArray.js)
 
 Structure
 
