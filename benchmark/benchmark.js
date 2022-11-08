@@ -1,17 +1,17 @@
-import Binar from '../src/Binar.js'
+import Bitz from '../src/Bitz.js'
 import Benchmark from 'nanobench'
 
 const N = 200_000
 
-Benchmark(`binArray.get middle N = ${N}`, bench => {
-  const binArray = new Binar()
+Benchmark(`bitzArray.get middle N = ${N}`, bench => {
+  const bitzArray = new Bitz()
   const mid = N / 2
-  for (let i = 0; i < N; i++) binArray.push(i)
-  binArray.balance()
+  for (let i = 0; i < N; i++) bitzArray.push(i)
+  bitzArray.balance()
   bench.start()
-  binArray.get(mid)
+  bitzArray.get(mid)
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.get middle N = ${N}`, bench => {
@@ -24,14 +24,14 @@ Benchmark(`regularArray.get middle N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.get random N = ${N}`, bench => {
-  const binArray = new Binar()
-  for (let i = 0; i < N; i++) binArray.push(i)
-  binArray.balance()
+Benchmark(`bitzArray.get random N = ${N}`, bench => {
+  const bitzArray = new Bitz()
+  for (let i = 0; i < N; i++) bitzArray.push(i)
+  bitzArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binArray.get(Math.floor(Math.random() * N))
+  for (let i = 0; i < N; i++) bitzArray.get(Math.floor(Math.random() * N))
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.get random N = ${N}`, bench => {
@@ -43,12 +43,12 @@ Benchmark(`regularArray.get random N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.push N = ${N}`, bench => {
-  const binArray = new Binar()
+Benchmark(`bitzArray.push N = ${N}`, bench => {
+  const bitzArray = new Bitz()
   bench.start()
-  for (let i = 0; i < N; i++) binArray.push(1)
+  for (let i = 0; i < N; i++) bitzArray.push(1)
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.push N = ${N}`, bench => {
@@ -59,14 +59,14 @@ Benchmark(`regularArray.push N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.pop N = ${N}`, bench => {
-  const binArray = new Binar()
-  for (let i = 0; i < N; i++) binArray.push(i)
-  binArray.balance()
+Benchmark(`bitzArray.pop N = ${N}`, bench => {
+  const bitzArray = new Bitz()
+  for (let i = 0; i < N; i++) bitzArray.push(i)
+  bitzArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binArray.pop()
+  for (let i = 0; i < N; i++) bitzArray.pop()
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.pop N = ${N}`, bench => {
@@ -78,14 +78,14 @@ Benchmark(`regularArray.pop N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.shift N = ${N}`, bench => {
-  const binArray = new Binar()
-  for (let i = 0; i < N; i++) binArray.push(i)
-  binArray.balance()
+Benchmark(`bitzArray.shift N = ${N}`, bench => {
+  const bitzArray = new Bitz()
+  for (let i = 0; i < N; i++) bitzArray.push(i)
+  bitzArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) binArray.shift()
+  for (let i = 0; i < N; i++) bitzArray.shift()
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.shift N = ${N}`, bench => {
@@ -97,12 +97,12 @@ Benchmark(`regularArray.shift N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.unshift N = ${N}`, bench => {
-  const binArray = new Binar()
+Benchmark(`bitzArray.unshift N = ${N}`, bench => {
+  const bitzArray = new Bitz()
   bench.start()
-  for (let i = 0; i < N; i++) binArray.unshift(1)
+  for (let i = 0; i < N; i++) bitzArray.unshift(1)
   bench.end()
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.unshift N = ${N}`, bench => {
@@ -113,17 +113,17 @@ Benchmark(`regularArray.unshift N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`binArray.quickSort N = ${N}`, bench => {
-  const binArray = new Binar()
+Benchmark(`bitzArray.quickSort N = ${N}`, bench => {
+  const bitzArray = new Bitz()
   for (let i = 0; i < N; i++) {
-    binArray.append(Math.random() * 1000)
+    bitzArray.append(Math.random() * 1000)
   }
 
   bench.start()
-  binArray.quickSort()
+  bitzArray.quickSort()
   bench.end()
 
-  binArray.clear()
+  bitzArray.clear()
 })
 
 Benchmark(`regularArray.sort N = ${N}`, bench => {
