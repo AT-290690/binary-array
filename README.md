@@ -2,6 +2,7 @@
 <p align="center">
 <img  width="100" alt="Thunder Logo" src="https://user-images.githubusercontent.com/88512646/200684693-ff06ff9d-12a1-404c-9d4e-7fbb541dba23.png" />
 </p>
+
 ## instant array operations
 
 npm i --save-dev
@@ -19,10 +20,8 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 
 ```js
 // validate matching parens
-Bitz.from('((()))()()(())')
-  .to((acc, x) =>
-    x === '(' ? acc.prepend(x) : acc.first === '(' ? acc.tail() : acc.append(x)
-  )
+Bitz.from('((()))()()(())()')
+  .to((stack, paren) => paren === '(' ? stack.prepend(paren) : stack.first === '(' ? stack.tail() : stack.append(paren))
   .isEmpty()
 ```
 
