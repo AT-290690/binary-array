@@ -22,9 +22,9 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 // validate matching parens
 Bitz.from('((()))()()(())()')
   .to((stack, paren) => 
-              paren === '(' ? stack.prepend(paren) : 
-                              stack.first === '(' ? stack.tail() :
-                                            stack.append(paren))
+    paren === '(' ? stack.prepend(paren) : 
+                    stack.first === '(' ? stack.tail() :
+                                          stack.append(paren))
   .isEmpty()
 ```
 
