@@ -1,16 +1,16 @@
-import Bitz from '../src/Bitz.js'
+import Brrr from '../src/Brrr.js'
 import Benchmark from 'nanobench'
 
 const N = 500_000
 
-Benchmark(`bitzArray.shift N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.push(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.shift N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.push(i)
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.shift()
+  for (let i = 0; i < N; i++) brrrArray.shift()
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
 Benchmark(`regularArray.shift N = ${N}`, bench => {
@@ -22,12 +22,12 @@ Benchmark(`regularArray.shift N = ${N}`, bench => {
   regularArray.length = 0
 })
 
-Benchmark(`bitzArray.unshift N = ${N}`, bench => {
-  const bitzArray = new Bitz()
+Benchmark(`brrrArray.unshift N = ${N}`, bench => {
+  const brrrArray = new Brrr()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.unshift(1)
+  for (let i = 0; i < N; i++) brrrArray.unshift(1)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
 Benchmark(`regularArray.unshift N = ${N}`, bench => {

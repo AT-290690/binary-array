@@ -1,5 +1,5 @@
-export default class Bitz {
-  #left = [Bitz.#negativeZeroSymbol]
+export default class Brrr {
+  #left = [Brrr.#negativeZeroSymbol]
   #right = []
 
   get offsetLeft() {
@@ -118,7 +118,7 @@ export default class Bitz {
    * @example
    * // Regular Array View
    * [1, 2, 3, 4, 5, 6]
-   * // The above as Bitzy Array
+   * // The above as Brrry Array
    * [-0, 3, 2, 1] // left
    *   0  1  2  3  // indexes
    * [ 4, 5. 6, 7] // right
@@ -126,17 +126,17 @@ export default class Bitz {
   static #negativeZeroSymbol = Symbol('-0')
 
   static of(...items) {
-    return Bitz.from(items)
+    return Brrr.from(items)
   }
 
-  static isBitz(entity) {
-    return entity instanceof Bitz
+  static isBrrr(entity) {
+    return entity instanceof Brrr
   }
 
   static from(iterable) {
     if (!isIterable(iterable))
       throw new Error('TypeError: From input is not iterable')
-    const out = new Bitz()
+    const out = new Brrr()
     const half = (iterable.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
     for (let i = half; i < iterable.length; i++) out.#addToRight(iterable[i])
@@ -148,11 +148,11 @@ export default class Bitz {
   }
 
   static zeroes(size) {
-    return Bitz.from(new Array(size).fill(0))
+    return Brrr.from(new Array(size).fill(0))
   }
 
   static ones(size) {
-    return Bitz.from(new Array(size).fill(1))
+    return Brrr.from(new Array(size).fill(1))
   }
 
   at(index) {
@@ -198,7 +198,7 @@ export default class Bitz {
   slice(start, end = this.length) {
     const collection = []
     for (let i = start; i < end; i++) collection.push(this.get(i))
-    return Bitz.from(collection)
+    return Brrr.from(collection)
   }
   /**
    * Removes elements from an array and,
@@ -211,7 +211,7 @@ export default class Bitz {
   splice(dir, deleteCount, ...items) {
     const start = Math.abs(dir)
     deleteCount = deleteCount ?? this.length - start
-    const deleted = new Bitz()
+    const deleted = new Brrr()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
@@ -323,7 +323,7 @@ export default class Bitz {
    * The map method calls the callbackfn function one time for each element in the array.
    */
   map(callback) {
-    const result = new Bitz()
+    const result = new Brrr()
     const half = (this.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--)
       result.#addToLeft(callback(this.get(i), i, this))
@@ -376,7 +376,7 @@ export default class Bitz {
       const predicat = callback(current, i, this)
       if (predicat) out.push(current)
     }
-    return Bitz.from(out)
+    return Brrr.from(out)
   }
   /**
    * Reverses the elements in an array in place.
@@ -392,15 +392,15 @@ export default class Bitz {
   }
 
   /**
-   * The group method executes the callback function once for each index of the Bitzy Array,
+   * The group method executes the callback function once for each index of the Brrry Array,
    * returning a string (or value that can be coerced to a string) indicating the group of the element.
-   * A new property and Bitzy Array is created in the result object for each unique group name
+   * A new property and Brrry Array is created in the result object for each unique group name
    * that is returned by the callback.
-   * Each element is added to the Bitzy Array in the property that corresponds to its group.
+   * Each element is added to the Brrry Array in the property that corresponds to its group.
    * @param callback - (item, index, arr )
    * @returns Object
    * @example
-   * Bitz.with(1,2,3,4).group((item) => (item % 2 == 0 ? "even" : "odd")
+   * Brrr.with(1,2,3,4).group((item) => (item % 2 == 0 ? "even" : "odd")
    * // retunrs (this is array view)
    * {"odd":[1,3],"even":[2,4]}
    */
@@ -408,7 +408,7 @@ export default class Bitz {
     const out = this.reduce((acc, item, index, arr) => {
       const key = callback(item, index, arr)
       if (acc.has(key)) acc.get(key).append(item)
-      else acc.set(key, new Bitz(key).with(item))
+      else acc.set(key, new Brrr(key).with(item))
       return acc
     }, new Group())
     out.forEach(item => item.balance())
@@ -448,7 +448,7 @@ export default class Bitz {
   }
 
   concat(second) {
-    return Bitz.from([...this, ...second])
+    return Brrr.from([...this, ...second])
   }
   /**
    * Returns a new array with all sub-array elements concatenated
@@ -465,13 +465,13 @@ export default class Bitz {
               ? collection
               : flatten(collection, levels, flat)
           }
-    return Bitz.from(flat(this, levels))
+    return Brrr.from(flat(this, levels))
   }
 
   flatten(callback) {
-    return Bitz.from(
+    return Brrr.from(
       this.reduce((acc, current, index, self) => {
-        if (Bitz.isBitz(current))
+        if (Brrr.isBrrr(current))
           current.forEach(item => acc.push(callback(item)))
         else acc.push(callback(current, index, self))
         return acc
@@ -594,7 +594,7 @@ export default class Bitz {
     const collection = []
     const len = Math.min(n, this.length)
     for (let i = 0; i < len; i++) collection.push(this.get(i))
-    return Bitz.from(collection)
+    return Brrr.from(collection)
   }
   /**
    * Creates a slice of array with n elements taken from the end.
@@ -604,10 +604,10 @@ export default class Bitz {
     const length = this.length
     const len = Math.min(n, length)
     for (let i = 0; i < len; i++) collection.push(this.get(length - (len - i)))
-    return Bitz.from(collection)
+    return Brrr.from(collection)
   }
 
-  to(callback, initial = new Bitz()) {
+  to(callback, initial = new Brrr()) {
     for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
@@ -650,7 +650,7 @@ export default class Bitz {
 
   union(b) {
     const a = this
-    const out = new Bitz()
+    const out = new Brrr()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     A.forEach(item => out.append(item))
@@ -661,7 +661,7 @@ export default class Bitz {
 
   symetricDifference(b) {
     const a = this
-    const out = new Bitz()
+    const out = new Brrr()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     B.forEach(item => !A.has(item) && out.append(item))
@@ -672,7 +672,7 @@ export default class Bitz {
 
   intersection(b) {
     const a = this
-    const out = new Bitz()
+    const out = new Brrr()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     B.forEach(item => A.has(item) && out.append(item))
@@ -682,7 +682,7 @@ export default class Bitz {
 
   difference(b) {
     const a = this
-    const out = new Bitz()
+    const out = new Brrr()
     const A = new Set(a.toArray())
     const B = new Set(b.toArray())
     A.forEach(item => !B.has(item) && out.append(item))
@@ -693,7 +693,7 @@ export default class Bitz {
   partition(groups = 1) {
     const res = this.reduce((acc, _, index, arr) => {
       if (index % groups === 0) {
-        const part = new Bitz()
+        const part = new Brrr()
         for (let i = 0; i < groups; i++) {
           const current = arr.get(index + i)
           if (current !== undefined) part.append(current)
@@ -702,14 +702,14 @@ export default class Bitz {
         acc.append(part)
       }
       return acc
-    }, new Bitz())
+    }, new Brrr())
     res.balance()
     return res
   }
 
   unique() {
     const set = new Set()
-    return Bitz.from(
+    return Brrr.from(
       this.reduce((acc, item) => {
         if (!set.has(item)) {
           set.add(item)
@@ -734,7 +734,7 @@ export default class Bitz {
         extra.push(item)
       }
     })
-    return Bitz.from(out.concat(extra))
+    return Brrr.from(out.concat(extra))
   }
 
   swap(i1, i2) {
@@ -755,7 +755,7 @@ export default class Bitz {
   }
 
   copy() {
-    return Bitz.from([...this])
+    return Brrr.from([...this])
   }
 
   scan(callback, dir = 1) {
@@ -798,7 +798,7 @@ export default class Bitz {
     )
   }
   /**
-   * perform bitzy search queries in the array
+   * perform brrry search queries in the array
    * requires the array to be sorted first!
    * @param target
    * @param identity
@@ -808,7 +808,7 @@ export default class Bitz {
    * current => identity(current) > target // greather
    * */
   search(target, identity = current => current, greather) {
-    return bitzySearch(
+    return brrrySearch(
       this,
       target,
       identity,
@@ -847,26 +847,26 @@ const tailCallOptimisedRecursion =
 
 const flatten = (collection, levels, flat) =>
   collection.reduce((acc, current) => {
-    if (Bitz.isBitz(current)) acc.push(...flat(current, levels))
+    if (Brrr.isBrrr(current)) acc.push(...flat(current, levels))
     else acc.push(current)
     return acc
   }, [])
 
 const toMatrix = (...args) => {
   if (args.length === 0) return
-  const dimensions = new Bitz().with(...args)
+  const dimensions = new Brrr().with(...args)
   const dim = dimensions.chop()
-  const arr = new Bitz()
+  const arr = new Brrr()
   for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
   return arr
 }
 
 const toArrayDeep = entity => {
-  return Bitz.isBitz(entity)
+  return Brrr.isBrrr(entity)
     ? entity
         .map(item =>
-          Bitz.isBitz(item)
-            ? item.some(Bitz.isBitz)
+          Brrr.isBrrr(item)
+            ? item.some(Brrr.isBrrr)
               ? toArrayDeep(item)
               : item.toArray()
             : item
@@ -876,7 +876,7 @@ const toArrayDeep = entity => {
 }
 
 const toShapeDeep = (entity, out = []) => {
-  if (Bitz.isBitz(entity.get(0))) {
+  if (Brrr.isBrrr(entity.get(0))) {
     entity.forEach(item => {
       out.push(toShapeDeep(item))
     })
@@ -940,7 +940,7 @@ const merge = (left, right, callback) => {
   for (let i = 0; i < right.length; i++) {
     arr.push(right.get(i))
   }
-  const out = new Bitz()
+  const out = new Brrr()
   const half = (arr.length / 2) | 0.5
   for (let i = half - 1; i >= 0; i--) out.prepend(arr[i])
   for (let i = half; i < arr.length; i++) out.append(arr[i])
@@ -956,7 +956,7 @@ const mergeSort = (array, callback) => {
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
 }
 
-const bitzySearch = tailCallOptimisedRecursion(
+const brrrySearch = tailCallOptimisedRecursion(
   (arr, target, by, greather, start, end) => {
     if (start > end) return undefined
     const index = ((start + end) / 2) | 0.5
@@ -965,8 +965,8 @@ const bitzySearch = tailCallOptimisedRecursion(
     const identity = by(current)
     if (identity === target) return current
     if (greather(current))
-      return bitzySearch(arr, target, by, greather, start, index - 1)
-    else return bitzySearch(arr, target, by, greather, index + 1, end)
+      return brrrySearch(arr, target, by, greather, start, index - 1)
+    else return brrrySearch(arr, target, by, greather, index + 1, end)
   }
 )
 

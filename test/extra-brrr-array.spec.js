@@ -1,45 +1,45 @@
-import Bitz from '../src/Bitz.js'
+import Brrr from '../src/Brrr.js'
 
-describe('Bitz extra features', () => {
+describe('Brrr extra features', () => {
   it('.rotate should work', () => {
     const arr1 = [1, 2, 3]
-    expect(Bitz.from(arr1).copy().rotate(0, 1).items).toEqual([1, 2, 3])
-    expect(Bitz.from(arr1).copy().rotate(1, 1).items).toEqual([3, 1, 2])
-    expect(Bitz.from(arr1).copy().rotate(2, 1).items).toEqual([2, 3, 1])
-    expect(Bitz.from(arr1).copy().rotate(3, 1).items).toEqual([1, 2, 3])
-    expect(Bitz.from(arr1).copy().rotate(4, 1).items).toEqual([3, 1, 2])
-    expect(Bitz.from(arr1).copy().rotate(6, 1).items).toEqual([1, 2, 3])
-    expect(Bitz.from(arr1).copy().rotate(0, -1).items).toEqual([1, 2, 3])
-    expect(Bitz.from(arr1).copy().rotate(1, -1).items).toEqual([2, 3, 1])
-    expect(Bitz.from(arr1).copy().rotate(2, -1).items).toEqual([3, 1, 2])
-    expect(Bitz.from(arr1).copy().rotate(3, -1).items).toEqual([1, 2, 3])
-    expect(Bitz.from(arr1).copy().rotate(4, -1).items).toEqual([2, 3, 1])
-    expect(Bitz.from(arr1).copy().rotate(6, -1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(0, 1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(1, 1).items).toEqual([3, 1, 2])
+    expect(Brrr.from(arr1).copy().rotate(2, 1).items).toEqual([2, 3, 1])
+    expect(Brrr.from(arr1).copy().rotate(3, 1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(4, 1).items).toEqual([3, 1, 2])
+    expect(Brrr.from(arr1).copy().rotate(6, 1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(0, -1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(1, -1).items).toEqual([2, 3, 1])
+    expect(Brrr.from(arr1).copy().rotate(2, -1).items).toEqual([3, 1, 2])
+    expect(Brrr.from(arr1).copy().rotate(3, -1).items).toEqual([1, 2, 3])
+    expect(Brrr.from(arr1).copy().rotate(4, -1).items).toEqual([2, 3, 1])
+    expect(Brrr.from(arr1).copy().rotate(6, -1).items).toEqual([1, 2, 3])
 
     const arr2 = [1, 2, 3, 4]
 
-    expect(Bitz.from(arr2).copy().rotate(0, 1).items).toEqual([1, 2, 3, 4])
-    expect(Bitz.from(arr2).copy().rotate(1, 1).items).toEqual([4, 1, 2, 3])
-    expect(Bitz.from(arr2).copy().rotate(2, 1).items).toEqual([3, 4, 1, 2])
-    expect(Bitz.from(arr2).copy().rotate(3, 1).items).toEqual([2, 3, 4, 1])
-    expect(Bitz.from(arr2).copy().rotate(4, 1).items).toEqual([1, 2, 3, 4])
+    expect(Brrr.from(arr2).copy().rotate(0, 1).items).toEqual([1, 2, 3, 4])
+    expect(Brrr.from(arr2).copy().rotate(1, 1).items).toEqual([4, 1, 2, 3])
+    expect(Brrr.from(arr2).copy().rotate(2, 1).items).toEqual([3, 4, 1, 2])
+    expect(Brrr.from(arr2).copy().rotate(3, 1).items).toEqual([2, 3, 4, 1])
+    expect(Brrr.from(arr2).copy().rotate(4, 1).items).toEqual([1, 2, 3, 4])
   })
 
   it('.compact should work', () => {
     expect(
-      new Bitz().with(1, 0, 0, 4, '', false, undefined, 3, 4).compact().items
+      new Brrr().with(1, 0, 0, 4, '', false, undefined, 3, 4).compact().items
     ).toEqual([1, 4, 3, 4])
   })
 
   it('.unique should work', () => {
     expect(
-      new Bitz().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).unique().items
+      new Brrr().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).unique().items
     ).toEqual([1, 2, 3])
   })
 
   it('.duplicates should work', () => {
     expect(
-      new Bitz()
+      new Brrr()
         .with(1, 2, 2, 0, 2, 5, 2, 9, 3, 3, 3, 4, 8, 9)
         .duplicates()
         .mergeSort().items
@@ -48,7 +48,7 @@ describe('Bitz extra features', () => {
 
   it('.partition should work', () => {
     expect(
-      new Bitz().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).partition(3).items
+      new Brrr().with(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3).partition(3).items
     ).toEqual([
       [1, 1, 1],
       [1, 2, 2],
@@ -58,35 +58,35 @@ describe('Bitz extra features', () => {
   })
 
   it('Set methods should work', () => {
-    const a1 = new Bitz().with(1, 2, 3, 4)
-    const b1 = new Bitz().with(8, 9, 3, 2, 4)
+    const a1 = new Brrr().with(1, 2, 3, 4)
+    const b1 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a1.symetricDifference(b1).items).toEqual([8, 9, 1])
 
-    const a2 = new Bitz().with(1, 2, 3, 4)
-    const b2 = new Bitz().with(8, 9, 3, 2, 4)
+    const a2 = new Brrr().with(1, 2, 3, 4)
+    const b2 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a2.difference(b2).items).toEqual([1])
 
-    const a3 = new Bitz().with(1, 2, 3, 4)
-    const b3 = new Bitz().with(8, 9, 3, 2, 4)
+    const a3 = new Brrr().with(1, 2, 3, 4)
+    const b3 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a3.union(b3).items).toEqual([1, 2, 3, 4, 8, 9, 3, 2, 4])
 
-    const a4 = new Bitz().with(1, 2, 3, 4)
-    const b4 = new Bitz().with(8, 9, 3, 2, 4)
+    const a4 = new Brrr().with(1, 2, 3, 4)
+    const b4 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a4.intersection(b4).items).toEqual([3, 2, 4])
 
-    const a5 = new Bitz().with(1, 2, 3, 4)
-    const b5 = new Bitz().with(8, 9, 3, 2, 4)
+    const a5 = new Brrr().with(1, 2, 3, 4)
+    const b5 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a5.union(b5).unique().items).toEqual([1, 2, 3, 4, 8, 9])
 
-    const a6 = new Bitz().with(1, 2, 3, 4, 5, 8)
-    const b6 = new Bitz().with(8, 9, 3, 2, 4)
+    const a6 = new Brrr().with(1, 2, 3, 4, 5, 8)
+    const b6 = new Brrr().with(8, 9, 3, 2, 4)
     expect(a6.unique().union(b6.unique()).symetricDifference(b6).items).toEqual(
       [1, 5]
     )
   })
 
   it('.swap should work', () => {
-    const arr = new Bitz().with(1, 2, 3)
+    const arr = new Brrr().with(1, 2, 3)
     arr.swap(0, 2)
     expect([...arr]).toEqual([3, 2, 1])
     arr.swap(0, 2)
@@ -95,7 +95,7 @@ describe('Bitz extra features', () => {
 
   it('.scan should work', () => {
     const out = []
-    new Bitz()
+    new Brrr()
       .with(1, 2, 3)
       .scan(x => out.push(x))
       .scan(x => out.push(x * 2))
@@ -104,7 +104,7 @@ describe('Bitz extra features', () => {
   })
 
   it('.append, .prepend, .tail, .head, .insertLeft, .insertRight should work', () => {
-    const arr = new Bitz().with(1, 2, 3)
+    const arr = new Brrr().with(1, 2, 3)
     expect(
       arr.append(4).append(5).prepend(0).prepend(-1).prepend(-2).items
     ).toEqual([-2, -1, 0, 1, 2, 3, 4, 5])
@@ -116,12 +116,12 @@ describe('Bitz extra features', () => {
     expect(arr.chop()).toBe(1)
     expect(arr.chop()).toBe(2)
     expect(
-      new Bitz().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4).items
+      new Brrr().insertLeft(-2, -1).insertRight(0, 1, 2, 3, 4).items
     ).toEqual([-2, -1, 0, 1, 2, 3, 4])
   })
 
   it('.balance should work', () => {
-    const arr = new Bitz().with(6, 6, 6)
+    const arr = new Brrr().with(6, 6, 6)
     arr.push(-2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     arr.unshift(-3, -4)
     expect(arr.length).toBe(18)
@@ -132,43 +132,43 @@ describe('Bitz extra features', () => {
 
   it('.removeFrom should work', () => {
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 0)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 0)
         .items
     ).toEqual([-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 1)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 1)
         .items
     ).toEqual([-1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 2)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(0, 2)
         .items
     ).toEqual([0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(1, 1)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(1, 1)
         .items
     ).toEqual([-2, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5])
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(2, 1)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(2, 1)
         .items
     ).toEqual([-2, -1, 1, 2, 3, 4, 5, 2, 3, 4, 5])
     expect(
-      new Bitz().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(2, 4)
+      new Brrr().with(-2, -1, 0, 1, 2, 3, 4, 5, 2, 3, 4, 5).removeFrom(2, 4)
         .items
     ).toEqual([-2, -1, 4, 5, 2, 3, 4, 5])
     const arr = [1, 2, 3, 4, 5, 6, 7]
-    expect(Bitz.from(arr).copy().removeFrom(1, 3).items).toEqual([1, 5, 6, 7])
-    expect(Bitz.from(arr).copy().removeFrom(1, arr.length).items).toEqual([1])
-    expect(Bitz.from(arr).copy().removeFrom(3, 1).items).toEqual([
+    expect(Brrr.from(arr).copy().removeFrom(1, 3).items).toEqual([1, 5, 6, 7])
+    expect(Brrr.from(arr).copy().removeFrom(1, arr.length).items).toEqual([1])
+    expect(Brrr.from(arr).copy().removeFrom(3, 1).items).toEqual([
       1, 2, 3, 5, 6, 7,
     ])
-    expect(Bitz.from(arr).copy().removeFrom(3, 0).items).toEqual([
+    expect(Brrr.from(arr).copy().removeFrom(3, 0).items).toEqual([
       1, 2, 3, 4, 5, 6, 7,
     ])
-    expect(Bitz.from(arr).copy().removeFrom(0, arr.length).items).toEqual([])
+    expect(Brrr.from(arr).copy().removeFrom(0, arr.length).items).toEqual([])
   })
 
   it('.group should work', () => {
-    const group = new Bitz()
+    const group = new Brrr()
       .with(1, 2, 3, 4, 4, 5, 8, 9, 1, 2, 32, 222, 2)
       .group(item => (item % 2 == 0 ? 'even' : 'odd'))
       .map(item => item.items)
@@ -179,15 +179,15 @@ describe('Bitz extra features', () => {
   })
 
   it('.isSorted should work', () => {
-    expect(Bitz.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
-    expect(Bitz.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
-    expect(Bitz.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
-    expect(Bitz.from(['a', 'b', 'c']).isSorted()).toBe(true)
-    expect(Bitz.from(['a', 'c', 'b']).isSorted()).toBe(false)
-    expect(Bitz.from(['c', 'b', 'a']).isSorted()).toBe(false)
-    expect(Bitz.from(['c', 'b', 'a']).isSorted(false)).toBe(true)
+    expect(Brrr.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
+    expect(Brrr.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
+    expect(Brrr.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
+    expect(Brrr.from(['a', 'b', 'c']).isSorted()).toBe(true)
+    expect(Brrr.from(['a', 'c', 'b']).isSorted()).toBe(false)
+    expect(Brrr.from(['c', 'b', 'a']).isSorted()).toBe(false)
+    expect(Brrr.from(['c', 'b', 'a']).isSorted(false)).toBe(true)
     expect(
-      Bitz.from([
+      Brrr.from([
         { key: 'a', value: 1 },
         { key: 'b', value: 2 },
         { key: 'c', value: 4 },
@@ -196,7 +196,7 @@ describe('Bitz extra features', () => {
       )
     ).toBe(true)
     expect(
-      Bitz.from([
+      Brrr.from([
         { key: 'b', value: 1 },
         { key: 'a', value: 8 },
         { key: 'c', value: 9 },
@@ -207,24 +207,24 @@ describe('Bitz extra features', () => {
   })
 
   it('.quickSort should work', () => {
-    expect(Bitz.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('asc').items).toEqual([
+    expect(Brrr.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('asc').items).toEqual([
       1, 1, 2, 3, 4, 5, 8, 9,
     ])
-    expect(Bitz.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('des').items).toEqual(
+    expect(Brrr.from([3, 1, 8, 5, 9, 1, 2, 4]).quickSort('des').items).toEqual(
       [1, 1, 2, 3, 4, 5, 8, 9].reverse()
     )
   })
 
   it('.search should work', () => {
-    expect(Bitz.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
-    expect(Bitz.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
-    expect(Bitz.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
+    expect(Brrr.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(3)).toBe(3)
+    expect(Brrr.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(9)).toBe(9)
+    expect(Brrr.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]).search(11)).toBe(
       undefined
     )
     const searchKey = 'd'
     const objectTarget = { key: searchKey, value: 7 }
     expect(
-      Bitz.from([
+      Brrr.from([
         { key: 'f', value: 14 },
         { key: 'g', value: 24 },
         { key: 'g', value: 14 },
@@ -242,7 +242,7 @@ describe('Bitz extra features', () => {
 
     const input = [1, 2, 3, 2, 3, 7, 1, 2, 3, 2, 3, 7, 13]
     expect(
-      new Bitz()
+      new Brrr()
         .with(...input)
         .unique()
         .map((x, i) => ({ key: x + '-' + i, x }))
@@ -254,7 +254,7 @@ describe('Bitz extra features', () => {
         )
     ).toEqual({ key: '3-2', x: 3 })
     expect(
-      new Bitz()
+      new Brrr()
         .with(...input)
         .unique()
         .map((x, i) => ({ key: x + '-' + i, x }))
@@ -268,7 +268,7 @@ describe('Bitz extra features', () => {
 
     const dateTarget = new Date('1970-01-01T00:00:00.002Z')
     expect(
-      new Bitz()
+      new Brrr()
         .with(...input)
         .unique()
         .map((x, i) => ({ date: new Date(i), x }))
@@ -283,14 +283,14 @@ describe('Bitz extra features', () => {
 
   it('.without should work', () => {
     const items = [2, 1, 2, 3]
-    const binArr = Bitz.from(items)
+    const binArr = Brrr.from(items)
     expect(binArr.without(1, 2).items).toEqual([3])
     expect(binArr.without(1).items).toEqual([2, 2, 3])
     expect(binArr.without(3).items).toEqual([2, 1, 2])
   })
 
   it('.isInBouds and .getInBounds should work', () => {
-    const binArr = new Bitz().with(0, 1, 2, 3)
+    const binArr = new Brrr().with(0, 1, 2, 3)
     expect(binArr.isInBounds(4)).toBe(false)
     expect(binArr.isInBounds(-1)).toBe(false)
     expect(binArr.isInBounds(2)).toBe(true)
@@ -301,18 +301,18 @@ describe('Bitz extra features', () => {
   })
 
   it('.take and .takeRight should work', () => {
-    expect(Bitz.from([1, 2, 3]).take().items).toEqual([1])
-    expect(Bitz.from([1, 2, 3]).take(2).items).toEqual([1, 2])
-    expect(Bitz.from([1, 2, 3]).take(5).items).toEqual([1, 2, 3])
-    expect(Bitz.from([]).take(0).items).toEqual([])
+    expect(Brrr.from([1, 2, 3]).take().items).toEqual([1])
+    expect(Brrr.from([1, 2, 3]).take(2).items).toEqual([1, 2])
+    expect(Brrr.from([1, 2, 3]).take(5).items).toEqual([1, 2, 3])
+    expect(Brrr.from([]).take(0).items).toEqual([])
 
-    expect(Bitz.from([1, 2, 3]).takeRight().items).toEqual([3])
-    expect(Bitz.from([2, 3]).takeRight(2).items).toEqual([2, 3])
-    expect(Bitz.from([1, 2, 3]).takeRight(5).items).toEqual([1, 2, 3])
-    expect(Bitz.from([]).takeRight(0).items).toEqual([])
+    expect(Brrr.from([1, 2, 3]).takeRight().items).toEqual([3])
+    expect(Brrr.from([2, 3]).takeRight(2).items).toEqual([2, 3])
+    expect(Brrr.from([1, 2, 3]).takeRight(5).items).toEqual([1, 2, 3])
+    expect(Brrr.from([]).takeRight(0).items).toEqual([])
   })
   it('.swapRemove should work', () => {
-    const arr = new Bitz().with(1, 2, 3, 4, 5)
+    const arr = new Brrr().with(1, 2, 3, 4, 5)
     expect(arr.swapRemoveLeft(2))
     expect(arr.items).toEqual([2, 3, 1, 5])
     expect(arr.swapRemoveRight(2))
@@ -320,7 +320,7 @@ describe('Bitz extra features', () => {
   })
   it('.to should work', () => {
     expect(
-      Bitz.from('(())')
+      Brrr.from('(())')
         .to((acc, x) =>
           x === '('
             ? acc.prepend(x)
@@ -332,29 +332,29 @@ describe('Bitz extra features', () => {
     ).toBe(true)
 
     expect(
-      Bitz.from('101234')
+      Brrr.from('101234')
         .map(Number)
         .to((acc, item) => (acc += item), 0)
     ).toBe(11)
   })
   it('.zeroes and .ones should work', () => {
-    expect(Bitz.zeroes(4).items).toEqual([0, 0, 0, 0])
-    expect(Bitz.ones(8).items).toEqual([1, 1, 1, 1, 1, 1, 1, 1])
+    expect(Brrr.zeroes(4).items).toEqual([0, 0, 0, 0])
+    expect(Brrr.ones(8).items).toEqual([1, 1, 1, 1, 1, 1, 1, 1])
   })
   it('.shape should work', () => {
-    expect(Bitz.of(1, 1, 1, 1).shape).toEqual([4])
-    expect(Bitz.of(Bitz.of(1, 1, 1), Bitz.of(1, 1, 1)).shape).toEqual([
+    expect(Brrr.of(1, 1, 1, 1).shape).toEqual([4])
+    expect(Brrr.of(Brrr.of(1, 1, 1), Brrr.of(1, 1, 1)).shape).toEqual([
       [3],
       [3],
     ])
     expect(
-      Bitz.of(
-        Bitz.of(
-          Bitz.of(1, 1),
-          Bitz.of(Bitz.of(1, 1, 1), Bitz.of(1, 1), Bitz.of(1)),
-          Bitz.of(1, 1, 1, 1, 1, 1)
+      Brrr.of(
+        Brrr.of(
+          Brrr.of(1, 1),
+          Brrr.of(Brrr.of(1, 1, 1), Brrr.of(1, 1), Brrr.of(1)),
+          Brrr.of(1, 1, 1, 1, 1, 1)
         ),
-        Bitz.of(1, 1, 1)
+        Brrr.of(1, 1, 1)
       ).shape
     ).toEqual([[[2], [[3], [2], [1]], [6]], [3]])
   })

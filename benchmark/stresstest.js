@@ -1,119 +1,119 @@
-import Bitz from '../src/Bitz.js'
+import Brrr from '../src/Brrr.js'
 import Benchmark from 'nanobench'
 
 const N = 1_000_000
-Benchmark(`bitzArray.get middle N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.get middle N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  bitzArray.get(N / 2)
+  brrrArray.get(N / 2)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.get random N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.get random N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.get(Math.floor(Math.random() * N))
+  for (let i = 0; i < N; i++) brrrArray.get(Math.floor(Math.random() * N))
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.append N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  bitzArray.balance()
+Benchmark(`brrrArray.append N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.append(1)
+  for (let i = 0; i < N; i++) brrrArray.append(1)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.head N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.head N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.head()
+  for (let i = 0; i < N; i++) brrrArray.head()
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.tail N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.tail N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.tail()
+  for (let i = 0; i < N; i++) brrrArray.tail()
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.prepend N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  bitzArray.balance()
+Benchmark(`brrrArray.prepend N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  brrrArray.balance()
   bench.start()
-  for (let i = 0; i < N; i++) bitzArray.prepend(1)
+  for (let i = 0; i < N; i++) brrrArray.prepend(1)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.rotateRight N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.rotateRight N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  bitzArray.rotateRight(N - 1)
+  brrrArray.rotateRight(N - 1)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.rotateLeft N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
-  bitzArray.balance()
+Benchmark(`brrrArray.rotateLeft N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
+  brrrArray.balance()
   bench.start()
-  bitzArray.rotateLeft(N - 1)
+  brrrArray.rotateLeft(N - 1)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.search N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N; i++) bitzArray.append(i)
+Benchmark(`brrrArray.search N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N; i++) brrrArray.append(i)
   const target = (N / 3) | 0.5
-  bitzArray.append(target)
-  bitzArray.balance()
+  brrrArray.append(target)
+  brrrArray.balance()
 
   bench.start()
-  bitzArray.search(target)
+  brrrArray.search(target)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.quickSort and bitzArray.search N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N / 10; i++) bitzArray.append(Math.random() * 1000)
+Benchmark(`brrrArray.quickSort and brrrArray.search N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N / 10; i++) brrrArray.append(Math.random() * 1000)
   const target = -1
-  bitzArray.append(target)
-  bitzArray.balance()
+  brrrArray.append(target)
+  brrrArray.balance()
   bench.start()
-  bitzArray.quickSort('asc').search(target)
+  brrrArray.quickSort('asc').search(target)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
 
-Benchmark(`bitzArray.quickSort and bitzArray.search N = ${N}`, bench => {
-  const bitzArray = new Bitz()
-  for (let i = 0; i < N / 10; i++) bitzArray.append(Math.random() * 1000)
+Benchmark(`brrrArray.quickSort and brrrArray.search N = ${N}`, bench => {
+  const brrrArray = new Brrr()
+  for (let i = 0; i < N / 10; i++) brrrArray.append(Math.random() * 1000)
   const target = -1
-  bitzArray.append(target)
-  bitzArray.balance()
+  brrrArray.append(target)
+  brrrArray.balance()
   bench.start()
-  const sorted = bitzArray.quickSort()
+  const sorted = brrrArray.quickSort()
   sorted.search(target)
   bench.end()
-  bitzArray.clear()
+  brrrArray.clear()
 })
