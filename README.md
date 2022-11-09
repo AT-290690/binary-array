@@ -1,5 +1,9 @@
 # Brrr
 
+<p align="center">
+<img  width="100" alt="Thunder Logo" src="https://user-images.githubusercontent.com/88512646/200684693-ff06ff9d-12a1-404c-9d4e-7fbb541dba23.png" />
+</p>
+
 ## instant array operations
 
 npm i --save-dev
@@ -17,9 +21,13 @@ Elegant API (Entire algorithms can be expressed in few lines of code)
 
 ```js
 // validate matching parens
-Brrr.from('((()))()()(())')
-  .to((acc, x) =>
-    x === '(' ? acc.prepend(x) : acc.first === '(' ? acc.tail() : acc.append(x)
+Brrr.from('((()))()()(())()')
+  .to((stack, paren) =>
+    paren === '('
+      ? stack.prepend(paren)
+      : stack.first === '('
+      ? stack.tail()
+      : stack.append(paren)
   )
   .isEmpty()
 ```
@@ -42,7 +50,7 @@ log(
 )
 ```
 
-Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/9021bc9afd9420cb44d4db652cbff59c/raw/3d06b922ce44bfd77f952623c8a93112c03239ea/BitzArray.js)
+Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/675b2c3d986aca3fd04bf64daa66b631/raw/afe22cebc8c90170c0fa52dc92dfe1105f40b613/BitzArray.js)
 
 Structure
 
@@ -58,6 +66,23 @@ array.items => [-2, -1, 0, 1, 2, 3, 4]
 Indexing is guaranteed without the need of reordering thanks to simple arithmetics:
 
 ![1_CJHj_FVbZ61iWSIevvMrsw](https://user-images.githubusercontent.com/88512646/189848001-5274f5bf-200d-46e3-80df-25c5718bfc4a.gif)
+
+```js
+ -  [Symbol(-0), 3, 2, 1, 0] // left
+ +  [4, 5, 6, 7, 8]          // right
+
+[0] -> 0 - 4 = -4 => 0 // -
+[1] -> 1 - 4 = -3 => 1 // -
+[2] -> 2 - 4 = -2 => 2 // -
+[3] -> 3 - 4 = -1 -> 3 // -
+[4] -> 4 - 4 =  0 => 4 // +
+[5] -> 5 - 4 =  1 => 5 // +
+[6] -> 6 - 4 =  2 => 6 // +
+[7] -> 7 - 4 =  3 => 7 // +
+[8] -> 8 - 4 =  4 => 8 // +
+
+[0, 1, 2, 3, 4, 5, 6, 7, 8]
+```
 
 Comparison for N = 200 000 (runned on MacBook Pro M1 chip laptop)
 
