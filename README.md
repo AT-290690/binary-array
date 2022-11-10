@@ -4,7 +4,7 @@
 <img  width="100" alt="Thunder Logo" src="https://user-images.githubusercontent.com/88512646/200684693-ff06ff9d-12a1-404c-9d4e-7fbb541dba23.png" />
 </p>
 
-## instant array operations
+## Instant array operations
 
 npm i --save-dev
 
@@ -33,22 +33,6 @@ Brrr.from('((()))()()(())()')
 ```
 
 Unoptimal array solutions are as efficient as optimal ones
-
-```js
-const code = '49380518301380480923802840'
-// change these numbers to reveal subset of the code
-const index = 4
-const amount = 3
-
-log(
-  `|${Brrr.from(code)
-    .rotateLeft(index) // shift X times to the left
-    .map((char, index, arr) => (index > amount - 1 ? '.' : char)) // mask out a portion of the code
-    .rotateRight(index) // shift X times to the right
-    .items.join('')}|`,
-  `reveal mask subset of the code (index: ${index} amount: ${amount})`
-)
-```
 
 Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/675b2c3d986aca3fd04bf64daa66b631/raw/afe22cebc8c90170c0fa52dc92dfe1105f40b613/BitzArray.js)
 
