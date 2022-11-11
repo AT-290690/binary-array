@@ -39,8 +39,9 @@ body {
   background-image: url(https://rare-gallery.com/thumbs/356110-4k-wallpaper.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 96vh;
+  height: 94vh;
   background-position: center;
+  padding: 8px;
 }
 
 .app {

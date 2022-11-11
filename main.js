@@ -49,5 +49,4 @@ document.addEventListener('keydown', e => {
 
 consoleElement.value = ''
 window.dispatchEvent(new Event('resize'))
-// editor.setValue(window.localStorage.getItem('source') ?? '')
-// setTimeout(() => alert(), 1000)
+editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
