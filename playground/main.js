@@ -28,6 +28,8 @@ const run = () => {
     const out = new Function(`${editor.getValue().trim()}`)()
     if (out !== undefined) {
       Brrr.isBrrr(out) ? print(out.toObject(true)) : print(out)
+    } else {
+      return print(undefined)
     }
     return out
   } catch (err) {
@@ -57,4 +59,5 @@ consoleElement.value = ''
 window.dispatchEvent(new Event('resize'))
 editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
 ;['Brrr', 'List'].forEach(createButton)
+
 document.getElementById('app').style.height = 'auto'
