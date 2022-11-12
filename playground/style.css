@@ -53,7 +53,6 @@ body {
 .app {
   background-color: var(--theme-bg-color);
   border: none;
-  min-height: 500px;
   /* border: 1px solid var(--border-color); */
   overflow: hidden;
   border-radius: 14px;
@@ -92,7 +91,7 @@ p {
 
 .content {
   padding: 10px;
-  border-left: 1px solid var(--border-color);
+  border-left: 1px solid var(--border-color2);
 }
 
 :root {
@@ -265,6 +264,9 @@ input:focus {
   margin-left: 10px;
   cursor: pointer;
   filter: grayscale(0%);
+}
+#run:hover {
+  filter: grayscale(100%) brightness(300%);
 }
 #run:active {
   filter: grayscale(100%) brightness(300%);

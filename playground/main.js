@@ -1,8 +1,10 @@
 import { CodeMirror } from './libs/editor/editor.bundle.js'
 import Brrr from '../src/Brrr.js'
 import { createButton } from './buttons.js'
+
 const mainContainer = document.getElementById('editor-container')
 const consoleElement = document.getElementById('console')
+
 globalThis.Brrr = Brrr
 export const editor = CodeMirror(mainContainer, {})
 editor.changeFontSize('15px')
@@ -12,7 +14,6 @@ const print = function (...values) {
   )
   return values
 }
-editor.setSize(mainContainer.getBoundingClientRect().width, 300)
 const printErrors = errors => {
   consoleElement.classList.remove('info_line')
   consoleElement.classList.add('error_line')
@@ -33,8 +34,13 @@ const run = () => {
     printErrors(err)
   }
 }
-const resize = () =>
-  editor.setSize(mainContainer.getBoundingClientRect().width, 300)
+const resize = () => {
+  const height = document.body.getBoundingClientRect().height
+  editor.setSize(
+    mainContainer.getBoundingClientRect().width,
+    Math.min(height / window.devicePixelRatio, height * 0.8)
+  )
+}
 window.addEventListener('resize', resize)
 
 document.addEventListener('keydown', e => {
@@ -51,3 +57,4 @@ consoleElement.value = ''
 window.dispatchEvent(new Event('resize'))
 editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
 ;['Brrr', 'List'].forEach(createButton)
+document.getElementById('app').style.height = 'auto'

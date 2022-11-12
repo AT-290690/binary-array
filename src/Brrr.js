@@ -265,7 +265,7 @@ export default class Brrr {
    * @param predicate
    * find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined.
    */
-  find(callback) {
+  find(callback = Identity) {
     for (let i = 0, len = this.length; i < len; i++) {
       if (i >= this.length) return
       const current = this.get(i)
@@ -273,7 +273,7 @@ export default class Brrr {
     }
   }
 
-  findLast(callback) {
+  findLast(callback = Identity) {
     for (let i = this.length - 1; i >= 0; i--) {
       if (i >= this.length) return
       const current = this.get(i)
@@ -288,7 +288,7 @@ export default class Brrr {
    * until the predicate returns a value which is coercible to the Boolean value true,
    * or until the end of the array.
    */
-  some(callback) {
+  some(callback = Identity) {
     for (let i = 0, len = this.length; i < len; i++)
       if (callback(this.get(i), i, this)) return true
     return false
@@ -298,13 +298,13 @@ export default class Brrr {
    * @param predicate
    * A function that accepts up to three arguments. The every method calls the predicate function for each element in the array until the predicate returns a value which is coercible to the Boolean value false, or until the end of the array.
    */
-  every(callback) {
+  every(callback = Identity) {
     for (let i = 0, len = this.length; i < len; i++)
       if (i >= this.length || !callback(this.get(i), i, this)) return false
     return true
   }
 
-  findIndex(callback) {
+  findIndex(callback = Identity) {
     for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
@@ -312,7 +312,7 @@ export default class Brrr {
     return -1
   }
 
-  findLastIndex(callback) {
+  findLastIndex(callback = Identity) {
     for (let i = this.length - 1; i >= 0; i--) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
@@ -362,7 +362,7 @@ export default class Brrr {
     return initial
   }
 
-  reduceRight(callback, initial) {
+  reduceRight(callback, initial = this.at(-1)) {
     for (let i = this.length - 1; i >= 0; i--)
       initial = callback(initial, this.get(i), i, this)
     return initial
@@ -372,7 +372,7 @@ export default class Brrr {
    * @param predicate — A function that accepts up to three arguments.
    * The filter method calls the predicate function one time for each element in the array.
    */
-  filter(callback) {
+  filter(callback = Identity) {
     const out = []
     for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
@@ -382,7 +382,7 @@ export default class Brrr {
     return Brrr.from(out)
   }
 
-  reject(callback) {
+  reject(callback = Identity) {
     const out = []
     for (let i = 0, len = this.length; i < len; i++) {
       const current = this.get(i)
@@ -417,7 +417,7 @@ export default class Brrr {
    * // retunrs (this is array view)
    * {"odd":[1,3],"even":[2,4]}
    */
-  group(callback) {
+  group(callback = Identity) {
     const out = this.reduce((acc, item, index, arr) => {
       const key = callback(item, index, arr)
       if (acc.has(key)) acc.get(key).append(item)
@@ -501,31 +501,31 @@ export default class Brrr {
     return this
   }
 
-  addAt(key, ...value) {
-    if (this.offsetLeft + key > 0) {
-      const len = this.length - key
+  addAt(index, ...value) {
+    if (this.offsetLeft + index > 0) {
+      const len = this.length - index
       this.rotateRight(len)
       this.push(...value)
       for (let i = 0; i < len; i++) this.append(this.shift())
     } else {
-      this.rotateLeft(key)
+      this.rotateLeft(index)
       this.unshift(...value)
-      for (let i = 0; i < key; i++) this.prepend(this.pop())
+      for (let i = 0; i < index; i++) this.prepend(this.pop())
     }
     return this
   }
 
-  removeFrom(key, amount) {
-    const len = this.length - key
+  removeFrom(index, amount) {
+    const len = this.length - index
     amount = len < amount ? len : amount
-    if (this.offsetLeft + key > 0) {
+    if (this.offsetLeft + index > 0) {
       this.rotateRight(len)
       for (let i = 0; i < amount; i++) this.cut()
       for (let i = 0; i < len; i++) this.append(this.chop())
     } else {
-      this.rotateLeft(key)
+      this.rotateLeft(index)
       for (let i = 0; i < amount; i++) this.chop()
-      for (let i = 0; i < key; i++) this.prepend(this.cut())
+      for (let i = 0; i < index; i++) this.prepend(this.cut())
     }
     return this
   }
@@ -809,7 +809,7 @@ export default class Brrr {
     return this.every(
       typeof order === 'function'
         ? order
-        : order
+        : order === 'asc'
         ? (current, index, arr) => !index || arr.at(index - 1) <= current
         : (current, index, arr) => !index || arr.at(index - 1) >= current
     )
@@ -824,8 +824,8 @@ export default class Brrr {
    * current => current.key // identity
    * current => identity(current) > target // greather
    * */
-  search(target, identity = current => current, greather) {
-    return brrrySearch(
+  search(target, identity = Identity, greather) {
+    return binarySearch(
       this,
       target,
       identity,
@@ -986,7 +986,7 @@ const mergeSort = (array, callback) => {
   return merge(mergeSort(left, callback), mergeSort(array, callback), callback)
 }
 
-const brrrySearch = tailCallOptimisedRecursion(
+const binarySearch = tailCallOptimisedRecursion(
   (arr, target, by, greather, start, end) => {
     if (start > end) return undefined
     const index = ((start + end) / 2) | 0.5
@@ -995,11 +995,11 @@ const brrrySearch = tailCallOptimisedRecursion(
     const identity = by(current)
     if (identity === target) return current
     if (greather(current))
-      return brrrySearch(arr, target, by, greather, start, index - 1)
-    else return brrrySearch(arr, target, by, greather, index + 1, end)
+      return binarySearch(arr, target, by, greather, start, index - 1)
+    else return binarySearch(arr, target, by, greather, index + 1, end)
   }
 )
-
+const Identity = current => current
 class Group {
   constructor() {
     this.items = {}

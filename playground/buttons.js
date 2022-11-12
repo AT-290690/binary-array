@@ -36,21 +36,21 @@ splice(dir, deleteCount, ...items)
 indexOf(item)
 lastIndexOf(item)
 includes(val, fromIndex = 0)
-find(callback)
-findLast(callback)
-some(callback)
-every(callback)
-findIndex(callback)
-findLastIndex(callback)
+find(callback = Identity)
+findLast(callback = Identity)
+some(callback = Identity)
+every(callback = Identity)
+findIndex(callback = Identity)
+findLastIndex(callback = Identity)
 map(callback)
 mapMut(callback)
 forEach(callback)
 reduce(callback, initial)
 reduceRight(callback, initial)
-filter(callback)
-reject(callback)
+filter(callback = Identity)
+reject(callback = Identity)
 reverse()
-group(callback)
+group(callback = Identity)
 mergeSort(callback = (a, b) => (a < b ? -1 : 1))
 quickSort(order)
 join(separator = ',')
@@ -93,7 +93,7 @@ scan(callback, dir = 1)
 isEmpty() 
 isInBounds(index) 
 isSorted(order = 'asc') 
-search(target, identity = current => current, greather)`,
+search(target, identity = Identity, greather)`,
     content: [
       'All existing methods',
       'to RUN the code: press the thunder on the left OR',
@@ -131,9 +131,30 @@ return arr.filter((x, i, arr) => x % 2)`,
 (Array): The new filtered array.`,
     ],
   },
+  reject: {
+    source: `const arr = Brrr.of(1, 2, 3, 4, 5)
+// remove even elements
+return arr.reject((x, i, arr) => x % 2)`,
+    content: [
+      `The opposite of Brrr.filter; this method returns the elements of collection that predicate does not return truthy for.`,
+      `Arguments
+[iteratee] (Function): The function invoked per iteration.`,
+      `Returns
+(Array): The new filtered array.`,
+    ],
+  },
+  compact: {
+    source: `const arr = Brrr.of(1, 2, null, 3, false, 4, 0, 5)
+return arr.compact()`,
+    content: [
+      `Creates an array with all falsey values removed. The values false, null, 0, "", undefined, and NaN are falsey.`,
+      `Argumetns void`,
+      `(Array): Returns the new array of filtered values.`,
+    ],
+  },
   reduce: {
     source: `const arr = Brrr.of(1, 2, 3, 4, 5)
-return arr.reduce((acc, x, i, arr) => acc+=x, 0)`,
+return arr.reduce((acc, x, i, arr) => acc += x, 0)`,
     content: [
       `Reduces collection to a value which is the accumulated result of running each element in collection thru iteratee, where each successive invocation is supplied the return value of the previous. If accumulator is not given, the first element of collection is used as the initial value. The iteratee is invoked with four arguments: (accumulator, value, index, collection).`,
       `Arguments
@@ -143,7 +164,18 @@ return arr.reduce((acc, x, i, arr) => acc+=x, 0)`,
 (*): The accumulated value.`,
     ],
   },
-
+  reduceRight: {
+    source: `const arr = Brrr.of(1, 2, 3, 4, 5)
+return arr.reduceRight((acc, x, i, arr) => acc /= x)`,
+    content: [
+      `This method is like Brrr.reduce except that it iterates over elements of collection from right to left.`,
+      `Arguments
+  [iteratee] (Function): The function invoked per iteration.
+  [accumulator] (*): The initial value.`,
+      `Returns
+(*): The accumulated value.`,
+    ],
+  },
   get: {
     source: `const arr = Brrr.of(1, 2, 3, 4, 5)
 return arr.get(2)`,
@@ -187,8 +219,7 @@ return arr.last`,
     ],
   },
   group: {
-    source: `const arr = Brrr
-    .of(1, 2, 3, 4)
+    source: `const arr = Brrr.of(1, 2, 3, 4)
 return arr.group((item) => (item % 2 == 0 ? "even" : "odd"))
 .items
 .even
@@ -201,7 +232,73 @@ return arr.group((item) => (item % 2 == 0 ? "even" : "odd"))
 (Object): The Object/Map with groups as keys.`,
     ],
   },
+  find: {
+    source: `const arr = Brrr.of(1, 2, 3, 4)
+return arr.find((x) => x > 2)`,
+    content: [
+      `Iterates over elements of collection, returning the first element predicate returns truthy for. The predicate is invoked with three arguments: (value, index, collection).`,
+      `Arguments
+[predicate=Identity] (Function): The function invoked per iteration.
+[fromIndex=0] (number): The index to search from.`,
+      `Returns
+the found element or undefined if none is found`,
+    ],
+  },
+  concat: {
+    source: `const a = Brrr.of(1, 2, 3, 4)
+const b = Brrr.of(5, 6, 7)
+return a.concat(b)`,
+    content: [
+      `Creates a new array concatenating array with any additional arrays and/or values.`,
+      `Arguments
+array (Array): The array to concatenate.`,
+      `Returns
+(Array): Returns the new concatenated array.`,
+    ],
+  },
+  head: {
+    source: `const arr = Brrr.of(1, 2, 3, 4)
+return arr.head()`,
+    content: [
+      `Removes the last element of the array`,
+      `Arguments void.`,
+      `Returns
+(Array): Returns all but the last element of the array.`,
+    ],
+  },
+  tail: {
+    source: `const arr = Brrr.of(1, 2, 3, 4)
+return arr.tail()`,
+    content: [
+      `Removes the first element of the array`,
+      `Arguments void.`,
+      `Returns
+(Array): Returns all but the first element of the array.`,
+    ],
+  },
+
+  cut: {
+    source: `const arr = Brrr.of(1, 2, 3, 4)
+return arr.cut()`,
+    content: [
+      `Removes the last element of the array`,
+      `Arguments void.`,
+      `Returns
+(*): Returns the removed element`,
+    ],
+  },
+  chop: {
+    source: `const arr = Brrr.of(1, 2, 3, 4)
+return arr.chop()`,
+    content: [
+      `Removes the first element of the array`,
+      `Arguments void.`,
+      `Returns
+(*): Returns the removed element`,
+    ],
+  },
 }
+
 export const createButton = label => {
   const button = document.createElement('button')
   button.textContent = label

@@ -179,13 +179,17 @@ describe('Brrr extra features', () => {
   })
 
   it('.isSorted should work', () => {
-    expect(Brrr.from([1, 2, 3, 4, 5]).isSorted()).toBe(true)
-    expect(Brrr.from([1, 2, 8, 9, 9]).isSorted()).toBe(true)
-    expect(Brrr.from([1, 2, 2, 3, 2]).isSorted()).toBe(false)
-    expect(Brrr.from(['a', 'b', 'c']).isSorted()).toBe(true)
-    expect(Brrr.from(['a', 'c', 'b']).isSorted()).toBe(false)
-    expect(Brrr.from(['c', 'b', 'a']).isSorted()).toBe(false)
-    expect(Brrr.from(['c', 'b', 'a']).isSorted(false)).toBe(true)
+    expect(Brrr.of(1, 2, 3, 4, 5).isSorted()).toBe(true)
+    expect(Brrr.of(1, 2, 8, 9, 9).isSorted()).toBe(true)
+    expect(Brrr.of(1, 2, 2, 3, 2).isSorted()).toBe(false)
+    expect(Brrr.of('a', 'b', 'c').isSorted()).toBe(true)
+    expect(Brrr.of('a', 'c', 'b').isSorted()).toBe(false)
+    expect(Brrr.of('c', 'b', 'a').isSorted()).toBe(false)
+    expect(Brrr.of('c', 'b', 'a').isSorted(false)).toBe(true)
+    expect(Brrr.of(1, 2, 3, 4).quickSort('asc').isSorted('asc')).toBe(true)
+    expect(Brrr.of(1, 2, 3, 4).quickSort('des').isSorted('des')).toBe(true)
+    expect(Brrr.of(1, 2, 3, 4).quickSort('asc').isSorted('des')).toBe(false)
+    expect(Brrr.of(1, 2, 3, 4).quickSort('des').isSorted('asc')).toBe(false)
     expect(
       Brrr.from([
         { key: 'a', value: 1 },
