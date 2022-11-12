@@ -156,7 +156,9 @@ return arr.compact()`,
     source: `const arr = Brrr.of(1, 2, 3, 4, 5)
 return arr.reduce((acc, x, i, arr) => acc += x, 0)`,
     content: [
-      `Reduces collection to a value which is the accumulated result of running each element in collection thru iteratee, where each successive invocation is supplied the return value of the previous. If accumulator is not given, the first element of collection is used as the initial value. The iteratee is invoked with four arguments: (accumulator, value, index, collection).`,
+      `Reduces collection to a value which is the accumulated result of running each element in collection thru iteratee, where each successive invocation is supplied the return value of the previous.`,
+      `If accumulator is not given, the first element of collection is used as the initial value.`,
+      `The iteratee is invoked with four arguments: (accumulator, value, index, collection).`,
       `Arguments
   [iteratee] (Function): The function invoked per iteration.
   [accumulator] (*): The initial value.`,
@@ -236,12 +238,13 @@ return arr.group((item) => (item % 2 == 0 ? "even" : "odd"))
     source: `const arr = Brrr.of(1, 2, 3, 4)
 return arr.find((x) => x > 2)`,
     content: [
-      `Iterates over elements of collection, returning the first element predicate returns truthy for. The predicate is invoked with three arguments: (value, index, collection).`,
+      `Iterates over elements of collection, returning the first element predicate returns truthy for.`,
+      `The predicate is invoked with three arguments: (value, index, collection).`,
       `Arguments
 [predicate=Identity] (Function): The function invoked per iteration.
 [fromIndex=0] (number): The index to search from.`,
       `Returns
-the found element or undefined if none is found`,
+The found element or undefined if none is found`,
     ],
   },
   concat: {
@@ -253,7 +256,7 @@ return a.concat(b)`,
       `Arguments
 array (Array): The array to concatenate.`,
       `Returns
-(Array): Returns the new concatenated array.`,
+(Array): The new concatenated array.`,
     ],
   },
   head: {
@@ -263,7 +266,7 @@ return arr.head()`,
       `Removes the last element of the array`,
       `Arguments void.`,
       `Returns
-(Array): Returns all but the last element of the array.`,
+(Array): All but the last element of the array.`,
     ],
   },
   tail: {
@@ -273,7 +276,7 @@ return arr.tail()`,
       `Removes the first element of the array`,
       `Arguments void.`,
       `Returns
-(Array): Returns all but the first element of the array.`,
+(Array): All but the first element of the array.`,
     ],
   },
 
@@ -297,12 +300,24 @@ return arr.chop()`,
 (*): Returns the removed element`,
     ],
   },
+  flat: {
+    source: `const arr = Brrr.of(1, Brrr.of(1, 2, Brrr.of(1, 2, 3)), 3, Brrr.of(1, 2, 3))
+return arr.flat(Infinity)`,
+    content: [
+      `Flattens the array of a certain depth level.`,
+      `Arguments
+[level] (Number): index of the array`,
+      `Returns
+(Array): Flatten array of the given levels`,
+    ],
+  },
 }
 
 export const createButton = label => {
   const button = document.createElement('button')
   button.textContent = label
   buttonContainer.appendChild(button)
+
   button.addEventListener('click', () => {
     contentContainer.innerHTML = ''
     const par = document.createElement('p')
@@ -313,7 +328,10 @@ export const createButton = label => {
       par.textContent = content
       return par
     })
-    paras.forEach(par => contentContainer.appendChild(par))
+    const parContainer = document.createElement('div')
+    contentContainer.appendChild(parContainer)
+    parContainer.classList.add('section')
+    paras.forEach(par => parContainer.appendChild(par))
 
     if (snippets[label].source) editor.setValue(snippets[label].source)
   })
