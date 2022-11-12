@@ -50,4 +50,4 @@ document.getElementById('run').addEventListener('click', run)
 consoleElement.value = ''
 window.dispatchEvent(new Event('resize'))
 editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
-createButton('Brrr')
+;['Brrr', 'List'].forEach(createButton)

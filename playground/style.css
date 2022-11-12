@@ -46,16 +46,19 @@ body {
 
 .app {
   background-color: var(--theme-bg-color);
-  border: 1px solid var(--border-color);
+  border: none;
+  /* border: 1px solid var(--border-color); */
   overflow: hidden;
   border-radius: 14px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   font-size: 15px;
   font-weight: 500;
+  box-shadow: 0 0 15px 1px var(--border-color);
 }
 button {
-  border: 1px solid var(--border-color);
+  border: none;
+  box-shadow: 0 0 15px 1px var(--border-color);
   cursor: pointer;
   background-color: var(--theme-bg-color);
   border-radius: 14px;
@@ -201,7 +204,6 @@ input {
   background-color: transparent;
   border: var(--border-width) solid var(--comment);
   color: var(--icons);
-  margin: 5px;
   padding: 8px;
 }
 input:focus {
@@ -244,10 +246,11 @@ input:focus {
   background-color: transparent !important;
 }
 #buttons {
-  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 #buttons > button {
-  margin: 5px;
+  margin-right: 5px;
 }
 #run {
   height: 60px;
@@ -274,6 +277,7 @@ p {
 #search {
   background-color: var(--theme-bg-color);
   max-width: 300px;
-  border: 1px solid var(--border-color);
+  border: none;
+  box-shadow: 0 0 15px 1px var(--border-color);
   border-radius: 14px;
 }

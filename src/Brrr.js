@@ -356,7 +356,7 @@ export default class Brrr {
    * The first call to the callbackfn function provides this value as an argument
    * instead of an array value.
    */
-  reduce(callback, initial) {
+  reduce(callback, initial = this.get(0)) {
     for (let i = 0, len = this.length; i < len; i++)
       initial = callback(initial, this.get(i), i, this)
     return initial
