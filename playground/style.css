@@ -1,7 +1,8 @@
 :root {
   --theme-bg-color: rgba(16 18 27 / 40%);
-  --border-color: rgba(113, 119, 144, 0.519);
-  --theme-color: #f9fafb;
+  --border-color: rgba(237, 27, 94, 0.519);
+  --border-color2: rgba(27, 128, 237, 0.519);
+  --theme-color: #d4daf5;
   --inactive-color: rgb(113 119 144 / 78%);
   --body-font: 'Poppins', sans-serif;
   --hover-menu-bg: rgba(12 15 25 / 30%);
@@ -36,10 +37,15 @@ html {
   -webkit-font-smoothing: antialiased;
 }
 body {
-  background-image: url(https://rare-gallery.com/thumbs/356110-4k-wallpaper.jpg);
-  background-repeat: no-repeat;
+  background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+  background-image: url(https://res-3.cloudinary.com/fieldfisher/image/upload/f_jpg,q_auto/v1/sectors/technology/tech_neoncircuitboard_857021704_medium_lc5h05);
   background-size: cover;
-  height: 97vh;
+  overflow: hidden;
+  /* background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%); */
+  /* background-image: url(https://rare-gallery.com/thumbs/356110-4k-wallpaper.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; */
+  height: 100vh;
   background-position: center;
   padding: 8px;
 }
@@ -47,6 +53,7 @@ body {
 .app {
   background-color: var(--theme-bg-color);
   border: none;
+  min-height: 500px;
   /* border: 1px solid var(--border-color); */
   overflow: hidden;
   border-radius: 14px;
@@ -58,7 +65,7 @@ body {
 }
 button {
   border: none;
-  box-shadow: 0 0 15px 1px var(--border-color);
+  box-shadow: 0 0 15px 1px var(--border-color2);
   cursor: pointer;
   background-color: var(--theme-bg-color);
   border-radius: 14px;
@@ -183,7 +190,7 @@ textarea {
 #editor-container {
   z-index: 1;
   border: none;
-  border-top: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color2);
   border-bottom: 1px solid var(--border-color);
 
   /* border: solid 1px var(--border); */
@@ -260,7 +267,7 @@ input:focus {
   filter: grayscale(0%);
 }
 #run:active {
-  filter: grayscale(100%) brightness(200%);
+  filter: grayscale(100%) brightness(300%);
   transform: scale(1.2);
 }
 img,
@@ -275,9 +282,14 @@ p {
 }
 
 #search {
-  background-color: var(--theme-bg-color);
-  max-width: 300px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  width: 85vw;
   border: none;
-  box-shadow: 0 0 15px 1px var(--border-color);
+  box-shadow: 0 0 15px 1px var(--border-color2);
   border-radius: 14px;
+}
+#tools {
+  position: absolute;
+  bottom: 10px;
 }

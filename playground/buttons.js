@@ -20,7 +20,6 @@ set(index, value)
 clear()
 isBalanced()
 balance()
-static #negativeZeroSymbol = Symbol('-0')
 static of(...items)
 static isBrrr(entity)
 static from(iterable)
@@ -129,7 +128,7 @@ return arr.filter((x, i, arr) => x % 2)`,
       `Arguments
 [iteratee] (Function): The function invoked per iteration.`,
       `Returns
-(Array): Returns the new filtered array.`,
+(Array): The new filtered array.`,
     ],
   },
   reduce: {
@@ -141,7 +140,7 @@ return arr.reduce((acc, x, i, arr) => acc+=x, 0)`,
   [iteratee] (Function): The function invoked per iteration.
   [accumulator] (*): The initial value.`,
       `Returns
-(*): Returns the accumulated value.`,
+(*): The accumulated value.`,
     ],
   },
 
@@ -199,7 +198,7 @@ return arr.group((item) => (item % 2 == 0 ? "even" : "odd"))
       `Arguments
 [[iteratee] (Function): The function invoked per iteration.`,
       `Returns
-(Object): Returns a object/map with groups as keys.`,
+(Object): The Object/Map with groups as keys.`,
     ],
   },
 }

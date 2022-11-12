@@ -777,7 +777,7 @@ export default class Brrr {
 
   scan(callback, dir = 1) {
     if (dir === -1)
-      for (let i = this.length; i >= 0; i--) callback(this.get(i), i, this)
+      for (let i = this.length - 1; i >= 0; i--) callback(this.get(i), i, this)
     else
       for (let i = 0, len = this.length; i < len; i++)
         callback(this.get(i), i, this)
