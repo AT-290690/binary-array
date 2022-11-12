@@ -11,11 +11,8 @@
   <body>
     <div class="app">
       <div class="header">
-        <img
-          style="height: 60px; margin-right: 20px; margin-left: 10px"
-          src="./assets/images/favicon.svg"
-        />
-        <div class="content">
+        <img id="run" src="./assets/images/favicon.svg" title="run code" />
+        <div class="content" id="content">
           <p>Brrr</p>
           <p>Array-like data structure with fast operations</p>
         </div>
@@ -23,12 +20,7 @@
       <div id="editor-container"></div>
       <input id="console" />
     </div>
-    <div style="padding: 10px">
-      <button>map</button>
-      <button>filter</button>
-      <button>reduce</button>
-      <button>every</button>
-    </div>
+    <div id="buttons"></div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>

@@ -39,7 +39,7 @@ body {
   background-image: url(https://rare-gallery.com/thumbs/356110-4k-wallpaper.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  height: 94vh;
+  height: 97vh;
   background-position: center;
   padding: 8px;
 }
@@ -71,7 +71,7 @@ button:active {
 .header {
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--border-color);
+  /* border-bottom: 1px solid var(--border-color); */
   padding: 0px 10px;
 }
 p {
@@ -176,6 +176,10 @@ textarea {
 }
 #editor-container {
   z-index: 1;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+
   /* border: solid 1px var(--border); */
 }
 .cm-editor {
@@ -235,4 +239,21 @@ input:focus {
 }
 .cm-gutters {
   background-color: transparent !important;
+}
+#buttons {
+  padding: 10px;
+}
+#buttons > button {
+  margin: 5px;
+}
+#run {
+  height: 60px;
+  margin-right: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  filter: grayscale(0%);
+}
+#run:active {
+  filter: grayscale(100%) brightness(200%);
+  transform: scale(1.2);
 }
