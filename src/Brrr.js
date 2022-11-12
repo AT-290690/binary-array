@@ -381,6 +381,16 @@ export default class Brrr {
     }
     return Brrr.from(out)
   }
+
+  reject(callback) {
+    const out = []
+    for (let i = 0, len = this.length; i < len; i++) {
+      const current = this.get(i)
+      const predicat = !callback(current, i, this)
+      if (predicat) out.push(current)
+    }
+    return Brrr.from(out)
+  }
   /**
    * Reverses the elements in an array in place.
    * This method mutates the array and returns a reference to the same array.
