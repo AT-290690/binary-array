@@ -26,6 +26,9 @@ export default class Brrr {
     return toArrayDeep(this)
   }
 
+  get reflection() {
+    return { left: this.#left, right: this.#right }
+  }
   /**
    * Returns the number of dimensions
    * and their length
@@ -525,6 +528,10 @@ export default class Brrr {
     return deep ? toArrayDeep(this) : [...this]
   }
 
+  toObject(deep = false) {
+    return deep ? toObjectDeep(this) : this.reflection
+  }
+
   append(item) {
     this.#addToRight(item)
     return this
@@ -875,6 +882,19 @@ const toArrayDeep = entity => {
     : entity
 }
 
+const toObjectDeep = entity => {
+  return Brrr.isBrrr(entity)
+    ? entity
+        .map(item =>
+          Brrr.isBrrr(item)
+            ? item.some(Brrr.isBrrr)
+              ? toObjectDeep(item)
+              : item.toObject()
+            : item
+        )
+        .toObject()
+    : entity
+}
 const toShapeDeep = (entity, out = []) => {
   if (Brrr.isBrrr(entity.get(0))) {
     entity.forEach(item => {
