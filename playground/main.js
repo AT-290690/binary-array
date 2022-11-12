@@ -1,5 +1,5 @@
-import { CodeMirror } from './libs/editor/editor.bundle.js'
-import Brrr from './src/Brrr.js'
+import { CodeMirror } from '../libs/editor/editor.bundle.js'
+import Brrr from '../src/Brrr.js'
 const mainContainer = document.getElementById('editor-container')
 const consoleElement = document.getElementById('console')
 globalThis.Brrr = Brrr
