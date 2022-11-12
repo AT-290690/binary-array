@@ -257,3 +257,8 @@ input:focus {
   filter: grayscale(100%) brightness(200%);
   transform: scale(1.2);
 }
+img,
+button,
+p {
+  user-select: none;
+}
