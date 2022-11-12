@@ -358,7 +358,7 @@ describe('Brrr extra features', () => {
       ).shape
     ).toEqual([[[2], [[3], [2], [1]], [6]], [3]])
   })
-  it('.reject should work exactly like Array.prototype.filter', () => {
+  it('.reject should work exactly like and inverse of Array.prototype.filter', () => {
     const isPrime = num => {
       for (let i = 2; num > i; i++) if (num % i === 0) return false
       return num > 1
