@@ -1,11 +1,11 @@
-import { CodeMirror } from '../libs/editor/editor.bundle.js'
+import { CodeMirror } from './libs/editor/editor.bundle.js'
 import Brrr from '../src/Brrr.js'
 import { createButton } from './buttons.js'
 const mainContainer = document.getElementById('editor-container')
 const consoleElement = document.getElementById('console')
 globalThis.Brrr = Brrr
 export const editor = CodeMirror(mainContainer, {})
-editor.changeFontSize('18px')
+editor.changeFontSize('15px')
 const print = function (...values) {
   values.forEach(
     x => (consoleElement.value += `${JSON.stringify(x) ?? undefined}`)
@@ -33,12 +33,8 @@ const run = () => {
     printErrors(err)
   }
 }
-const resize = e => {
-  editor.setSize(
-    mainContainer.getBoundingClientRect().width,
-    mainContainer.getBoundingClientRect().height
-  )
-}
+const resize = () =>
+  editor.setSize(mainContainer.getBoundingClientRect().width, 300)
 window.addEventListener('resize', resize)
 
 document.addEventListener('keydown', e => {

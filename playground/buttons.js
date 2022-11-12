@@ -6,7 +6,14 @@ const snippets = {
   map: {
     source: `const arr = Brrr.of(1, 2, 3, 4, 5)
 return arr.map((x, i, arr) => x * i * 2)`,
-    content: 'Create new array by iterating over the existing one',
+    content: [
+      `Creates an array of values by running each element in collection thru iteratee. The iteratee is invoked with three arguments: (value, index, collection).`,
+      `Arguments
+collection (Array): The collection to iterate over.
+[iteratee] (Function): The function invoked per iteration.`,
+      `Returns
+(Array): The new mapped array.`,
+    ],
   },
 }
 export const createButton = label => {
@@ -15,9 +22,14 @@ export const createButton = label => {
   buttonContainer.appendChild(button)
   button.addEventListener('click', () => {
     contentContainer.innerHTML = ''
-    const paras = [document.createElement('p'), document.createElement('p')]
-    paras[0].textContent = label
-    paras[1].textContent = snippets[label].content
+    const par = document.createElement('p')
+    par.textContent = label
+    contentContainer.appendChild(par)
+    const paras = snippets[label].content.map(content => {
+      const par = document.createElement('p')
+      par.textContent = content
+      return par
+    })
     paras.forEach(par => contentContainer.appendChild(par))
     editor.setValue(snippets[label].source)
   })
