@@ -42,7 +42,7 @@ export default class Brrr {
     if (this.length) this.clear()
     const half = (initial.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
-    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
+    for (let i = half; i < initial.length; ++i) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -90,7 +90,7 @@ export default class Brrr {
   }
 
   [Symbol.iterator] = function* () {
-    for (let i = 0, len = this.length; i < len; i++) yield this.get(i)
+    for (let i = 0, len = this.length; i < len; ++i) yield this.get(i)
   }
 
   isBalanced() {
@@ -103,7 +103,7 @@ export default class Brrr {
     this.clear()
     const half = (initial.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) this.#addToLeft(initial[i])
-    for (let i = half; i < initial.length; i++) this.#addToRight(initial[i])
+    for (let i = half; i < initial.length; ++i) this.#addToRight(initial[i])
     return this
   }
   /**
@@ -142,7 +142,7 @@ export default class Brrr {
     const out = new Brrr()
     const half = (iterable.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--) out.#addToLeft(iterable[i])
-    for (let i = half; i < iterable.length; i++) out.#addToRight(iterable[i])
+    for (let i = half; i < iterable.length; ++i) out.#addToRight(iterable[i])
     return out
   }
 
@@ -164,7 +164,7 @@ export default class Brrr {
   }
 
   push(...items) {
-    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
+    for (let i = 0; i < items.length; ++i) this.#addToRight(items[i])
     return this.length
   }
 
@@ -200,7 +200,7 @@ export default class Brrr {
    */
   slice(start, end = this.length) {
     const collection = []
-    for (let i = start; i < end; i++) collection.push(this.get(i))
+    for (let i = start; i < end; ++i) collection.push(this.get(i))
     return Brrr.from(collection)
   }
   /**
@@ -219,15 +219,15 @@ export default class Brrr {
       const len = this.length - start - deleteCount
       this.rotateRight(len)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i++) deleted.push(this.cut())
+        for (let i = 0; i < deleteCount; ++i) deleted.push(this.cut())
       dir < 0 ? this.unshift(...items) : this.push(...items)
-      for (let i = 0; i < len; i++) this.append(this.chop())
+      for (let i = 0; i < len; ++i) this.append(this.chop())
     } else {
       this.rotateLeft(start)
       if (deleteCount > 0)
-        for (let i = 0; i < deleteCount; i++) deleted.push(this.chop())
+        for (let i = 0; i < deleteCount; ++i) deleted.push(this.chop())
       dir < 0 ? this.push(...items) : this.unshift(...items)
-      for (let i = 0; i < start; i++) this.prepend(this.cut())
+      for (let i = 0; i < start; ++i) this.prepend(this.cut())
     }
     return deleted
   }
@@ -239,7 +239,7 @@ export default class Brrr {
    * If fromIndex is omitted, the search starts at index 0.
    */
   indexOf(item) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       if (this.get(i) === item) return i
     return -1
   }
@@ -256,7 +256,7 @@ export default class Brrr {
   }
 
   includes(val, fromIndex = 0) {
-    for (let i = fromIndex, len = this.length; i < len; i++)
+    for (let i = fromIndex, len = this.length; i < len; ++i)
       if (sameValueZero(this.get(i), val)) return true
     return false
   }
@@ -266,7 +266,7 @@ export default class Brrr {
    * find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined.
    */
   find(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; i++) {
+    for (let i = 0, len = this.length; i < len; ++i) {
       if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return current
@@ -289,7 +289,7 @@ export default class Brrr {
    * or until the end of the array.
    */
   some(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       if (callback(this.get(i), i, this)) return true
     return false
   }
@@ -299,13 +299,13 @@ export default class Brrr {
    * A function that accepts up to three arguments. The every method calls the predicate function for each element in the array until the predicate returns a value which is coercible to the Boolean value false, or until the end of the array.
    */
   every(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       if (i >= this.length || !callback(this.get(i), i, this)) return false
     return true
   }
 
   findIndex(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; i++) {
+    for (let i = 0, len = this.length; i < len; ++i) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -330,19 +330,19 @@ export default class Brrr {
     const half = (this.length / 2) | 0.5
     for (let i = half - 1; i >= 0; i--)
       result.#addToLeft(callback(this.get(i), i, this))
-    for (let i = half, len = this.length; i < len; i++)
+    for (let i = half, len = this.length; i < len; ++i)
       result.#addToRight(callback(this.get(i), i, this))
     return result
   }
 
   mapMut(callback) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       this.set(i, callback(this.get(i), i, this))
     return this
   }
 
   forEach(callback) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       callback(this.get(i), i, this)
   }
   /**
@@ -357,7 +357,7 @@ export default class Brrr {
    * instead of an array value.
    */
   reduce(callback, initial = this.get(0)) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
@@ -374,7 +374,7 @@ export default class Brrr {
    */
   filter(callback = Identity) {
     const out = []
-    for (let i = 0, len = this.length; i < len; i++) {
+    for (let i = 0, len = this.length; i < len; ++i) {
       const current = this.get(i)
       const predicat = callback(current, i, this)
       if (predicat) out.push(current)
@@ -384,7 +384,7 @@ export default class Brrr {
 
   reject(callback = Identity) {
     const out = []
-    for (let i = 0, len = this.length; i < len; i++) {
+    for (let i = 0, len = this.length; i < len; ++i) {
       const current = this.get(i)
       const predicat = !callback(current, i, this)
       if (predicat) out.push(current)
@@ -454,7 +454,7 @@ export default class Brrr {
 
   join(separator = ',') {
     let output = ''
-    for (let i = 0, len = this.length; i < len - 1; i++)
+    for (let i = 0, len = this.length; i < len - 1; ++i)
       output += this.get(i) + separator
     output += this.get(this.length - 1)
     return output
@@ -494,7 +494,7 @@ export default class Brrr {
 
   addTo(index, value) {
     if (index >= this.length)
-      for (let i = this.length; i <= index; i++) this.#addToRight(undefined)
+      for (let i = this.length; i <= index; ++i) this.#addToRight(undefined)
     const offset = index + this.offsetLeft
     if (offset >= 0) this.#right[offset] = value
     else this.#left[offset * -1] = value
@@ -506,26 +506,26 @@ export default class Brrr {
       const len = this.length - index
       this.rotateRight(len)
       this.push(...value)
-      for (let i = 0; i < len; i++) this.append(this.shift())
+      for (let i = 0; i < len; ++i) this.append(this.shift())
     } else {
       this.rotateLeft(index)
       this.unshift(...value)
-      for (let i = 0; i < index; i++) this.prepend(this.pop())
+      for (let i = 0; i < index; ++i) this.prepend(this.pop())
     }
     return this
   }
 
   removeFrom(index, amount) {
     const len = this.length - index
-    amount = len < amount ? len : amount
-    if (this.offsetLeft + index > 0) {
-      this.rotateRight(len)
-      for (let i = 0; i < amount; i++) this.cut()
-      for (let i = 0; i < len; i++) this.append(this.chop())
+    const isCloserToTheRight = this.offsetLeft + index > 0
+    isCloserToTheRight ? this.rotateRight(len) : this.rotateLeft(index)
+    amount = Math.min(len, amount)
+    if (isCloserToTheRight) {
+      for (let i = 0; i < amount; ++i) this.cut()
+      for (let i = 0; i < len; ++i) this.append(this.chop())
     } else {
-      this.rotateLeft(index)
-      for (let i = 0; i < amount; i++) this.chop()
-      for (let i = 0; i < index; i++) this.prepend(this.cut())
+      for (let i = 0; i < amount; ++i) this.chop()
+      for (let i = 0; i < index; ++i) this.prepend(this.cut())
     }
     return this
   }
@@ -585,7 +585,7 @@ export default class Brrr {
   }
 
   insertRight(...items) {
-    for (let i = 0; i < items.length; i++) this.#addToRight(items[i])
+    for (let i = 0; i < items.length; ++i) this.#addToRight(items[i])
     return this
   }
 
@@ -610,7 +610,7 @@ export default class Brrr {
   take(n = 1) {
     const collection = []
     const len = Math.min(n, this.length)
-    for (let i = 0; i < len; i++) collection.push(this.get(i))
+    for (let i = 0; i < len; ++i) collection.push(this.get(i))
     return Brrr.from(collection)
   }
   /**
@@ -620,19 +620,19 @@ export default class Brrr {
     const collection = []
     const length = this.length
     const len = Math.min(n, length)
-    for (let i = 0; i < len; i++) collection.push(this.get(length - (len - i)))
+    for (let i = 0; i < len; ++i) collection.push(this.get(length - (len - i)))
     return Brrr.from(collection)
   }
 
   to(callback, initial = new Brrr()) {
-    for (let i = 0, len = this.length; i < len; i++)
+    for (let i = 0, len = this.length; i < len; ++i)
       initial = callback(initial, this.get(i), i, this)
     return initial
   }
 
   rotateLeft(n = 1) {
     n = n % this.length
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < n; ++i) {
       if (this.offsetLeft === 0) this.balance()
       this.#addToRight(this.first)
       this.#removeFromLeft()
@@ -642,7 +642,7 @@ export default class Brrr {
 
   rotateRight(n = 1) {
     n = n % this.length
-    for (let i = 0; i < n; i++) {
+    for (let i = 0; i < n; ++i) {
       if (this.offsetRight === 0) this.balance()
       this.#addToLeft(this.last)
       this.#removeFromRight()
@@ -711,7 +711,7 @@ export default class Brrr {
     const res = this.reduce((acc, _, index, arr) => {
       if (index % groups === 0) {
         const part = new Brrr()
-        for (let i = 0; i < groups; i++) {
+        for (let i = 0; i < groups; ++i) {
           const current = arr.get(index + i)
           if (current !== undefined) part.append(current)
         }
@@ -779,7 +779,7 @@ export default class Brrr {
     if (dir === -1)
       for (let i = this.length - 1; i >= 0; i--) callback(this.get(i), i, this)
     else
-      for (let i = 0, len = this.length; i < len; i++)
+      for (let i = 0, len = this.length; i < len; ++i)
         callback(this.get(i), i, this)
     return this
   }
@@ -874,7 +874,7 @@ const toMatrix = (...args) => {
   const dimensions = new Brrr().with(...args)
   const dim = dimensions.chop()
   const arr = new Brrr()
-  for (let i = 0; i < dim; i++) arr.set(i, toMatrix(...dimensions))
+  for (let i = 0; i < dim; ++i) arr.set(i, toMatrix(...dimensions))
   return arr
 }
 
@@ -922,11 +922,11 @@ const quickSortAsc = (items, left, right) => {
       i = left,
       j = right
     while (i <= j) {
-      while (items.get(i) < pivot) i++
+      while (items.get(i) < pivot) ++i
       while (items.get(j) > pivot) j--
       if (i <= j) {
         items.swap(i, j)
-        i++
+        ++i
         j--
       }
     }
@@ -942,11 +942,11 @@ const quickSortDesc = (items, left, right) => {
       i = left,
       j = right
     while (i <= j) {
-      while (items.get(i) > pivot) i++
+      while (items.get(i) > pivot) ++i
       while (items.get(j) < pivot) j--
       if (i <= j) {
         items.swap(i, j)
-        i++
+        ++i
         j--
       }
     }
@@ -964,16 +964,16 @@ const merge = (left, right, callback) => {
       : arr.push(right.chop())
   }
 
-  for (let i = 0; i < left.length; i++) {
+  for (let i = 0; i < left.length; ++i) {
     arr.push(left.get(i))
   }
-  for (let i = 0; i < right.length; i++) {
+  for (let i = 0; i < right.length; ++i) {
     arr.push(right.get(i))
   }
   const out = new Brrr()
   const half = (arr.length / 2) | 0.5
   for (let i = half - 1; i >= 0; i--) out.prepend(arr[i])
-  for (let i = half; i < arr.length; i++) out.append(arr[i])
+  for (let i = half; i < arr.length; ++i) out.append(arr[i])
   return out
 }
 

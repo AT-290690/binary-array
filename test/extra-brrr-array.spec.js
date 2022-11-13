@@ -165,6 +165,10 @@ describe('Brrr extra features', () => {
       1, 2, 3, 4, 5, 6, 7,
     ])
     expect(Brrr.from(arr).copy().removeFrom(0, arr.length).items).toEqual([])
+
+    expect(
+      Brrr.of(1, 2, 3, 4).addAt(2, '#1', '#2', '#3').removeFrom(1, 3).items
+    ).toEqual([1, '#3', 3, 4])
   })
 
   it('.group should work', () => {

@@ -133,7 +133,7 @@ return arr.filter((x, i, arr) => x % 2)`,
   },
   reject: {
     source: `const arr = Brrr.of(1, 2, 3, 4, 5)
-// remove even elements
+// keep even elements
 return arr.reject((x, i, arr) => x % 2)`,
     content: [
       `The opposite of Brrr.filter; this method returns the elements of collection that predicate does not return truthy for.`,
@@ -252,7 +252,7 @@ The found element or undefined if none is found`,
 const b = Brrr.of(5, 6, 7)
 return a.concat(b)`,
     content: [
-      `Creates a new array concatenating array with any additional arrays and/or values.`,
+      `Creates a new array concatenating array with any additional arrays.`,
       `Arguments
 array (Array): The array to concatenate.`,
       `Returns
