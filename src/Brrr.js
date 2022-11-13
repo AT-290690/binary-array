@@ -517,13 +517,14 @@ export default class Brrr {
 
   removeFrom(index, amount) {
     const len = this.length - index
-    const isCloserToTheRight = this.offsetLeft + index > 0
-    isCloserToTheRight ? this.rotateRight(len) : this.rotateLeft(index)
     amount = Math.min(len, amount)
+    const isCloserToTheRight = this.offsetLeft + index > 0
     if (isCloserToTheRight) {
+      this.rotateRight(len)
       for (let i = 0; i < amount; ++i) this.cut()
       for (let i = 0; i < len; ++i) this.append(this.chop())
     } else {
+      this.rotateLeft(index)
       for (let i = 0; i < amount; ++i) this.chop()
       for (let i = 0; i < index; ++i) this.prepend(this.cut())
     }

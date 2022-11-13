@@ -169,6 +169,14 @@ describe('Brrr extra features', () => {
     expect(
       Brrr.of(1, 2, 3, 4).addAt(2, '#1', '#2', '#3').removeFrom(1, 3).items
     ).toEqual([1, '#3', 3, 4])
+
+    expect(
+      Brrr.of(1, 2, 3, 4)
+        .addAt(2, '#1', '#2', '#3', '#4')
+        .addAt(1, '#0')
+        .removeFrom(1, 1)
+        .removeFrom(2, 4).items
+    ).toEqual([1, 2, 3, 4])
   })
 
   it('.group should work', () => {
