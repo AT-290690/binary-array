@@ -34,8 +34,6 @@ Brrr.from('((()))()()(())()')
 
 Unoptimal array solutions are as efficient as optimal ones
 
-Try it out at the [playground](https://at-290690.github.io/YavaScript/?g=AT-290690/675b2c3d986aca3fd04bf64daa66b631/raw/afe22cebc8c90170c0fa52dc92dfe1105f40b613/BitzArray.js)
-
 Structure
 
 ```js
