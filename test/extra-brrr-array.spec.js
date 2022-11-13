@@ -177,6 +177,9 @@ describe('Brrr extra features', () => {
         .removeFrom(1, 1)
         .removeFrom(2, 4).items
     ).toEqual([1, 2, 3, 4])
+
+    expect(Brrr.of(1, 2, 3, 4).removeFrom(3, 1).items).toEqual([1, 2, 3])
+    expect(Brrr.of(1, 2, 3, 4).removeFrom(3, 5).items).toEqual([1, 2, 3])
   })
 
   it('.group should work', () => {

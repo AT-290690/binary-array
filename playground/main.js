@@ -36,13 +36,8 @@ const run = () => {
     printErrors(err)
   }
 }
-const resize = () => {
-  const height = document.body.getBoundingClientRect().height
-  editor.setSize(
-    mainContainer.getBoundingClientRect().width,
-    Math.min(height / window.devicePixelRatio, height * 0.8)
-  )
-}
+
+const resize = () => editor.setSize(window.innerWidth, window.innerHeight / 2)
 window.addEventListener('resize', resize)
 
 document.addEventListener('keydown', e => {

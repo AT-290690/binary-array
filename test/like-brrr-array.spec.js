@@ -38,6 +38,15 @@ describe('Brrr mimic Array', () => {
     expect(arr.length).toEqual(binArr.length)
   })
 
+  it('.length should modify the collection the same', () => {
+    const arr = Array.from([1, 2, 3])
+    const binArr = Brrr.from(arr)
+    expect(arr.length).toEqual(binArr.length)
+    binArr.length = 2
+    arr.length = 2
+    expect(arr.length).toEqual(binArr.length)
+    expect([...binArr]).toEqual(arr)
+  })
   it('.filter should work exactly like Array.prototype.filter', () => {
     const isPrime = num => {
       for (let i = 2; num > i; i++) if (num % i === 0) return false

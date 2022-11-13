@@ -14,6 +14,13 @@ export default class Brrr {
     return this.#left.length + this.#right.length - 1
   }
 
+  set length(n) {
+    const len = this.length
+    if (n === len) return len
+    len > n ? this.removeFrom(n, len - n) : this.addTo(n, undefined)
+    return this.length
+  }
+
   get first() {
     return this.get(0)
   }
@@ -516,7 +523,9 @@ export default class Brrr {
   }
 
   removeFrom(index, amount) {
-    const len = this.length - index
+    const length = this.length
+    if (length - 1 <= index) return this.head()
+    const len = length - index
     amount = Math.min(len, amount)
     const isCloserToTheRight = this.offsetLeft + index > 0
     if (isCloserToTheRight) {
