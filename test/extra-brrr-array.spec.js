@@ -411,4 +411,13 @@ describe('Brrr extra features', () => {
       }).items
     )
   })
+  it('.merge should work', () => {
+    const arr = Brrr.of(1, 2, 3, 4)
+    expect(
+      arr.merge(arr.copy(), arr.copy(), arr.copy(), arr.copy()).items
+    ).toEqual([1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4])
+    expect(
+      Brrr.of(1, 2, 3, 4).merge(Brrr.of(5, 6, 7, 8), Brrr.of(9, 10)).items
+    ).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+  })
 })

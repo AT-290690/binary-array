@@ -467,6 +467,13 @@ export default class Brrr {
     return output
   }
 
+  merge(...arrays) {
+    arrays.forEach(array => {
+      array.forEach(item => this.append(item))
+    })
+    return this
+  }
+
   concat(second) {
     return Brrr.from([...this, ...second])
   }
@@ -805,6 +812,11 @@ export default class Brrr {
   getInBounds(index) {
     return this.get(clamp(index, 0, this.length - 1))
   }
+
+  getInWrap(index) {
+    return this.get(index % this.length)
+  }
+
   /**
    * @param order
    * check if the array is sorted
