@@ -1,10 +1,11 @@
 import { CodeMirror } from './libs/editor/editor.bundle.js'
 import Brrr from '../src/Brrr.js'
-import { createButton } from './buttons.js'
+import { createButton } from './manual.js'
 
+const app = document.getElementById('app')
 const mainContainer = document.getElementById('editor-container')
 const consoleElement = document.getElementById('console')
-
+app.style.height = window.innerHeight
 globalThis.Brrr = Brrr
 export const editor = CodeMirror(mainContainer, {})
 editor.changeFontSize('15px')
@@ -48,11 +49,11 @@ document.addEventListener('keydown', e => {
     run()
   }
 })
-
-document.getElementById('run').addEventListener('click', run)
-consoleElement.value = ''
-window.dispatchEvent(new Event('resize'))
-editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
-;['Brrr', 'List'].forEach(createButton)
-
-document.getElementById('app').style.height = 'auto'
+;(() => {
+  document.getElementById('run').addEventListener('click', run)
+  consoleElement.value = ''
+  editor.setValue(`return Brrr.of(1, 2, 3, 4).items`)
+  ;['Brrr', 'List'].forEach(createButton)
+  window.dispatchEvent(new Event('resize'))
+  document.getElementById('app').style.height = 'auto'
+})()

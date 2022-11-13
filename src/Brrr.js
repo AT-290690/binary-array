@@ -67,11 +67,13 @@ export default class Brrr {
     const offset = index + this.offsetLeft
     if (offset >= 0) this.#right[offset] = value
     else this.#left[offset * -1] = value
+    return this
   }
 
   clear() {
     this.#left.length = 1
     this.#right.length = 0
+    return this
   }
 
   #addToLeft(item) {
@@ -207,6 +209,7 @@ export default class Brrr {
    */
   slice(start, end = this.length) {
     const collection = []
+    end = Math.min(end, this.length)
     for (let i = start; i < end; ++i) collection.push(this.get(i))
     return Brrr.from(collection)
   }
@@ -221,6 +224,7 @@ export default class Brrr {
   splice(dir, deleteCount, ...items) {
     const start = Math.abs(dir)
     deleteCount = deleteCount ?? this.length - start
+    deleteCount = Math.min(deleteCount, this.length - start)
     const deleted = new Brrr()
     if (this.offsetLeft + start > 0) {
       const len = this.length - start - deleteCount
@@ -272,16 +276,16 @@ export default class Brrr {
    * @param predicate
    * find calls predicate once for each element of the array, in ascending order, until it finds one where predicate returns true. If such an element is found, find immediately returns that element value. Otherwise, find returns undefined.
    */
-  find(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; ++i) {
+  find(callback = Identity, startIndex = 0) {
+    for (let i = startIndex, len = this.length; i < len; ++i) {
       if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return current
     }
   }
 
-  findLast(callback = Identity) {
-    for (let i = this.length - 1; i >= 0; i--) {
+  findLast(callback = Identity, startIndex = 0) {
+    for (let i = this.length - 1 - startIndex; i >= 0; i--) {
       if (i >= this.length) return
       const current = this.get(i)
       if (callback(current, i, this)) return current
@@ -311,16 +315,16 @@ export default class Brrr {
     return true
   }
 
-  findIndex(callback = Identity) {
-    for (let i = 0, len = this.length; i < len; ++i) {
+  findIndex(callback = Identity, startIndex = 0) {
+    for (let i = startIndex, len = this.length; i < len; ++i) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
     return -1
   }
 
-  findLastIndex(callback = Identity) {
-    for (let i = this.length - 1; i >= 0; i--) {
+  findLastIndex(callback = Identity, startIndex = 0) {
+    for (let i = this.length - 1 - startIndex; i >= 0; i--) {
       const current = this.get(i)
       if (callback(current, i, this)) return i
     }
@@ -813,8 +817,16 @@ export default class Brrr {
     return this.get(clamp(index, 0, this.length - 1))
   }
 
+  setInBounds(index, value) {
+    return this.set(clamp(index, 0, this.length - 1), value)
+  }
+
   getInWrap(index) {
     return this.get(index % this.length)
+  }
+
+  setInWrap(index, value) {
+    return this.set(index % this.length, value)
   }
 
   /**

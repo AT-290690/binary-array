@@ -38,7 +38,7 @@ html {
 }
 body {
   background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
-  background-image: url(https://res-3.cloudinary.com/fieldfisher/image/upload/f_jpg,q_auto/v1/sectors/technology/tech_neoncircuitboard_857021704_medium_lc5h05);
+  background-image: url(./assets/images/tech_neoncircuitboard_857021704_medium_lc5h05.jpeg);
   background-size: cover;
   overflow: hidden;
   /* background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%); */
@@ -237,17 +237,6 @@ input:focus {
   transform-origin: 50% 50%;
 }
 
-#popup-container {
-  position: absolute;
-  bottom: 8px;
-  left: 0px;
-  width: fit-content;
-  z-index: 1000;
-  color: white;
-  background-color: transparent;
-  display: none;
-  border: solid 1px var(--border);
-}
 .cm-gutters {
   background-color: transparent !important;
 }
